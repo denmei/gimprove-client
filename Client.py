@@ -3,13 +3,15 @@ import json
 from hx711py.hx711 import HX711
 import random
 import time
+from datetime import datetime
 
 # TODO cache requests that failed because of a connection error
 
 
 class Equipment(HX711):
 
-    list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
+    # list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
+    list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
     detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
 
     def __init__(self, exercise_name, equipment_id):
@@ -18,8 +20,12 @@ class Equipment(HX711):
         self.equipment_id = equipment_id
 
     def new_set(self, repetitions, weight, rfid, exercise_unit=""):
-        r = requests.post(self.list_address, data={'exercise_unit': exercise_unit, 'repetitions': repetitions,
-                                                   'weight': weight, 'exercise_name': self.exercise_name, 'rfid': rfid})
+        data = {'exercise_unit': exercise_unit, 'repetitions': repetitions,
+                   'weight': weight, 'exercise_name': self.exercise_name, 'rfid': rfid,
+                   'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
+                    'equipment_id':self.equipment_id}
+        r = requests.post(self.list_address, data=data, )
+        print(data)
         print(r.status_code)
 
     def get_sets(self):
@@ -67,5 +73,5 @@ class Equipment(HX711):
                 print("Not a valid rfid-tag.")
             print()
 
-equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="123456789")
+equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="af091b0631e44714af3f8f76faf4763b")
 equipment.run()
