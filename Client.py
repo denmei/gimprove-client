@@ -12,7 +12,8 @@ class Equipment(HX711):
 
     # list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
     list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
-    detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
+    # detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
+    detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
 
     def __init__(self, exercise_name, equipment_id):
         super(Equipment, self).__init__(5, 6)
@@ -25,17 +26,18 @@ class Equipment(HX711):
                    'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
                     'equipment_id':self.equipment_id}
         r = requests.post(self.list_address, data=data, )
-        print(data)
         print(r.status_code)
+        return r.content
 
     def get_sets(self):
         r = requests.get(self.list_address)
         print(json.dumps(r.json(), sort_keys=True, indent=3))
 
-    def update_set(self, repetitions, weight, set_id, exercise_unit=""):
+    def update_set(self, repetitions, weight, set_id, rfid, exercise_unit=""):
         address = self.detail_address + set_id
-        r = requests.put(address, data={'exercise_unit': exercise_unit, 'repetitions': repetitions, 'weight': weight,
-                                        'exercise_name': self.exercise_name})
+        r = requests.put(address, data={'repetitions': repetitions, 'weight': weight,
+                                        'exercise_name': self.exercise_name, 'equipment_id':self.equipment_id,
+                                        'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"), 'rfid': rfid})
         print(r.status_code)
 
     def delete_set(self, set_id):
@@ -63,12 +65,24 @@ class Equipment(HX711):
             # wait for valid rfid-tag input
             rfid_tag = input('RFID: ')
             if len(rfid_tag) == 10:
-                print("  Waiting for input")
-                # get repetition and weight input
-                ex_weight = random.randint(5, 100)
-                ex_repetitions = random.randint(5, 15)
-                # send to client
-                self.new_set(weight=ex_weight, repetitions=ex_repetitions, rfid=rfid_tag)
+                print("Receiving repetitions")
+                rep_count = 0
+                set_id = ""
+                ex_weight = 0
+                while rep_count < 10:
+                    # create new set
+                    if rep_count == 0:
+                        response = json.loads(self.new_set(weight=0, repetitions=rep_count, rfid=rfid_tag).decode("utf-8"))
+                        set_id = response['id']
+                    # update set and weight
+                    elif rep_count == 1:
+                        ex_weight = random.randint(5, 100)
+                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id,  rfid=rfid_tag)
+                    # update set keep weight
+                    else:
+                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag)
+                    rep_count += 1
+                    time.sleep(1)
             else:
                 print("Not a valid rfid-tag.")
             print()
