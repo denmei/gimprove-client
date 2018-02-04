@@ -24,20 +24,22 @@ class Equipment(HX711):
         data = {'exercise_unit': exercise_unit, 'repetitions': repetitions,
                    'weight': weight, 'exercise_name': self.exercise_name, 'rfid': rfid,
                    'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
-                    'equipment_id':self.equipment_id}
+                    'equipment_id':self.equipment_id, 'active': 'True'}
         r = requests.post(self.list_address, data=data, )
         print(r.status_code)
+        print(r.content)
         return r.content
 
     def get_sets(self):
         r = requests.get(self.list_address)
         print(json.dumps(r.json(), sort_keys=True, indent=3))
 
-    def update_set(self, repetitions, weight, set_id, rfid, exercise_unit=""):
+    def update_set(self, repetitions, weight, set_id, rfid, active, exercise_unit=""):
         address = self.detail_address + set_id
         r = requests.put(address, data={'repetitions': repetitions, 'weight': weight,
                                         'exercise_name': self.exercise_name, 'equipment_id':self.equipment_id,
-                                        'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"), 'rfid': rfid})
+                                        'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"), 'rfid': rfid,
+                                        'active': str(active)})
         print(r.status_code)
 
     def delete_set(self, set_id):
@@ -77,15 +79,16 @@ class Equipment(HX711):
                     # update set and weight
                     elif rep_count == 1:
                         ex_weight = random.randint(5, 100)
-                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id,  rfid=rfid_tag)
+                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id,  rfid=rfid_tag, active=True)
                     # update set keep weight
                     else:
-                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag)
+                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag, active=True)
                     rep_count += 1
                     time.sleep(1)
+                self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag, active=False)
             else:
                 print("Not a valid rfid-tag.")
             print()
 
-equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="af091b0631e44714af3f8f76faf4763b")
+equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="1b7d032196154bd5a64c7fcfee388ec5")
 equipment.run()
