@@ -9,6 +9,11 @@ from datetime import datetime
 
 
 class Equipment(HX711):
+    """
+    Represents a component to upgrade a gym machine. Can record new exercise units and send the results to the
+    SmartGym-Server.
+    In case of a connection error, the results will be cached an resent at another point of time.
+    """
 
     # list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
     list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
@@ -66,26 +71,33 @@ class Equipment(HX711):
         while self.is_ready():
             # wait for valid rfid-tag input
             rfid_tag = input('RFID: ')
+
+            # start recording if rfid-tag is valid
             if len(rfid_tag) == 10:
-                print("Receiving repetitions")
                 rep_count = 0
                 set_id = ""
                 ex_weight = 0
-                while rep_count < 10:
-                    # create new set
-                    if rep_count == 0:
-                        response = json.loads(self.new_set(weight=0, repetitions=rep_count, rfid=rfid_tag).decode("utf-8"))
-                        set_id = response['id']
-                    # update set and weight
-                    elif rep_count == 1:
-                        ex_weight = random.randint(5, 100)
-                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id,  rfid=rfid_tag, active=True)
-                    # update set keep weight
+                # create new set
+                response = json.loads(self.new_set(weight=0, repetitions=rep_count, rfid=rfid_tag).decode("utf-8"))
+                set_id = response['id']
+
+                # receive repetitions
+                while True:
+                    rep = input("Tip r for repetition:  ")
+                    if rep == "r":
+                        rep_count += 1
+                        # update set and weight for the first repetition
+                        if rep_count == 1:
+                            ex_weight = random.randint(5, 100)
+                            self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id,  rfid=rfid_tag, active=True)
+                        # update set keep weight for the next repetitions after the first one
+                        else:
+                            self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag, active=True)
+                        time.sleep(2)
                     else:
-                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag, active=True)
-                    rep_count += 1
-                    time.sleep(1)
-                self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag, active=False)
+                        # deactivate current set
+                        self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag, active=False)
+                        break
             else:
                 print("Not a valid rfid-tag.")
             print()
