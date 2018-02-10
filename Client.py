@@ -42,7 +42,7 @@ class Equipment(HX711):
     def update_set(self, repetitions, weight, set_id, rfid, active, exercise_unit=""):
         address = self.detail_address + set_id
         r = requests.put(address, data={'repetitions': repetitions, 'weight': weight,
-                                        'exercise_name': self.exercise_name, 'equipment_id':self.equipment_id,
+                                        'exercise_name': self.exercise_name, 'equipment_id': self.equipment_id,
                                         'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"), 'rfid': rfid,
                                         'active': str(active)})
         print(r.status_code)
@@ -83,7 +83,7 @@ class Equipment(HX711):
 
                 # receive repetitions
                 while True:
-                    rep = input("Tip r for repetition:  ")
+                    rep = input("r for repetition:  ")
                     if rep == "r":
                         rep_count += 1
                         # update set and weight for the first repetition
