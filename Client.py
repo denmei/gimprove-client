@@ -15,10 +15,10 @@ class Equipment(HX711):
     In case of a connection error, the results will be cached an resent at another point of time.
     """
 
-    # list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
-    list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
-    # detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
-    detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
+    list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
+    # list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
+    detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
+    # detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
 
     def __init__(self, exercise_name, equipment_id):
         super(Equipment, self).__init__(5, 6)
@@ -36,6 +36,7 @@ class Equipment(HX711):
         return r.content
 
     def get_sets(self):
+
         r = requests.get(self.list_address)
         print(json.dumps(r.json(), sort_keys=True, indent=3))
 
@@ -93,7 +94,6 @@ class Equipment(HX711):
                         # update set keep weight for the next repetitions after the first one
                         else:
                             self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag, active=True)
-                        time.sleep(2)
                     else:
                         # deactivate current set
                         self.update_set(repetitions=rep_count, weight=ex_weight, set_id=set_id, rfid=rfid_tag, active=False)
