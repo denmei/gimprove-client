@@ -1,21 +1,32 @@
 import requests
 from datetime import datetime
+import os
 
 
 class RequestManager:
     """
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
-    # TODO: Persist cache
 
-    def __init__(self, detail_address, list_address, exercise_name, equipment_id):
+    def __init__(self, detail_address, list_address, exercise_name, equipment_id, cache_path):
         self.detail_address = detail_address
         self.list_address = list_address
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
+        self.cache_path = os.path.join(cache_path, "client_cache.txt")
+        self._check_cache_file_()
 
     def rfid_is_valid(self, rfid):
+        #TODO
         return True
+
+    def _check_cache_file_(self):
+        """
+        Checks whether there is a cache_file in the specified directory. If not, a new file will be created.
+        """
+        if not os.path.isfile(self.cache_path):
+            cache_file = open(self.cache_path, 'w')
+            cache_file.close()
 
     def update_set(self, repetitions, weight, set_id, rfid, active):
         """
@@ -28,10 +39,12 @@ class RequestManager:
         :return: Server response.
         """
         address = self.detail_address + set_id
-        response = requests.put(address, data={'repetitions': repetitions, 'weight': weight,
-                                               'exercise_name': self.exercise_name, 'equipment_id': self.equipment_id,
-                                               'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"), 'rfid': rfid,
-                                               'active': str(active)})
+        data = {'repetitions': repetitions, 'weight': weight, 'exercise_name': self.exercise_name,
+                'equipment_id': self.equipment_id, 'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
+                'rfid': rfid, 'active': str(active)}
+        response = requests.put(address, data=data)
+        if response.status_code != 200 or response.status_code != 201:
+            self.cache_request("put", address, data)
         return response
 
     def new_set(self, rfid, exercise_unit=""):
@@ -45,20 +58,25 @@ class RequestManager:
                 'rfid': rfid, 'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
                 'equipment_id': self.equipment_id, 'active': 'True'}
         response = requests.post(self.list_address, data=data)
+        if response.status_code != 200 or response.status_code != 201:
+            self.cache_request("post", self.list_address, data)
         return response
 
     def delete_set(self, set_id):
         address = self.detail_address + set_id
         response = requests.delete(address)
+        if response.status_code != 200 or response.status_code != 201:
+            self.cache_request("delete", address, "")
         return response
 
-    def cache_exercise(self):
+    def cache_request(self, method, address, data):
         """
-        Caches an exercise if there is a connection error. Delete all prior cached messages that belong to the same
-        set."
-        :return:
+        Caches a request if there is a connection error. Delete all prior cached messages that belong to the same
+        set.
         """
-        pass
+        with open(self.cache_path, "w") as cache_file:
+            cache_file.write(str(method) + "|" + str(address) + "|" + str(data))
+            cache_file.close()
 
     def empty_cache(self):
         """

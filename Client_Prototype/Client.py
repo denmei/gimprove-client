@@ -20,7 +20,8 @@ class Equipment:
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
-                                              exercise_name=self.exercise_name, equipment_id=self.equipment_id)
+                                              exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+                                              cache_path="/home/dennis/Dokumente/")
 
     def _init_set_record_(self, rfid):
         """
@@ -79,7 +80,6 @@ class Equipment:
                     if set_id is not None:
                         self._delete_set(set_id)
             else:
-                # print error
                 print("Not a valid rfid tag")
 
 
