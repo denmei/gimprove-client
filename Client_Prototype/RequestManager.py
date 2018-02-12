@@ -47,6 +47,11 @@ class RequestManager:
         response = requests.post(self.list_address, data=data)
         return response
 
+    def delete_set(self, set_id):
+        address = self.detail_address + set_id
+        response = requests.delete(address)
+        return response
+
     def cache_exercise(self):
         """
         Caches an exercise if there is a connection error. Delete all prior cached messages that belong to the same

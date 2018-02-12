@@ -2,7 +2,6 @@ import json
 from Client_Prototype.RequestManager import RequestManager
 from Client_Prototype.SensorManager import SensorManager
 from Client_Prototype.Timer import Timer
-import time
 
 
 class Equipment:
@@ -26,8 +25,7 @@ class Equipment:
     def _init_set_record_(self, rfid):
         """
         Creates a new set with repetitions = 0 and weight = 0. Returns server response including the set id.
-        :param rfid:
-        :return:
+        :return: server response
         """
         # create set
         # TODO: exercise unit check
@@ -38,34 +36,48 @@ class Equipment:
     def _end_set_(self, rfid_tag, set_id, repetitions, weight):
         """
         Deactivates the specified set.
-        :param rfid_tag:
-        :param set_id:
-        :param repetitions:
-        :param weight:
-        :return:
+        :return: server response
         """
-        self.request_manager.update_set(rfid=rfid_tag, set_id=set_id, active=False, repetitions=repetitions,
-                                        weight=weight)
+        return self.request_manager.update_set(rfid=rfid_tag, set_id=set_id, active=False, repetitions=repetitions,
+                                               weight=weight)
+
+    def _delete_set(self, set_id):
+        """
+        Sends a request to delete the specified set.
+        :return: server response
+        """
+        return self.request_manager.delete_set(set_id=set_id)
 
     def run(self):
         while True:
             # start waiting for rfid tag
             rfid_tag = input('RFID (0006921147):')
             # check validity of rfid tag.
+            set_id = None
             if self.request_manager.rfid_is_valid(rfid_tag):
-                # init set
-                set_id = self._init_set_record_(rfid_tag)['id']
-                timer = Timer(8)
-                # start sensor thread
-                sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id, timer=timer)
-                sensor_manager.start()
-                # start timer
-                timer.start()
-                # while not time out nor sensor manager ready, do nothing
-                while not timer.is_timed_out() or False:
-                    pass
-                # stop subthreads
-                print("stopped")
+                try:
+                    # init set
+                    set_id = self._init_set_record_(rfid_tag)['id']
+                    timer = Timer(8)
+                    # start sensor thread
+                    sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id, timer=timer,
+                                                   request_manager=self.request_manager)
+                    sensor_manager.start()
+                    # start timer
+                    timer.start()
+                    # while not time out nor sensor manager ready, do nothing
+                    while not timer.is_timed_out() and sensor_manager.is_alive():
+                        pass
+                    # stop both threads
+                    timer.stop_timer()
+                    sensor_manager.stop_thread()
+                    # end set
+                    self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=sensor_manager.get_repetitions(),
+                                   weight=sensor_manager.get_weight())
+                except Exception as e:
+                    print(e.__traceback__)
+                    if set_id is not None:
+                        self._delete_set(set_id)
             else:
                 # print error
                 print("Not a valid rfid tag")

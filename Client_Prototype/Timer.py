@@ -13,6 +13,7 @@ class Timer(Thread):
         self.timer = self._time_out_
         Thread.__init__(self)
         self.daemon = True
+        self._stop_ = False
 
     def reset_timer(self):
         """
@@ -33,13 +34,16 @@ class Timer(Thread):
         """
         return self.timed_out
 
+    def stop_timer(self):
+        self._stop_ = True
+
     def run(self):
         """
         Starts the timer.
         """
         self.timed_out = False
         self.timer = self._time_out_
-        while self.timer > 0:
+        while self.timer > 0 and not self._stop_:
             self.timer -= 1
             print(self.timer)
             time.sleep(1)
