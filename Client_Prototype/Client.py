@@ -82,7 +82,9 @@ class Equipment:
             else:
                 print("Not a valid rfid tag")
 
+if __name__ == '__main__':
+    equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="1b7d032196154bd5a64c7fcfee388ec5")
+    equipment.run()
 
-equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="1b7d032196154bd5a64c7fcfee388ec5")
-equipment.run()
+
 

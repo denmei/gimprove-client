@@ -26,6 +26,7 @@ class RequestManager:
         """
         if not os.path.isfile(self.cache_path):
             cache_file = open(self.cache_path, 'w')
+            cache_file.write("Method | Address | Data | Status Code")
             cache_file.close()
 
     def update_set(self, repetitions, weight, set_id, rfid, active):
@@ -44,7 +45,7 @@ class RequestManager:
                 'rfid': rfid, 'active': str(active)}
         response = requests.put(address, data=data)
         if response.status_code != 200 or response.status_code != 201:
-            self.cache_request("put", address, data)
+            self.cache_request("put", address, data, response.status_code)
         return response
 
     def new_set(self, rfid, exercise_unit=""):
@@ -59,23 +60,26 @@ class RequestManager:
                 'equipment_id': self.equipment_id, 'active': 'True'}
         response = requests.post(self.list_address, data=data)
         if response.status_code != 200 or response.status_code != 201:
-            self.cache_request("post", self.list_address, data)
+            self.cache_request("post", self.list_address, data, response.status_code)
         return response
 
     def delete_set(self, set_id):
+        """
+        Sends a request to delete the set with the specified set_id.
+        """
         address = self.detail_address + set_id
         response = requests.delete(address)
         if response.status_code != 200 or response.status_code != 201:
-            self.cache_request("delete", address, "")
+            self.cache_request("delete", address, "", response.status_code)
         return response
 
-    def cache_request(self, method, address, data):
+    def cache_request(self, method, address, data, status_code):
         """
         Caches a request if there is a connection error. Delete all prior cached messages that belong to the same
         set.
         """
         with open(self.cache_path, "w") as cache_file:
-            cache_file.write(str(method) + "|" + str(address) + "|" + str(data))
+            cache_file.write(str(method) + "|" + str(address) + "|" + str(data) + "|" + status_code)
             cache_file.close()
 
     def empty_cache(self):
