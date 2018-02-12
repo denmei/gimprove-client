@@ -1,6 +1,8 @@
 import json
 from Client_Prototype.RequestManager import RequestManager
-from Client_Prototype.RepetitionManager import RepetitionManager
+from Client_Prototype.SensorManager import SensorManager
+from Client_Prototype.Timer import Timer
+import time
 
 
 class Equipment:
@@ -20,7 +22,6 @@ class Equipment:
         self.equipment_id = equipment_id
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id)
-        self.repetition_manager = RepetitionManager(self)
 
     def _init_set_record_(self, rfid):
         """
@@ -34,20 +35,7 @@ class Equipment:
         print("init ok")
         return response
 
-    def add_repetition(self, rfid_tag, set_id, repetitions, weight):
-        """
-        Sends a request to update the repetition count of a set.
-        :param rfid_tag:
-        :param set_id:
-        :param repetitions:
-        :param weight:
-        :return:
-        """
-        # TODO: start thread to make the update request
-        self.request_manager.update_set(rfid=rfid_tag, set_id=set_id, active=True, repetitions=repetitions,
-                                        weight=weight)
-
-    def end_set(self, rfid_tag, set_id, repetitions, weight):
+    def _end_set_(self, rfid_tag, set_id, repetitions, weight):
         """
         Deactivates the specified set.
         :param rfid_tag:
@@ -67,8 +55,17 @@ class Equipment:
             if self.request_manager.rfid_is_valid(rfid_tag):
                 # init set
                 set_id = self._init_set_record_(rfid_tag)['id']
-                # start recording
-                self.repetition_manager.start(set_id=set_id, rfid_tag=rfid_tag)
+                timer = Timer(8)
+                # start sensor thread
+                sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id, timer=timer)
+                sensor_manager.start()
+                # start timer
+                timer.start()
+                # while not time out nor sensor manager ready, do nothing
+                while not timer.is_timed_out() or False:
+                    pass
+                # stop subthreads
+                print("stopped")
             else:
                 # print error
                 print("Not a valid rfid tag")
