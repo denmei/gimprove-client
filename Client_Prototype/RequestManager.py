@@ -45,7 +45,7 @@ class RequestManager:
                 'rfid': rfid, 'active': str(active)}
         response = requests.put(address, data=data)
         if response.status_code != 200 or response.status_code != 201:
-            self.cache_request("put", address, data, response.status_code)
+            self.cache_request("put", address, data, str(response.status_code))
         return response
 
     def new_set(self, rfid, exercise_unit=""):
@@ -60,7 +60,7 @@ class RequestManager:
                 'equipment_id': self.equipment_id, 'active': 'True'}
         response = requests.post(self.list_address, data=data)
         if response.status_code != 200 or response.status_code != 201:
-            self.cache_request("post", self.list_address, data, response.status_code)
+            self.cache_request("post", self.list_address, data, str(response.status_code))
         return response
 
     def delete_set(self, set_id):
@@ -69,8 +69,9 @@ class RequestManager:
         """
         address = self.detail_address + set_id
         response = requests.delete(address)
+        print(response.content)
         if response.status_code != 200 or response.status_code != 201:
-            self.cache_request("delete", address, "", response.status_code)
+            self.cache_request("delete", address, "", str(response.status_code))
         return response
 
     def cache_request(self, method, address, data, status_code):

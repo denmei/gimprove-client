@@ -31,7 +31,6 @@ class Equipment:
         # create set
         # TODO: exercise unit check
         response = json.loads(self.request_manager.new_set(rfid, "").content.decode("utf-8"))
-        print("init ok")
         return response
 
     def _end_set_(self, rfid_tag, set_id, repetitions, weight):
@@ -42,7 +41,7 @@ class Equipment:
         return self.request_manager.update_set(rfid=rfid_tag, set_id=set_id, active=False, repetitions=repetitions,
                                                weight=weight)
 
-    def _delete_set(self, set_id):
+    def _delete_set_(self, set_id):
         """
         Sends a request to delete the specified set.
         :return: server response
@@ -78,7 +77,8 @@ class Equipment:
                 except Exception as e:
                     print(e.__traceback__)
                     if set_id is not None:
-                        self._delete_set(set_id)
+                        # TODO: set inactive
+                        self._delete_set_(set_id)
             else:
                 print("Not a valid rfid tag")
 
