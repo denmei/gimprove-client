@@ -7,6 +7,8 @@ import json
 
 class TestClient(unittest.TestCase):
 
+    # TODO: Run-test with input-mockup
+
     def setUp(self):
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "1b7d032196154bd5a64c7fcfee388ec5"
