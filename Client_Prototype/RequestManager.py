@@ -12,18 +12,25 @@ class RequestManager:
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
 
-    def __init__(self, detail_address, list_address, exercise_name, equipment_id, cache_path):
+    def __init__(self, detail_address, list_address, userprofile_detail_address, exercise_name, equipment_id, cache_path):
         self.detail_address = detail_address
         self.list_address = list_address
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
         self.path = cache_path
         self.cache_path = os.path.join(cache_path, "client_cache.txt")
+        self.userprofile_detail_address = userprofile_detail_address
         self._check_cache_file_()
 
     def rfid_is_valid(self, rfid):
-        #TODO
-        return True
+        """
+        Checks whether there exists a Userprofile for a specific RFID.
+        :return: True if there is an Userprofile with the RFID, else False.
+        """
+        response = requests.get(self.userprofile_detail_address + rfid)
+        if response.status_code == 200:
+            return True
+        return False
 
     def _check_cache_file_(self):
         """

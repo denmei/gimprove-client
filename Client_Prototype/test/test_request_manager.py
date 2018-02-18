@@ -13,6 +13,7 @@ class TestRequestManager(unittest.TestCase):
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
+        self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "fded5e7ff5044992bb70949f3aec172c"
         self.cache_path = "/home/dennis/Dokumente/client_test/"
@@ -21,7 +22,8 @@ class TestRequestManager(unittest.TestCase):
 
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
-                                              cache_path=self.cache_path)
+                                              cache_path=self.cache_path,
+                                              userprofile_detail_address=self.user_profile_rfid_address)
 
     def tearDown(self):
         """
@@ -30,12 +32,6 @@ class TestRequestManager(unittest.TestCase):
         pass
         # if os.path.isfile(self.cache_file_path):
          #   os.remove(self.cache_file_path)
-
-    def test_rfid_check(self):
-        """
-        Checks method that checks whether a rfid is valid.
-        :return:
-        """
 
     def test_new_set(self):
         """
@@ -130,3 +126,15 @@ class TestRequestManager(unittest.TestCase):
         """
         self.request_manager.empty_cache()
 
+    def test_rfid_exists(self):
+        """
+        Tests whether requestmanager can distinguish real vs. non-real rfid-addresses.
+        """
+        # check whether return false for fake rfid
+        fake_rfid = "0123456789"
+        self.assertFalse(self.request_manager.rfid_is_valid(fake_rfid))
+
+        # check whether returns true for correct rfid
+        response = requests.get(self.user_profile_address + "1")
+        real_rfid = json.loads(response.content.decode("utf-8"))['rfid_tag']
+        self.assertTrue(self.request_manager.rfid_is_valid(real_rfid))

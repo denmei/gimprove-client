@@ -16,12 +16,14 @@ class Equipment:
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
         # self.detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
+        self.userprofile_detail_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
 
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
-                                              cache_path="/home/dennis/Dokumente/")
+                                              cache_path="/home/dennis/Dokumente/",
+                                              userprofile_detail_address=self.userprofile_detail_address)
 
     def _init_set_record_(self, rfid):
         """
