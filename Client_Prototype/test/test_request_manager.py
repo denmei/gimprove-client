@@ -14,7 +14,7 @@ class TestRequestManager(unittest.TestCase):
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
         self.exercise_name = 'Lat Pulldown'
-        self.equipment_id = "1b7d032196154bd5a64c7fcfee388ec5"
+        self.equipment_id = "fded5e7ff5044992bb70949f3aec172c"
         self.cache_path = "/home/dennis/Dokumente/client_test/"
         self.cache_file_path = "/home/dennis/Dokumente/client_test/client_cache.txt"
         self.rfid = "0006921147"
@@ -93,7 +93,7 @@ class TestRequestManager(unittest.TestCase):
         connection error.
         """
         count_begin = self._count_file_lines(self.cache_file_path)
-        self.request_manager.cache_request(method="update", address=self.detail_address,
+        self.request_manager.cache_request(method="update", address=self.detail_address + "test",
                                            data={'weight': 10, 'rfid': '0006921147', 'active': 'False',
                                                  'exercise_name': 'Lat Pulldown', 'date_time': '2018-02-15T21:21:23Z',
                                                  'repetitions': 10, 'equipment_id': '1b7d032196154bd5a64c7fcfee388ec5'},
@@ -104,7 +104,7 @@ class TestRequestManager(unittest.TestCase):
         else:
             self.assertTrue(count_after1 - 1 == count_begin)
         # successfull requests may not be cached
-        self.request_manager.cache_request(method="update", address=self.detail_address,
+        self.request_manager.cache_request(method="update", address=self.detail_address + "test",
                                            data={'weight': 10, 'rfid': '0006921147', 'active': 'False',
                                                  'exercise_name': 'Lat Pulldown', 'date_time': '2018-02-15T21:21:23Z',
                                                  'repetitions': 10, 'equipment_id': '1b7d032196154bd5a64c7fcfee388ec5'},

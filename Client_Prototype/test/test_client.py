@@ -11,7 +11,7 @@ class TestClient(unittest.TestCase):
 
     def setUp(self):
         self.exercise_name = 'Lat Pulldown'
-        self.equipment_id = "1b7d032196154bd5a64c7fcfee388ec5"
+        self.equipment_id = "fded5e7ff5044992bb70949f3aec172c"
         self.equipment = Equipment(exercise_name=self.exercise_name, equipment_id=self.equipment_id)
         self.rfid = "0006921147"
 

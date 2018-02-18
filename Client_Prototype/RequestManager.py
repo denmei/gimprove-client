@@ -3,6 +3,8 @@ from datetime import datetime
 import os
 import pandas as pd
 import json
+import random
+import traceback
 
 
 class RequestManager:
@@ -43,9 +45,10 @@ class RequestManager:
         :return: Server response.
         """
         address = self.detail_address + set_id
+        durations = random.sample(range(1, 20), repetitions)
         data = {'repetitions': repetitions, 'weight': weight, 'exercise_name': self.exercise_name,
                 'equipment_id': self.equipment_id, 'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
-                'rfid': rfid, 'active': str(active)}
+                'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
@@ -60,7 +63,7 @@ class RequestManager:
         """
         data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise_name': self.exercise_name,
                 'rfid': rfid, 'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
-                'equipment_id': self.equipment_id, 'active': 'True'}
+                'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
         response = requests.post(self.list_address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("new", self.list_address, data, str(response.status_code))
@@ -106,8 +109,8 @@ class RequestManager:
                 address = row.iloc[1]
                 data = json.loads(row.iloc[2].replace("'", '"'))
                 if method == 'update':
-                    self.update_set(repetitions=data['repetitions'], weight=data['weight'], set_id=data['id'],
-                                    rfid=data['rfid'], active=data['active'])
+                    self.update_set(repetitions=data['repetitions'], weight=data['weight'],
+                                    set_id=str(address.rsplit("/", 1))[1], rfid=data['rfid'], active=data['active'])
                 elif method == 'new':
                     self.new_set(rfid=data['rfid'], exercise_unit=data['exercise_unit'])
                 elif method == 'delete':
@@ -120,6 +123,7 @@ class RequestManager:
             return True
         except Exception as e:
             print("Exception RequestManager: " + str(e))
+            print(traceback.print_exc())
             # if an error occurs, recreate the cache and delete the buffer
             os.remove(self.cache_path)
             os.rename(self.path + "buffer_cache.txt", self.cache_path)
