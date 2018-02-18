@@ -45,6 +45,5 @@ class Timer(Thread):
         self.timer = self._time_out_
         while self.timer > 0 and not self._stop_:
             self.timer -= 1
-            print(self.timer)
             time.sleep(1)
         self.timed_out = True

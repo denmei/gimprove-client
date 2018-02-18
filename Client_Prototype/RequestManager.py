@@ -41,7 +41,7 @@ class RequestManager:
             cache_file.write("Method | Address | Data | Status Code \n")
             cache_file.close()
 
-    def update_set(self, repetitions, weight, set_id, rfid, active):
+    def update_set(self, repetitions, weight, set_id, rfid, active, durations):
         """
         Update an existing set.
         :param repetitions: Repetitions count.
@@ -49,10 +49,10 @@ class RequestManager:
         :param set_id: ID of the set to update.
         :param rfid: RFID of the User.
         :param active: Specify whether set shall stay active or not.
+        :param durations:
         :return: Server response.
         """
         address = self.detail_address + set_id
-        durations = random.sample(range(1, 20), repetitions)
         data = {'repetitions': repetitions, 'weight': weight, 'exercise_name': self.exercise_name,
                 'equipment_id': self.equipment_id, 'date_time': datetime.now().strftime("%Y-%m-%dT%H:%M:%SZ"),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}

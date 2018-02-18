@@ -2,6 +2,7 @@ import json
 from Client_Prototype.RequestManager import RequestManager
 from Client_Prototype.SensorManager import SensorManager
 from Client_Prototype.Timer import Timer
+import traceback
 
 
 class Equipment:
@@ -35,13 +36,13 @@ class Equipment:
         response = json.loads(self.request_manager.new_set(rfid, "").content.decode("utf-8"))
         return response
 
-    def _end_set_(self, rfid_tag, set_id, repetitions, weight):
+    def _end_set_(self, rfid_tag, set_id, repetitions, weight, durations):
         """
         Deactivates the specified set.
         :return: server response
         """
         return self.request_manager.update_set(rfid=rfid_tag, set_id=set_id, active=False, repetitions=repetitions,
-                                               weight=weight)
+                                               weight=weight, durations=durations)
 
     def _delete_set_(self, set_id):
         """
@@ -75,9 +76,9 @@ class Equipment:
                     sensor_manager.stop_thread()
                     # end set
                     self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=sensor_manager.get_repetitions(),
-                                   weight=sensor_manager.get_weight())
+                                   weight=sensor_manager.get_weight(), durations=sensor_manager.get_durations())
                 except Exception as e:
-                    print(e.__traceback__)
+                    print(traceback.print_exc())
                     if set_id is not None:
                         # TODO: set inactive
                         self._delete_set_(set_id)
@@ -85,7 +86,7 @@ class Equipment:
                 print("Not a valid rfid tag")
 
 if __name__ == '__main__':
-    equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="1b7d032196154bd5a64c7fcfee388ec5")
+    equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="fded5e7ff5044992bb70949f3aec172c")
     equipment.run()
 
 
