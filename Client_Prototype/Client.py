@@ -13,11 +13,12 @@ class Equipment:
     """
 
     def __init__(self, exercise_name, equipment_id):
-        # self.list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
-        self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
-        # self.detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
-        self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
-        self.userprofile_detail_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
+        self.list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
+        # self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
+        self.detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
+        # self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
+        self.userprofile_detail_address = "https://app-smartgym.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
+        # self.userprofile_detail_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
 
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
