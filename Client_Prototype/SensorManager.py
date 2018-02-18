@@ -60,9 +60,8 @@ class SensorManager(Thread):
             self.timer.reset_timer()
             self._rep_ += 1
             self.durations, self._start_time_ = self._update_durations_starttime_(self.durations, self._start_time_)
-            print(self._start_time_)
             self.request_manager.update_set(repetitions=self._rep_, weight=self._weight_, set_id=self.set_id,
                                             rfid=self.rfid_tag, active=True, durations=self.durations)
-            time.sleep(0.5)
+            time.sleep(1.5)
             if self._stop_:
                 break
