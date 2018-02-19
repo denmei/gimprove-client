@@ -97,7 +97,7 @@ class RequestManager:
             with open(self.cache_path, "a") as cache_file:
                 cache_file.write(str(method) + "|" + str(address) + "|" + str(data) + "|" + status_code + "\n")
                 cache_file.close()
-            self.logger.warn("Cached request.")
+            self.logger.info("Cached request.")
             return True
         else:
             return False
@@ -139,5 +139,5 @@ class RequestManager:
             # if an error occurs, recreate the cache and delete the buffer
             os.remove(self.cache_path)
             os.rename(self.path + "buffer_cache.txt", self.cache_path)
-            self.logger.warn("Cache empty did not work.")
+            self.logger.warning("Cache empty did not work.")
             return False
