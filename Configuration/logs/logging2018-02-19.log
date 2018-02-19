@@ -1,0 +1,43 @@
+gimproveClient_Prototype.Client INFO       2018-02-19 21:48:16,692 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-19 21:48:21,299 run RFID-read: 0006921147
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:21,303 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:21,312 _new_conn Starting new HTTP connection (1): 127.0.0.1
+gimproveClient_Prototype.SensorManager INFO       2018-02-19 21:48:21,345 run Start recording.
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:21,361 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:22,892 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:24,420 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:25,957 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:27,501 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:29,049 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:30,583 _new_conn Starting new HTTP connection (1): 127.0.0.1
+gimproveClient_Prototype.Client INFO       2018-02-19 21:48:34,437 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-19 21:48:36,223 run RFID-read: 0006921147
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:36,230 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:36,242 _new_conn Starting new HTTP connection (1): 127.0.0.1
+gimproveClient_Prototype.SensorManager INFO       2018-02-19 21:48:36,272 run Start recording.
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:36,281 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:37,834 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:39,373 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:40,921 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:42,466 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:44,006 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:45,548 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:47,089 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:48,625 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:50,162 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:51,689 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:53,235 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:54,774 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:56,311 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:57,859 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:48:59,405 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:00,953 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:02,495 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:04,028 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:05,569 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:07,104 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:08,628 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:10,173 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:11,713 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:13,256 _new_conn Starting new HTTP connection (1): 127.0.0.1
+requests.packages.urllib3.connectionpool INFO       2018-02-19 21:49:14,783 _new_conn Starting new HTTP connection (1): 127.0.0.1

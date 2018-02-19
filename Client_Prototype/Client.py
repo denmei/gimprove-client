@@ -6,6 +6,7 @@ import traceback
 import logging
 import os
 from pathlib import Path
+from datetime import datetime
 
 
 class Equipment:
@@ -45,12 +46,18 @@ class Equipment:
         """
         Configures and instantiates the logger.
         """
+        # check whether log-directory exists:
+        if not "logs" in os.listdir(self.config_path):
+            os.mkdir(self.config_path + "/logs")
+
         # check whether logging file exists:
-        if not "logging.log" in os.listdir(self.config_path):
-            logging_file = open(self.config_path + "/logging.log")
+        log_name = "logging" + str(datetime.now().date()) + ".log"
+        if not log_name in os.listdir(self.config_path + "/logs"):
+            logging_file = open(self.config_path + "/logs/" + log_name, 'w')
             logging_file.close()
+
         logging.basicConfig(
-            filename=self.config_path + "/logging.log",
+            filename=self.config_path + "/logs/" + log_name,
             format="%(name)s %(levelname) - 10s %(asctime)s %(funcName)s %(message)s",
             level=logging.INFO
         )

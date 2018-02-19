@@ -2,8 +2,12 @@
 
 ## Description
 
-#### Files
-**api-links.json**: Links to the server-API for production and testing.
+### Configuration-Dir: 
+Contains files with necessary information to run the application.
+
+* api-links.json: Links to the GImprove-API (testing and production).
+* config.json: Configuration data for the device (name, id etc.).
+* logging.log: Applikations-Logs.
 
 ## Usage
 
