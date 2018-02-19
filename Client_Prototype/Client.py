@@ -62,7 +62,7 @@ class Equipment:
             level=logging.INFO
         )
         self.logger = logging.getLogger('gimprove' + __name__)
-        logging.getLogger("urllib3").setLevel(logging.WARNING)
+        logging.getLogger("requests").setLevel(logging.WARNING)
 
     def _load_links_(self, testing=True):
         """

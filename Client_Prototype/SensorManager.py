@@ -65,7 +65,7 @@ class SensorManager(Thread):
             self.durations, self._start_time_ = self._update_durations_starttime_(self.durations, self._start_time_)
             self.request_manager.update_set(repetitions=self._rep_, weight=self._weight_, set_id=self.set_id,
                                             rfid=self.rfid_tag, active=True, durations=self.durations)
-            time.sleep(1.5)
+            time.sleep(0.5)
             if self._stop_:
                 self.logger.info('Timeout. Stop recording.')
                 break
