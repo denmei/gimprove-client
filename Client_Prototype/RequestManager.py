@@ -117,7 +117,8 @@ class RequestManager:
                 data = json.loads(row.iloc[2].replace("'", '"'))
                 if method == 'update':
                     self.update_set(repetitions=data['repetitions'], weight=data['weight'],
-                                    set_id=str(address.rsplit("/", 1))[1], rfid=data['rfid'], active=data['active'])
+                                    set_id=str(address.rsplit("/", 1))[1], rfid=data['rfid'], active=data['active'],
+                                    durations=random.sample(range(1, 20), data['repetitions']))
                 elif method == 'new':
                     self.new_set(rfid=data['rfid'], exercise_unit=data['exercise_unit'])
                 elif method == 'delete':

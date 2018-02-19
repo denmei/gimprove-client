@@ -3,7 +3,7 @@ from Client_Prototype.RequestManager import RequestManager
 from Client_Prototype.SensorManager import SensorManager
 from Client_Prototype.Timer import Timer
 import traceback
-
+import os
 
 class Equipment:
     """
@@ -12,20 +12,25 @@ class Equipment:
     In case of a connection error, the results will be cached an resent at another point of time.
     """
 
-    def __init__(self, exercise_name, equipment_id):
-        self.list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
-        # self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
-        self.detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
-        # self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
-        self.userprofile_detail_address = "https://app-smartgym.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
-        # self.userprofile_detail_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
-
+    def __init__(self, exercise_name, equipment_id, link_path, testing=True):
+        self._load_links_(testing, link_path)
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path="/home/dennis/Dokumente/",
                                               userprofile_detail_address=self.userprofile_detail_address)
+
+    def _load_links_(self, testing, path):
+        with open(path) as links_file:
+            if not testing:
+                links = json.load(links_file)['production-links']
+            else:
+                links = json.load(links_file)['testing-links']
+        links_file.close()
+        self.list_address = links['set_list']['link']
+        self.detail_address = links['set_detail']['link']
+        self.userprofile_detail_address = links['userprofile_detail']['link']
 
     def _init_set_record_(self, rfid):
         """

@@ -1,8 +1,8 @@
 import unittest
 from Client_Prototype.Client import Equipment
 import requests
-from datetime import datetime
 import json
+import random
 
 
 class TestClient(unittest.TestCase):
@@ -12,7 +12,8 @@ class TestClient(unittest.TestCase):
     def setUp(self):
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "fded5e7ff5044992bb70949f3aec172c"
-        self.equipment = Equipment(exercise_name=self.exercise_name, equipment_id=self.equipment_id)
+        self.equipment = Equipment(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+                                   link_path="/home/dennis/PycharmProjects/SmartGym_Client_Prototype/api-links.json")
         self.rfid = "0006921147"
 
         # self.list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
@@ -47,7 +48,8 @@ class TestClient(unittest.TestCase):
         set_id = data['id']
         response_middle = requests.get(self.list_address)
         # deactivate set
-        self.equipment._end_set_(rfid_tag=self.rfid, set_id=set_id, repetitions=10, weight=10)
+        self.equipment._end_set_(rfid_tag=self.rfid, set_id=set_id, repetitions=10, weight=10,
+                                 durations=random.sample(range(1, 20), 10))
         # delete set
         self.equipment._delete_set_(set_id)
         response_after = requests.get(self.list_address)

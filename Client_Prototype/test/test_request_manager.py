@@ -3,7 +3,7 @@ from Client_Prototype.RequestManager import RequestManager
 import requests
 from datetime import datetime
 import json
-import os
+import random
 
 
 class TestRequestManager(unittest.TestCase):
@@ -61,8 +61,10 @@ class TestRequestManager(unittest.TestCase):
         """
         response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
         content = json.loads(response.content.decode("utf-8"))
-        self.request_manager.update_set(repetitions=content['repetitions'] + 5, weight=content['weight'] + 5,
-                                        set_id=content['id'], rfid=self.rfid, active=False)
+        repetitions = content['repetitions'] + 5
+        self.request_manager.update_set(repetitions=repetitions, weight=content['weight'] + 5,
+                                        set_id=content['id'], rfid=self.rfid, active=False,
+                                        durations=random.sample(range(1, 20), repetitions))
         updated_set = requests.get(self.detail_address + content['id']).content
         updated_set = json.loads(updated_set.decode("utf-8"))
         user_profile = requests.get(self.user_profile_rfid_address + self.rfid).content
