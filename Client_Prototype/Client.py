@@ -3,7 +3,10 @@ from Client_Prototype.RequestManager import RequestManager
 from Client_Prototype.SensorManager import SensorManager
 from Client_Prototype.Timer import Timer
 import traceback
+import logging
 import os
+from pathlib import Path
+
 
 class Equipment:
     """
@@ -12,17 +15,53 @@ class Equipment:
     In case of a connection error, the results will be cached an resent at another point of time.
     """
 
-    def __init__(self, exercise_name, equipment_id, link_path, testing=True):
-        self._load_links_(testing, link_path)
-        self.exercise_name = exercise_name
-        self.equipment_id = equipment_id
+    def __init__(self, testing=True):
+        """
+        :param config_path: Path to the directory with the configuration files.
+        :param testing: If true, runs in test mode (APIs of the test-environment). Else, production environment is used.
+        """
+        self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
+        self._configure_()
+        self._configure_logger_()
+        self._load_links_(testing)
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path="/home/dennis/Dokumente/",
                                               userprofile_detail_address=self.userprofile_detail_address)
+        self.logger.info("Client instantiated.")
+        if not testing:
+            self.logger.warning("Running on production environment.")
 
-    def _load_links_(self, testing, path):
-        with open(path) as links_file:
+    def _configure_(self):
+        """
+        Configures the attributes of the equipment class from the configuration file.
+        """
+        with open(self.config_path + "/config.json") as config_file:
+            configuration = json.load(config_file)
+        self.exercise_name = configuration['exercise_name']
+        self.equipment_id = configuration['equipment_id']
+
+    def _configure_logger_(self):
+        """
+        Configures and instantiates the logger.
+        """
+        # check whether logging file exists:
+        if not "logging.log" in os.listdir(self.config_path):
+            logging_file = open(self.config_path + "/logging.log")
+            logging_file.close()
+        logging.basicConfig(
+            filename=self.config_path + "/logging.log",
+            format="%(name)s %(levelname) - 10s %(asctime)s %(funcName)s %(message)s",
+            level=logging.INFO
+        )
+        self.logger = logging.getLogger('gimprove' + __name__)
+
+    def _load_links_(self, testing=True):
+        """
+        Loads the links for the APIs of the GImprove-Server.
+        :param testing: If true, the APIs of the testing environment are loaded. Else production environment.
+        """
+        with open(self.config_path + "/api-links.json") as links_file:
             if not testing:
                 links = json.load(links_file)['production-links']
             else:
@@ -61,6 +100,7 @@ class Equipment:
         while True:
             # start waiting for rfid tag
             rfid_tag = input('RFID (0006921147):')
+            self.logger.info("RFID-read: " + rfid_tag)
             # check validity of rfid tag.
             set_id = None
             if self.request_manager.rfid_is_valid(rfid_tag):
@@ -89,10 +129,11 @@ class Equipment:
                         # TODO: set inactive
                         self._delete_set_(set_id)
             else:
+                self.logger.info("RFID-tag not valid: " + rfid_tag)
                 print("Not a valid rfid tag")
 
 if __name__ == '__main__':
-    equipment = Equipment(exercise_name='Lat Pulldown', equipment_id="fded5e7ff5044992bb70949f3aec172c")
+    equipment = Equipment(testing=True)
     equipment.run()
 
 

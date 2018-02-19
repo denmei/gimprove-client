@@ -2,6 +2,7 @@ import time
 from threading import Thread
 import os
 from datetime import datetime
+import logging
 
 
 class SensorManager(Thread):
@@ -15,6 +16,7 @@ class SensorManager(Thread):
         :param request_manager: Reference on the request manager for sending updates to the server.
         :param timeout_delta: If 'timeout_delta' seconds pass without a new repetition, the process stops.
         """
+        self.logger = logging.getLogger('gimprove' + __name__)
         self.timeout_delta = timeout_delta
         self.set_id = set_id
         self.rfid_tag = rfid_tag
@@ -51,6 +53,7 @@ class SensorManager(Thread):
         While running, the values of the distance sensor are analyzed. If a new repetition is identified, the current
         value of the weight sensor is taken and a new repetition-request is sent to the server.
         """
+        self.logger.info("Start recording.")
         os.chdir("/home/dennis/PycharmProjects/SmartGym_Client_Prototype/")
         self._rep_ = 0
         self._weight_ = 10
@@ -64,4 +67,5 @@ class SensorManager(Thread):
                                             rfid=self.rfid_tag, active=True, durations=self.durations)
             time.sleep(1.5)
             if self._stop_:
+                self.logger.info('Timeout. Stop recording.')
                 break

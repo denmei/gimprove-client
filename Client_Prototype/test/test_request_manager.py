@@ -4,12 +4,14 @@ import requests
 from datetime import datetime
 import json
 import random
+import logging
 
 
 class TestRequestManager(unittest.TestCase):
     # TODO: Check whether caching works when creating/updating/deleting
 
     def setUp(self):
+        logging.disable(logging.CRITICAL)
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"

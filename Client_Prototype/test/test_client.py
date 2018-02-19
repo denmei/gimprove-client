@@ -3,6 +3,7 @@ from Client_Prototype.Client import Equipment
 import requests
 import json
 import random
+import logging
 
 
 class TestClient(unittest.TestCase):
@@ -10,10 +11,10 @@ class TestClient(unittest.TestCase):
     # TODO: Run-test with input-mockup
 
     def setUp(self):
+        logging.disable(logging.CRITICAL)
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "fded5e7ff5044992bb70949f3aec172c"
-        self.equipment = Equipment(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
-                                   link_path="/home/dennis/PycharmProjects/SmartGym_Client_Prototype/api-links.json")
+        self.equipment = Equipment(testing=True)
         self.rfid = "0006921147"
 
         # self.list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"

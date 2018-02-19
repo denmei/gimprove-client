@@ -5,6 +5,7 @@ import pandas as pd
 import json
 import random
 import traceback
+import logging
 
 
 class RequestManager:
@@ -13,6 +14,7 @@ class RequestManager:
     """
 
     def __init__(self, detail_address, list_address, userprofile_detail_address, exercise_name, equipment_id, cache_path):
+        self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
         self.exercise_name = exercise_name
@@ -95,6 +97,7 @@ class RequestManager:
             with open(self.cache_path, "a") as cache_file:
                 cache_file.write(str(method) + "|" + str(address) + "|" + str(data) + "|" + status_code + "\n")
                 cache_file.close()
+            self.logger.warn("Cached request.")
             return True
         else:
             return False
@@ -128,6 +131,7 @@ class RequestManager:
                     status_code = response.status_code
                     self.cache_request(method, address, data, status_code)
             os.remove(self.path + "buffer_cache.txt")
+            self.logger.info("Cache empty.")
             return True
         except Exception as e:
             print("Exception RequestManager: " + str(e))
@@ -135,4 +139,5 @@ class RequestManager:
             # if an error occurs, recreate the cache and delete the buffer
             os.remove(self.cache_path)
             os.rename(self.path + "buffer_cache.txt", self.cache_path)
+            self.logger.warn("Cache empty did not work.")
             return False
