@@ -1,1 +1,3 @@
 gimproveClient_Prototype.Client INFO       2018-02-20 17:52:21,524 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-20 19:49:38,902 __init__ Client instantiated.
+gimproveClient_Prototype.Client WARNING    2018-02-20 19:49:38,904 __init__ Running on production environment.

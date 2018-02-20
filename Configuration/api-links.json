@@ -1,33 +1,26 @@
 {
-  "links":
-    {
-      "production-links": {
-        "set_list":
-        {
-            "link": "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
-        },
-        "set_detail":
-        {
-            "link": "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
-        },
-        "userprofile_detail":
-        {
-          "link": "https://app-smartgym.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
-        }
+  "links": {
+    "production-links": {
+      "set_list": {
+        "link": "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
+      },
+      "set_detail": {
+        "link": "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
+      },
+      "userprofile_detail": {
+        "link": "https://app-smartgym.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
       }
     },
-      "testing-links": {
-        "set_list":
-        {
-            "link": "http://127.0.0.1:8000/tracker/set_list_rest/"
-        },
-        "set_detail":
-        {
-            "link": "http://127.0.0.1:8000/tracker/set_detail_rest/"
-        },
-        "userprofile_detail":
-        {
-          "link": "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
-        }
+    "testing-links": {
+      "set_list": {
+        "link": "http://127.0.0.1:8000/tracker/set_list_rest/"
+      },
+      "set_detail": {
+        "link": "http://127.0.0.1:8000/tracker/set_detail_rest/"
+      },
+      "userprofile_detail": {
+        "link": "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
       }
+    }
+  }
 }
