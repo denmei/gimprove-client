@@ -80,6 +80,7 @@ class SensorManager(Thread):
                 weight = 10
             else:
                 weight = self.get_weight()
+                print("Weightsensor: " + str(weight))
             self.request_manager.update_set(repetitions=self._rep_, weight=weight, set_id=self.set_id,
                                             rfid=self.rfid_tag, active=True, durations=self.durations)
             time.sleep(1.0)
