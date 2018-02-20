@@ -71,9 +71,9 @@ class Equipment:
         """
         with open(self.config_path + "/api-links.json") as links_file:
             if not testing:
-                links = json.load(links_file)['production-links']
+                links = json.load(links_file)['links']['production-links']
             else:
-                links = json.load(links_file)['testing-links']
+                links = json.load(links_file)['links']['testing-links']
         links_file.close()
         self.list_address = links['set_list']['link']
         self.detail_address = links['set_detail']['link']

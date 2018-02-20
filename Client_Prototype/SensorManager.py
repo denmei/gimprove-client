@@ -3,6 +3,7 @@ from threading import Thread
 import os
 from datetime import datetime
 import logging
+from pathlib import Path
 
 
 class SensorManager(Thread):
@@ -54,10 +55,9 @@ class SensorManager(Thread):
         value of the weight sensor is taken and a new repetition-request is sent to the server.
         """
         self.logger.info("Start recording.")
-        os.chdir("/home/dennis/PycharmProjects/SmartGym_Client_Prototype/")
         self._rep_ = 0
         self._weight_ = 10
-        with open('numbers.txt') as numbers:
+        with open(str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/numbers.txt') as numbers:
             content = numbers.readlines()
         for c in content:
             self.timer.reset_timer()

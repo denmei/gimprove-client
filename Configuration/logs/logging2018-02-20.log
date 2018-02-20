@@ -1,3 +1,9 @@
 gimproveClient_Prototype.Client INFO       2018-02-20 17:52:21,524 __init__ Client instantiated.
 gimproveClient_Prototype.Client INFO       2018-02-20 19:49:38,902 __init__ Client instantiated.
 gimproveClient_Prototype.Client WARNING    2018-02-20 19:49:38,904 __init__ Running on production environment.
+gimproveClient_Prototype.Client INFO       2018-02-20 19:53:59,334 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-20 20:09:14,842 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-20 20:09:19,926 run RFID-read: 0006921147
+gimproveClient_Prototype.Client INFO       2018-02-20 20:09:34,975 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-20 20:09:37,196 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-20 20:09:37,297 run Start recording.
