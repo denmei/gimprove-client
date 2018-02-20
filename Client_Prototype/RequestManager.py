@@ -14,7 +14,6 @@ class RequestManager:
     """
 
     def __init__(self, detail_address, list_address, userprofile_detail_address, exercise_name, equipment_id, cache_path):
-        print("Path: " + cache_path)
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
@@ -113,8 +112,7 @@ class RequestManager:
         try:
             with open(self.path + "buffer_cache.txt", "r+") as cache_file:
                 for line in cache_file:
-                    print(line)
-                    message = json.load(line)
+                    message = json.loads(line)
                     response = None
                     method = message['method']
                     address = message['address']
