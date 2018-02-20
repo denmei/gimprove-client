@@ -21,6 +21,7 @@ class Equipment:
         :param config_path: Path to the directory with the configuration files.
         :param testing: If true, runs in test mode (APIs of the test-environment). Else, production environment is used.
         """
+        self.testing = testing
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
         self._configure_()
         self._configure_logger_()
@@ -118,7 +119,7 @@ class Equipment:
                     timer = Timer(8)
                     # start sensor thread
                     sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id, timer=timer,
-                                                   request_manager=self.request_manager)
+                                                   request_manager=self.request_manager, testing=self.testing)
                     sensor_manager.start()
                     # start timer
                     timer.start()

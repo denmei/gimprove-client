@@ -5,7 +5,7 @@ import numpy  # sudo apt-get python-numpy
 
 class HX711:
     def __init__(self, dout, pd_sck, gain=128):
-        """self.PD_SCK = pd_sck
+        self.PD_SCK = pd_sck
         self.DOUT = dout
 
         GPIO.setmode(GPIO.BCM)
@@ -29,7 +29,7 @@ class HX711:
 
         self.set_gain(gain)
 
-        time.sleep(1)"""
+        time.sleep(1)
         pass
 
     def is_ready(self):
