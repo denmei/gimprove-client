@@ -120,6 +120,7 @@ class Equipment:
                     # start sensor thread
                     sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id, timer=timer,
                                                    request_manager=self.request_manager, testing=self.testing)
+                    sensor_manager.isDaemon()
                     sensor_manager.start()
                     # start timer
                     timer.start()
