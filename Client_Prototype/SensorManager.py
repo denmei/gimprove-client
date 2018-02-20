@@ -53,7 +53,9 @@ class SensorManager(Thread):
         if self.testing:
             return 10
         else:
-            return self.hx_weight.get_weight(5)
+            weight = self.hx_weight.get_weight(5)
+            print("Weightsensor: " + str(weight))
+            return weight
 
     def get_durations(self):
         return self.durations
@@ -76,12 +78,7 @@ class SensorManager(Thread):
             self.timer.reset_timer()
             self._rep_ += 1
             self.durations, self._start_time_ = self._update_durations_starttime_(self.durations, self._start_time_)
-            if self.testing:
-                weight = 10
-            else:
-                weight = self.get_weight()
-                print("Weightsensor: " + str(weight))
-            self.request_manager.update_set(repetitions=self._rep_, weight=weight, set_id=self.set_id,
+            self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                             rfid=self.rfid_tag, active=True, durations=self.durations)
             time.sleep(1.0)
             if self._stop_:

@@ -1,4 +1,3 @@
-import RPi.GPIO as GPIO
 import time
 import numpy  # sudo apt-get python-numpy
 
