@@ -5,6 +5,8 @@ from datetime import datetime
 import json
 import random
 import logging
+from pathlib import Path
+import os
 
 
 class TestRequestManager(unittest.TestCase):
@@ -18,8 +20,9 @@ class TestRequestManager(unittest.TestCase):
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "fded5e7ff5044992bb70949f3aec172c"
-        self.cache_path = "/home/dennis/Dokumente/client_test/"
-        self.cache_file_path = "/home/dennis/Dokumente/client_test/client_cache.txt"
+        self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + "/Configuration"
+        self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + \
+                               "/Configuration/client_cache.txt"
         self.rfid = "0006921147"
 
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,

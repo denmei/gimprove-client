@@ -14,6 +14,7 @@ class RequestManager:
     """
 
     def __init__(self, detail_address, list_address, userprofile_detail_address, exercise_name, equipment_id, cache_path):
+        print("Path: " + cache_path)
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
@@ -40,7 +41,6 @@ class RequestManager:
         """
         if not os.path.isfile(self.cache_path):
             cache_file = open(self.cache_path, 'w')
-            cache_file.write("Method | Address | Data | Status Code \n")
             cache_file.close()
 
     def update_set(self, repetitions, weight, set_id, rfid, active, durations):
@@ -95,7 +95,7 @@ class RequestManager:
         """
         if status_code[0] == "5" or status_code[0] == "4":
             with open(self.cache_path, "a") as cache_file:
-                cache_file.write(str(method) + "|" + str(address) + "|" + str(data) + "|" + status_code + "\n")
+                cache_file.write(json.dumps({'method': method, 'address': address, 'data': data, 'status_code': status_code}) + "\n")
                 cache_file.close()
             self.logger.info("Cached request.")
             return True
@@ -108,31 +108,32 @@ class RequestManager:
         Attention: If requests fails, the request is written back to the cache -> not try again in the same session!
         :return: True if no error occured, else false.
         """
-        cache_df = pd.read_table(self.cache_path, sep="|", index_col=False).reindex()
         os.rename(self.cache_path, self.path + "buffer_cache.txt")
         self._check_cache_file_()
-        # send messages:
         try:
-            for index, row in cache_df.iterrows():
-                response = None
-                method = row.iloc[0]
-                address = row.iloc[1]
-                data = json.loads(row.iloc[2].replace("'", '"'))
-                if method == 'update':
-                    self.update_set(repetitions=data['repetitions'], weight=data['weight'],
-                                    set_id=str(address.rsplit("/", 1))[1], rfid=data['rfid'], active=data['active'],
-                                    durations=random.sample(range(1, 20), data['repetitions']))
-                elif method == 'new':
-                    self.new_set(rfid=data['rfid'], exercise_unit=data['exercise_unit'])
-                elif method == 'delete':
-                    self.delete_set(data['id'])
-                # if request was not successfull, try to cache it again
-                if response is not None:
-                    status_code = response.status_code
-                    self.cache_request(method, address, data, status_code)
-            os.remove(self.path + "buffer_cache.txt")
-            self.logger.info("Cache empty.")
-            return True
+            with open(self.path + "buffer_cache.txt", "r+") as cache_file:
+                for line in cache_file:
+                    print(line)
+                    message = json.load(line)
+                    response = None
+                    method = message['method']
+                    address = message['address']
+                    data = message['data']
+                    if message == 'update':
+                        self.update_set(repetitions=data['repetitions'], weight=data['weight'],
+                                        set_id=str(address.rsplit("/", 1))[1], rfid=data['rfid'], active=data['active'],
+                                        durations=random.sample(range(1, 20), data['repetitions']))
+                    elif method == 'new':
+                        self.new_set(rfid=data['rfid'], exercise_unit=data['exercise_unit'])
+                    elif method == 'delete':
+                        self.delete_set(data['id'])
+                    # if request was not successfull, try to cache it again
+                    if response is not None:
+                        status_code = response.status_code
+                        self.cache_request(method, address, data, status_code)
+                os.remove(self.path + "buffer_cache.txt")
+                self.logger.info("Cache empty.")
+                return True
         except Exception as e:
             print("Exception RequestManager: " + str(e))
             print(traceback.print_exc())

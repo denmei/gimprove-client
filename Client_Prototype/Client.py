@@ -27,7 +27,7 @@ class Equipment:
         self._load_links_(testing)
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
-                                              cache_path="/home/dennis/Dokumente/",
+                                              cache_path=self.config_path,
                                               userprofile_detail_address=self.userprofile_detail_address)
         self.logger.info("Client instantiated.")
         if not testing:
