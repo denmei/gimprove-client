@@ -1,0 +1,72 @@
+gimproveClient_Prototype.Client INFO       2018-02-22 17:42:51,985 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:43:14,012 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:43:14,113 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:44:20,931 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:44:22,352 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:44:22,407 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:44:44,525 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:44:48,650 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:44:48,710 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:45:11,918 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:45:13,700 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:45:13,757 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:45:52,702 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:45:57,053 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:45:57,108 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:46:13,558 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:46:14,774 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:46:14,830 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:46:58,379 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:47:01,570 run RFID-read: 0006921147
+gimproveClient_Prototype.Client INFO       2018-02-22 17:47:14,067 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:47:16,356 run RFID-read:         self.daemon = True
+gimproveClient_Prototype.Client INFO       2018-02-22 17:47:16,387 run RFID-tag not valid:         self.daemon = True
+gimproveClient_Prototype.Client INFO       2018-02-22 17:47:19,705 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:47:19,753 run Start recording.
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:47:26,944 run Timeout. Stop recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:48:14,287 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:48:29,695 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:48:30,833 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:48:30,893 run Start recording.
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:48:37,970 run Timeout. Stop recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:55:47,639 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:55:51,865 run RFID-read: 0006921147
+gimproveClient_Prototype.Client INFO       2018-02-22 17:56:16,916 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:56:18,557 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:56:18,612 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:56:49,623 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:56:50,794 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:56:50,848 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:57:02,331 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:57:05,288 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:57:05,350 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:57:37,123 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:57:38,622 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:57:38,684 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:57:49,164 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:57:50,352 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:57:50,406 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:58:36,624 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:58:38,744 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:58:38,802 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:58:54,227 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:58:55,372 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:58:55,428 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:59:20,473 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:59:21,917 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:59:21,971 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:59:45,414 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:59:46,741 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 17:59:46,798 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 17:59:59,630 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 18:00:00,855 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 18:00:00,917 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 18:02:09,100 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 18:02:10,302 run RFID-read: _distance_buffer_
+gimproveClient_Prototype.Client INFO       2018-02-22 18:02:10,327 run RFID-tag not valid: _distance_buffer_
+gimproveClient_Prototype.Client INFO       2018-02-22 18:02:13,928 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 18:02:13,981 run Start recording.
+gimproveClient_Prototype.Client INFO       2018-02-22 18:02:38,365 __init__ Client instantiated.
+gimproveClient_Prototype.Client INFO       2018-02-22 18:02:39,579 run RFID-read: 0006921147
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 18:02:39,634 run Start recording.
+gimproveClient_Prototype.SensorManager INFO       2018-02-22 18:02:47,650 run Timeout. Stop recording.

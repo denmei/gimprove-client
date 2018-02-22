@@ -9,14 +9,18 @@ from hx711py.hx711 import HX711
 
 class SensorManager(Thread):
 
-    def __init__(self, set_id, rfid_tag, timer, request_manager, timeout_delta=5, testing=True):
+    def __init__(self, set_id, rfid_tag, timer, request_manager, min_dist, max_dist, timeout_delta=5, testing=True):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param set_id: ID of the current set.
         :param rfid_tag: RFID tag of the active user.
         :param timer: Reference on the Timer module that stops the process on inactivity.
         :param request_manager: Reference on the request manager for sending updates to the server.
+        :param min_dist: minimum value that has to be reached with the distance sensor to count a repetition.
+        :param max_dist: maximum value the distance sensor can reach.
         :param timeout_delta: If 'timeout_delta' seconds pass without a new repetition, the process stops.
+        :param testing: If true, executes in testing mode (uses sensor data). Otherwise, local files are used to
+        simulate the sensor input.
         """
         self.logger = logging.getLogger('gimprove' + __name__)
         if not testing:
@@ -27,6 +31,8 @@ class SensorManager(Thread):
         self.timer = timer
         self._stop_ = False
         self._rep_ = 0
+        self._min_ = min
+        self._max_ = max
         self.request_manager = request_manager
         self._durations_ = []
         self._start_time_ = datetime.now()
@@ -38,6 +44,7 @@ class SensorManager(Thread):
         self._no_ = 0
         self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/numbers.txt'
         Thread.__init__(self)
+        self.daemon = True
 
     def _init_hx_weight_(self):
         self.hx_weight = HX711(5, 6)
@@ -80,25 +87,40 @@ class SensorManager(Thread):
         # get current distance from distance sensor.
         # TODO: currently reading from txt file, replace by sensor
         with open(self._numbers_file_) as numbers:
-            distance = numbers.readlines()[self._no_]
-        print(len(numbers.readlines()))
+            print("NO: " + str(self._no_))
+            lines = numbers.readlines()
+            length = len(lines)
+            distance = lines[self._no_]
         self._no_ += 1
-        if self._no_ >= len(numbers.readlines()):
+        if self._no_ >= length:
             self._stop_ = True
         # update distance buffer
-        distance_buffer += distance
+        distance_buffer += [int(distance)]
         # calculate repetitions and update repetitions-value
         new_reps = max(self._analyze_distance_buffer_(distance_buffer), repetitions)
-        # TODO: remove unnecessary values from distance buffer
         return new_reps, distance_buffer
 
     def _analyze_distance_buffer_(self, distance_buffer):
         """
-        Counts the number of repetitions in a distance buffer.
+        Counts the number of repetitions in a distance buffer. Simple logic that has to be replaced: Counts if a
+         distance is smaller than the min-Value. Then waits until half of the distance between min and max has been
+         reached again.
         :return: Number of repetitions in the buffer.
         """
         # TODO: Find algorithm to analyze distance buffer properly
-        return 0
+        count = 0
+        threshold = (self._max_ - self._min_)/2
+        no_count = False
+        for distance in distance_buffer:
+            print(distance + 1)
+            if (distance < self._min_) and (no_count is False):
+                count += 1
+                no_count = True
+            elif distance > threshold and no_count:
+                no_count = False
+            else:
+                pass
+        return count
 
     def get_durations(self):
         """
@@ -133,5 +155,6 @@ class SensorManager(Thread):
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                                 rfid=self.rfid_tag, active=True, durations=self._durations_)
-            time.sleep(1.0)
+            time.sleep(0.1)
+        print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Timeout. Stop recording.')
