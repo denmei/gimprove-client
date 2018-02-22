@@ -28,9 +28,15 @@ class SensorManager(Thread):
         self._stop_ = False
         self._rep_ = 0
         self.request_manager = request_manager
-        self.durations = []
+        self._durations_ = []
         self._start_time_ = datetime.now()
         self.testing = testing
+        # buffer for the measured distances
+        # Todo: limit size (FIFO)
+        self._distance_buffer_ = []
+        # TODO: delete:
+        self._no_ = 0
+        self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/numbers.txt'
         Thread.__init__(self)
 
     def _init_hx_weight_(self):
@@ -63,11 +69,42 @@ class SensorManager(Thread):
             print("Weightsensor: " + str(weight))
             return weight
 
+    def _check_reps_(self, repetitions, distance_buffer):
+        """
+        Gets distance from distance sensor. Checks whether new repetition has been made. Updates the passed repetitions
+        parameter and the distance buffer.
+        :param repetitions: Current count of repetitions to be updated.
+        :param distance_buffer: Current collection of measured distances to be updated
+        :return: [updated repetitions, updated distance_buffer]
+        """
+        # get current distance from distance sensor.
+        # TODO: currently reading from txt file, replace by sensor
+        with open(self._numbers_file_) as numbers:
+            distance = numbers.readlines()[self._no_]
+        print(len(numbers.readlines()))
+        self._no_ += 1
+        if self._no_ >= len(numbers.readlines()):
+            self._stop_ = True
+        # update distance buffer
+        distance_buffer += distance
+        # calculate repetitions and update repetitions-value
+        new_reps = max(self._analyze_distance_buffer_(distance_buffer), repetitions)
+        # TODO: remove unnecessary values from distance buffer
+        return new_reps, distance_buffer
+
+    def _analyze_distance_buffer_(self, distance_buffer):
+        """
+        Counts the number of repetitions in a distance buffer.
+        :return: Number of repetitions in the buffer.
+        """
+        # TODO: Find algorithm to analyze distance buffer properly
+        return 0
+
     def get_durations(self):
         """
         Returns the durations of the current repetitions.
         """
-        return self.durations
+        return self._durations_
 
     def _update_durations_starttime_(self, durations, start_time):
         """
@@ -83,16 +120,18 @@ class SensorManager(Thread):
         """
         self.logger.info("Start recording.")
         self._rep_ = 0
-        self._weight_ = 10
-        with open(str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/numbers.txt') as numbers:
-            content = numbers.readlines()
-        for c in content:
+        while not self._stop_:
             self.timer.reset_timer()
-            self._rep_ += 1
-            self.durations, self._start_time_ = self._update_durations_starttime_(self.durations, self._start_time_)
-            self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
-                                            rfid=self.rfid_tag, active=True, durations=self.durations)
+            # update repetitions
+            old_rep = self._rep_
+            self._rep_, self._distance_buffer_ = self._check_reps_(self._rep_, self._distance_buffer_)
+            # if new repetition, update all other values
+            if old_rep != self._rep_:
+                # update durations
+                self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
+                                                                                        self._start_time_)
+                # send update
+                self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
+                                                rfid=self.rfid_tag, active=True, durations=self._durations_)
             time.sleep(1.0)
-            if self._stop_:
-                self.logger.info('Timeout. Stop recording.')
-                break
+        self.logger.info('Timeout. Stop recording.')
