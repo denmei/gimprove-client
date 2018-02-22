@@ -40,16 +40,22 @@ class SensorManager(Thread):
         self.hx_weight.reset()
         self.hx_weight.tare()
 
-    def _send_repetition_(self):
-        pass
-
     def stop_thread(self):
+        """
+        Stops the sensormanager.
+        """
         self._stop_ = True
 
     def get_repetitions(self):
+        """
+        Returns the current count of repetitions.
+        """
         return self._rep_
 
     def get_weight(self):
+        """
+        Returns the current weight measured.
+        """
         if self.testing:
             return 10
         else:
@@ -58,9 +64,15 @@ class SensorManager(Thread):
             return weight
 
     def get_durations(self):
+        """
+        Returns the durations of the current repetitions.
+        """
         return self.durations
 
     def _update_durations_starttime_(self, durations, start_time):
+        """
+        Updates the durations of the repetitions.
+        """
         durations = durations + [(datetime.now() - start_time).total_seconds()]
         return durations, datetime.now()
 
