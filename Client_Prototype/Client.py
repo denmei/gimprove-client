@@ -18,14 +18,14 @@ class Equipment:
 
     def __init__(self, testing=True):
         """
-        :param config_path: Path to the directory with the configuration files.
         :param testing: If true, runs in test mode (APIs of the test-environment). Else, production environment is used.
         """
         self.testing = testing
-        self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
+        self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
         self._configure_logger_()
-        self._load_links_(testing)
+        self.list_address, self.detail_address, self.userprofile_detail_address = self._load_links_(testing)
+        self.distance_settings, self.weight_settings = self._load_sensor_settings_()
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
@@ -69,6 +69,7 @@ class Equipment:
         """
         Loads the links for the APIs of the GImprove-Server.
         :param testing: If true, the APIs of the testing environment are loaded. Else production environment.
+        :return [link set_list, link to set_detail, link to userprofile_detail(rfid)]
         """
         with open(self.config_path + "/api-links.json") as links_file:
             if not testing:
@@ -76,9 +77,17 @@ class Equipment:
             else:
                 links = json.load(links_file)['links']['testing-links']
         links_file.close()
-        self.list_address = links['set_list']['link']
-        self.detail_address = links['set_detail']['link']
-        self.userprofile_detail_address = links['userprofile_detail']['link']
+        return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link']
+
+    def _load_sensor_settings_(self):
+        """
+        Loads the sensor settings from the config.json file
+        :return Dict of distancesensor-settings and dict of weightsensor-settings
+        """
+        with open(self.config_path + "/config.json") as config_file:
+            settings = json.load(config_file)['sensor_settings']
+        config_file.close()
+        return settings['distance_sensor'], settings['weight_sensor']
 
     def _init_set_record_(self, rfid):
         """
@@ -119,7 +128,9 @@ class Equipment:
                     timer = Timer(8)
                     # start sensor thread
                     sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id, timer=timer,
-                                                   request_manager=self.request_manager, min_dist=30, max_dist=100,
+                                                   request_manager=self.request_manager,
+                                                   min_dist=self.distance_settings['min_dist'],
+                                                   max_dist=self.distance_settings['max_dist'],
                                                    testing=self.testing)
                     sensor_manager.isDaemon()
                     sensor_manager.start()

@@ -1,4 +1,13 @@
 {
   "equipment_id": "fded5e7ff5044992bb70949f3aec172c",
-  "exercise_name": "Lat Pulldown"
+  "exercise_name": "Lat Pulldown",
+  "sensor_settings": {
+    "distance_sensor": {
+      "min_dist": 30,
+      "max_dist": 100
+    },
+    "weight_sensor": {
+
+    }
+  }
 }
