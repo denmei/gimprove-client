@@ -2,10 +2,10 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="e12c8791-70ee-418e-bc4f-59456064ebc7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
-      <change beforePath="$PROJECT_DIR$/Client_Prototype/Client.py" afterPath="$PROJECT_DIR$/Client_Prototype/Client.py" />
       <change beforePath="$PROJECT_DIR$/Client_Prototype/SensorManager.py" afterPath="$PROJECT_DIR$/Client_Prototype/SensorManager.py" />
-      <change beforePath="$PROJECT_DIR$/numbers.txt" afterPath="$PROJECT_DIR$/numbers.txt" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/test/__init__.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/test/test_client.py" afterPath="" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/test/test_request_manager.py" afterPath="" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -19,8 +19,8 @@
       <file leaf-file-name="Client.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client_Prototype/Client.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="319">
-              <caret line="130" column="39" lean-forward="true" selection-start-line="130" selection-start-column="39" selection-end-line="130" selection-end-column="39" />
+            <state relative-caret-position="-1205">
+              <caret line="28" column="25" lean-forward="false" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -38,11 +38,11 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="SensorManager.py" pinned="false" current-in-tab="true">
+      <file leaf-file-name="SensorManager.py" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/Client_Prototype/SensorManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="185">
-              <caret line="102" column="24" lean-forward="false" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
+            <state relative-caret-position="292">
+              <caret line="52" column="30" lean-forward="true" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
               <folding>
                 <element signature="e#0#11#0" expanded="true" />
               </folding>
@@ -50,22 +50,14 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="test_client.py" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/Client_Prototype/test/test_client.py">
-          <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="180">
-              <caret line="17" column="31" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="31" />
-              <folding />
-            </state>
-          </provider>
-        </entry>
-      </file>
-      <file leaf-file-name="RequestManager.py" pinned="false" current-in-tab="false">
+      <file leaf-file-name="RequestManager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/Client_Prototype/RequestManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="7">
-              <caret line="2" column="9" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-              <folding />
+            <state relative-caret-position="513">
+              <caret line="46" column="12" lean-forward="false" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
             </state>
           </provider>
         </entry>
@@ -115,6 +107,7 @@
       <find>senso</find>
       <find>print</find>
       <find>_distance_buffer_</find>
+      <find>pare</find>
     </findStrings>
   </component>
   <component name="Git.Settings">
@@ -143,13 +136,14 @@
         <option value="$PROJECT_DIR$/README.md" />
         <option value="$PROJECT_DIR$/execute.py" />
         <option value="$PROJECT_DIR$/Configuration/api-links.json" />
-        <option value="$PROJECT_DIR$/Client_Prototype/RequestManager.py" />
         <option value="$PROJECT_DIR$/hx711py/hx711.py" />
         <option value="$PROJECT_DIR$/RPi/__init__.py" />
         <option value="$PROJECT_DIR$/RPi/GPIO.py" />
         <option value="$PROJECT_DIR$/numbers.txt" />
-        <option value="$PROJECT_DIR$/Client_Prototype/Client.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/test/test_sensor_manager.py" />
         <option value="$PROJECT_DIR$/Client_Prototype/SensorManager.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/Client.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/RequestManager.py" />
       </list>
     </option>
   </component>
@@ -193,13 +187,13 @@
             <path>
               <item name="sm_gym_client" type="b2602c69:ProjectViewProjectNode" />
               <item name="sm_gym_client" type="462c0819:PsiDirectoryNode" />
-              <item name="Client_Prototype" type="462c0819:PsiDirectoryNode" />
-              <item name="test" type="462c0819:PsiDirectoryNode" />
+              <item name="Configuration" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sm_gym_client" type="b2602c69:ProjectViewProjectNode" />
               <item name="sm_gym_client" type="462c0819:PsiDirectoryNode" />
               <item name="Configuration" type="462c0819:PsiDirectoryNode" />
+              <item name="logs" type="462c0819:PsiDirectoryNode" />
             </path>
             <path>
               <item name="sm_gym_client" type="b2602c69:ProjectViewProjectNode" />
@@ -210,6 +204,11 @@
               <item name="sm_gym_client" type="b2602c69:ProjectViewProjectNode" />
               <item name="sm_gym_client" type="462c0819:PsiDirectoryNode" />
               <item name="RPi" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="sm_gym_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="sm_gym_client" type="462c0819:PsiDirectoryNode" />
+              <item name="test" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -223,9 +222,9 @@
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
-      <recent name="$PROJECT_DIR$/Configuration" />
       <recent name="$PROJECT_DIR$" />
       <recent name="$PROJECT_DIR$/Client_Prototype" />
+      <recent name="$PROJECT_DIR$/Configuration" />
     </key>
   </component>
   <component name="RunDashboard">
@@ -331,13 +330,13 @@
       <option name="PARENT_ENVS" value="true" />
       <envs />
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Client_Prototype/test" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
       <option name="IS_MODULE_SDK" value="false" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <module name="SmartGym_Client_Prototype" />
       <option name="_new_additionalArguments" value="&quot;&quot;" />
-      <option name="_new_target" value="&quot;$PROJECT_DIR$/Client_Prototype/test/test_client.py&quot;" />
+      <option name="_new_target" value="&quot;$PROJECT_DIR$/test/test_client.py&quot;" />
       <option name="_new_targetType" value="&quot;PATH&quot;" />
     </configuration>
     <configuration default="true" type="tests" factoryName="Unittests">
@@ -405,16 +404,15 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="0" width="1440" height="900" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.22777778" sideWeight="0.5" order="0" side_tool="false" content_ui="combo" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29411766" sideWeight="0.12083333" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.29411766" sideWeight="0.87916666" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30588236" sideWeight="0.15277778" order="7" side_tool="true" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.29411766" sideWeight="0.87916666" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Python Console" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.30588236" sideWeight="0.8513889" order="7" side_tool="false" content_ui="tabs" />
+      <window_info id="Terminal" active="true" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.30588236" sideWeight="0.8472222" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.39979655" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="2" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
@@ -434,7 +432,7 @@
     <breakpoint-manager>
       <breakpoints>
         <line-breakpoint enabled="true" suspend="THREAD" type="python-line">
-          <url>file://$PROJECT_DIR$/Client_Prototype/test/test_client.py</url>
+          <url>file://$PROJECT_DIR$/test/test_client.py</url>
           <option name="timeStamp" value="2" />
         </line-breakpoint>
       </breakpoints>
@@ -443,13 +441,6 @@
     <watches-manager />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/Client_Prototype/Client.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="0">
-          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/hx711py/example.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="702">
@@ -582,7 +573,7 @@
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/Client_Prototype/WeightManager.py" />
-    <entry file="file://$PROJECT_DIR$/Client_Prototype/test/__init__.py">
+    <entry file="file://$PROJECT_DIR$/test/__init__.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="0">
           <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
@@ -633,7 +624,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client_Prototype/test/test_request_manager.py">
+    <entry file="file://$PROJECT_DIR$/test/test_request_manager.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="285">
           <caret line="27" column="47" lean-forward="false" selection-start-line="27" selection-start-column="46" selection-end-line="27" selection-end-column="47" />
@@ -665,7 +656,7 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client_Prototype/test/test_client.py">
+    <entry file="file://$PROJECT_DIR$/test/test_client.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="180">
           <caret line="17" column="31" lean-forward="false" selection-start-line="17" selection-start-column="21" selection-end-line="17" selection-end-column="31" />
@@ -702,14 +693,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client_Prototype/RequestManager.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="7">
-          <caret line="2" column="9" lean-forward="false" selection-start-line="2" selection-start-column="9" selection-end-line="2" selection-end-column="9" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/Client_Prototype/Timer.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="545">
@@ -718,22 +701,40 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client_Prototype/Client.py">
+    <entry file="file://$PROJECT_DIR$/test/test_sensor_manager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="319">
-          <caret line="130" column="39" lean-forward="true" selection-start-line="130" selection-start-column="39" selection-end-line="130" selection-end-column="39" />
+        <state relative-caret-position="0">
+          <caret line="0" column="0" lean-forward="false" selection-start-line="0" selection-start-column="0" selection-end-line="0" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client_Prototype/SensorManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="292">
+          <caret line="52" column="30" lean-forward="true" selection-start-line="52" selection-start-column="30" selection-end-line="52" selection-end-column="30" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
           </folding>
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/Client_Prototype/SensorManager.py">
+    <entry file="file://$PROJECT_DIR$/Client_Prototype/Client.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="185">
-          <caret line="102" column="24" lean-forward="false" selection-start-line="102" selection-start-column="24" selection-end-line="102" selection-end-column="24" />
+        <state relative-caret-position="-1205">
+          <caret line="28" column="25" lean-forward="false" selection-start-line="28" selection-start-column="25" selection-end-line="28" selection-end-column="25" />
           <folding>
             <element signature="e#0#11#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Client_Prototype/RequestManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="513">
+          <caret line="46" column="12" lean-forward="false" selection-start-line="46" selection-start-column="12" selection-end-line="46" selection-end-column="12" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
           </folding>
         </state>
       </provider>

@@ -42,7 +42,7 @@ class SensorManager(Thread):
         self._distance_buffer_ = []
         # TODO: delete:
         self._no_ = 0
-        self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/numbers.txt'
+        self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/numbers.txt'
         Thread.__init__(self)
         self.daemon = True
 
