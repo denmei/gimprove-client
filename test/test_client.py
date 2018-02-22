@@ -4,11 +4,37 @@ import requests
 import json
 import random
 import logging
+import mock
 
 
 class TestClient(unittest.TestCase):
 
     # TODO: Run-test with input-mockup
+
+    """def _make_mock_response_(self, status=200, content="CONTENT", json_data=None, raise_for_status=None):
+
+        Creates and returns a mock response to a http-request.
+        :param status:
+        :param content:
+        :param json_data:
+        :param raise_for_status:
+        :return:
+
+        mock_resp = mock.Mock()
+        # mock raise_for_status call w/optional error
+        mock_resp.raise_for_status = mock.Mock()
+        if raise_for_status:
+            mock_resp.raise_for_status.side_effect = raise_for_status
+        # set status code and content
+        mock_resp.status_code = status
+        mock_resp.content = content
+        # add json data if provided
+        if json_data:
+            mock_resp.json = mock.Mock(
+                return_value=json_data
+            )
+
+        return mock_resp"""
 
     def setUp(self):
         logging.disable(logging.CRITICAL)
@@ -22,7 +48,7 @@ class TestClient(unittest.TestCase):
         # self.detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
 
-    def test_init_set_record(self):
+    def test_init_set_record(self, mock_get):
         """
         Check whether new set is created and a valid set_id ist returned when initializing a record. The new
         set must be activated. The weight and repetitions values must be equal to 0.
