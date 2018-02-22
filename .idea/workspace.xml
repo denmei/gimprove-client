@@ -1,12 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="e12c8791-70ee-418e-bc4f-59456064ebc7" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/Client_Prototype/SensorManager.py" afterPath="$PROJECT_DIR$/Client_Prototype/SensorManager.py" />
-      <change beforePath="$PROJECT_DIR$/Client_Prototype/test/__init__.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Client_Prototype/test/test_client.py" afterPath="" />
-      <change beforePath="$PROJECT_DIR$/Client_Prototype/test/test_request_manager.py" afterPath="" />
-    </list>
+    <list default="true" id="e12c8791-70ee-418e-bc4f-59456064ebc7" name="Default" comment="" />
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
     <option name="SHOW_DIALOG" value="false" />
