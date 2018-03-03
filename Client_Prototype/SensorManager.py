@@ -31,8 +31,8 @@ class SensorManager(Thread):
         self.timer = timer
         self._stop_ = False
         self._rep_ = 0
-        self._min_ = min
-        self._max_ = max
+        self._min_ = min_dist
+        self._max_ = max_dist
         self.request_manager = request_manager
         self._durations_ = []
         self._start_time_ = datetime.now()
@@ -42,7 +42,7 @@ class SensorManager(Thread):
         self._distance_buffer_ = []
         # TODO: delete:
         self._no_ = 0
-        self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/numbers.txt'
+        self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/numbers.txt'
         Thread.__init__(self)
         self.daemon = True
 
