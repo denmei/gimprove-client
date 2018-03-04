@@ -6,10 +6,20 @@ from pathlib import Path
 from hx711py.hx711 import HX711
 import numpy as np
 import time
-from VL53L0X.python.VL53L0X import VL53L0X
+# from VL53L0X.python.VL53L0X import VL53L0X
 
 
 class SensorManager(Thread):
+    """
+    Responsible for recording and analyzing the sensor data during one session. Running in a own thread, the
+    SensorManager records the sensor-activity until the session is timed out (no new repetition).
+    When a new repetition is recognized, the weight from the weight sensor is taken and a new request to update the
+    current set with the new data is sent to the server.
+
+    During the whole session, all distance-data is collected in _distance_buffer_. So every time the SensorManager
+    analyzes the current set looking for new repetitions, all available data from the current session is used (should
+    be changed in the future to increase performance).
+    """
 
     def __init__(self, set_id, rfid_tag, timer, request_manager, min_dist, max_dist, timeout_delta=5, testing=True):
         """
@@ -58,10 +68,11 @@ class SensorManager(Thread):
         self.hx_weight.reset()
         self.hx_weight.tare()
 
-    def _init_VL530_distance_(self):
-        self.tof = VL53L0X.VL53L0X()
+    def _init_vl530_distance_(self):
+        # self.tof = VL53L0X.VL53L0X()
         # Start ranging
-        self.tof.start_ranging("VL53L0X.VL53L0X_BETTER_ACCURACY_MODE")
+        # self.tof.start_ranging("VL53L0X.VL53L0X_BETTER_ACCURACY_MODE")
+        pass
 
     def stop_thread(self):
         """
@@ -119,7 +130,6 @@ class SensorManager(Thread):
          reached again.
         :return: Number of repetitions in the buffer.
         """
-        # TODO: Find algorithm to analyze distance buffer properly
         rep_val = 0.8
         under_max = True
         reps = 0
@@ -137,8 +147,9 @@ class SensorManager(Thread):
                 under_max = True
         return reps
 
-    def _running_mean_(self, x, N):
-        return np.convolve(x, np.ones((N,)) / N)[(N - 1):]
+    @staticmethod
+    def _running_mean_(x, n):
+        return np.convolve(x, np.ones((n,)) / n)[(n - 1):]
 
     def get_durations(self):
         """
@@ -146,7 +157,8 @@ class SensorManager(Thread):
         """
         return self._durations_
 
-    def _update_durations_starttime_(self, durations, start_time):
+    @staticmethod
+    def _update_durations_starttime_(durations, start_time):
         """
         Updates the durations of the repetitions.
         """
@@ -174,6 +186,6 @@ class SensorManager(Thread):
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                                 rfid=self.rfid_tag, active=True, durations=self._durations_)
             time.sleep(0.01)
-        self.tof.stop_ranging()
+        # self.tof.stop_ranging()
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Stop recording.')
