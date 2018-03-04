@@ -1,4 +1,3 @@
-import time
 from threading import Thread
 import os
 from datetime import datetime
@@ -6,6 +5,8 @@ import logging
 from pathlib import Path
 from hx711py.hx711 import HX711
 import numpy as np
+import time
+from VL53L0X.python.VL53L0X import VL53L0X
 
 
 class SensorManager(Thread):
@@ -38,12 +39,15 @@ class SensorManager(Thread):
         self._durations_ = []
         self._start_time_ = datetime.now()
         self.testing = testing
+
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
-        # TODO: delete:
+
+        # only for testing:
         self._no_ = 0
         self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv'
+
         Thread.__init__(self)
         self.daemon = True
 
@@ -53,6 +57,11 @@ class SensorManager(Thread):
         self.hx_weight.set_reference_unit(92)
         self.hx_weight.reset()
         self.hx_weight.tare()
+
+    def _init_VL530_distance_(self):
+        self.tof = VL53L0X.VL53L0X()
+        # Start ranging
+        self.tof.start_ranging("VL53L0X.VL53L0X_BETTER_ACCURACY_MODE")
 
     def stop_thread(self):
         """
@@ -86,15 +95,17 @@ class SensorManager(Thread):
         :return: [updated repetitions, updated distance_buffer]
         """
         
-        # get current distance from distance sensor.
-        # TODO: currently reading from txt file, replace by sensor
-        with open(self._numbers_file_) as numbers:
-            lines = numbers.readlines()
-            length = len(lines)
-            distance = lines[self._no_].split(",")[1]
-        self._no_ += 1
-        if self._no_ >= length:
-            self._stop_ = True
+        # get current distance. If testing, use distance.csv, otherwise data from sensor
+        if self.testing:
+            with open(self._numbers_file_) as numbers:
+                lines = numbers.readlines()
+                length = len(lines)
+                distance = lines[self._no_].split(",")[1]
+            self._no_ += 1
+            if self._no_ >= length:
+                self._stop_ = True
+        else:
+            distance = self.tof.get_distance()
         # update distance buffer
         distance_buffer += [int(distance)]
         # calculate repetitions and update repetitions-value
@@ -115,7 +126,7 @@ class SensorManager(Thread):
         reps_i = []
         max_val = self._max_
         min_val = self._min_
-        # distance_buffer = self.runningMeanFast(distance_buffer, 10)
+        distance_buffer = self._running_mean_(distance_buffer, 10)
         for i in range(0, len(distance_buffer) - 1):
             if under_max:
                 if distance_buffer[i] > (max_val * rep_val):
@@ -124,10 +135,9 @@ class SensorManager(Thread):
                     under_max = False
             elif distance_buffer[i] < (min_val * (2 - rep_val)):
                 under_max = True
-        print(reps)
         return reps
 
-    def runningMeanFast(self, x, N):
+    def _running_mean_(self, x, N):
         return np.convolve(x, np.ones((N,)) / N)[(N - 1):]
 
     def get_durations(self):
@@ -151,18 +161,19 @@ class SensorManager(Thread):
         self.logger.info("Start recording.")
         self._rep_ = 0
         while not self._stop_:
-            self.timer.reset_timer()
             # update repetitions
             old_rep = self._rep_
             self._rep_, self._distance_buffer_ = self._check_reps_(self._rep_, self._distance_buffer_)
             # if new repetition, update all other values
             if old_rep != self._rep_:
+                self.timer.reset_timer()
                 # update durations
                 self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
                                                                                         self._start_time_)
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                                 rfid=self.rfid_tag, active=True, durations=self._durations_)
-            # time.sleep(0.01)
+            time.sleep(0.01)
+        self.tof.stop_ranging()
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
-        self.logger.info('Timeout. Stop recording.')
+        self.logger.info('Stop recording.')
