@@ -16,6 +16,8 @@ class SensorManager(Thread):
     When a new repetition is recognized, the weight from the weight sensor is taken and a new request to update the
     current set with the new data is sent to the server.
 
+    In testing mode, the distance data from the distance.csv-file is taken, while the weight will always be 10.
+
     During the whole session, all distance-data is collected in _distance_buffer_. So every time the SensorManager
     analyzes the current set looking for new repetitions, all available data from the current session is used (should
     be changed in the future to increase performance).

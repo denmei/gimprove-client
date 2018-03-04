@@ -42,6 +42,7 @@ class Equipment:
             configuration = json.load(config_file)
         self.exercise_name = configuration['exercise_name']
         self.equipment_id = configuration['equipment_id']
+        self.time_out = configuration['time_out']
 
     def _configure_logger_(self):
         """
@@ -115,6 +116,16 @@ class Equipment:
         return self.request_manager.delete_set(set_id=set_id)
 
     def run(self):
+        """
+        Runs the whole application.
+
+        When started, the application waits for a RFID-Tag as input. If the input passes the validation, a new set is
+        created by sending a corresponding request to the server. After that, a new Thread is started to record the
+        current set-session. Furthermore, a timer is started to stop the recording in case of inactivity. Once the
+        recording is finished, a new request to the server deactivates the current set.
+
+        If there occurs an error, the new set is deleted by sending a request to the server.
+        """
         while True:
             # start waiting for rfid tag
             rfid_tag = input('RFID (0006921147):')
@@ -125,7 +136,7 @@ class Equipment:
                 try:
                     # init set
                     set_id = self._init_set_record_(rfid_tag)['id']
-                    timer = Timer(8)
+                    timer = Timer(self.time_out)
                     # start sensor thread
                     sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id, timer=timer,
                                                    request_manager=self.request_manager,
@@ -148,7 +159,6 @@ class Equipment:
                 except Exception as e:
                     print(traceback.print_exc())
                     if set_id is not None:
-                        # TODO: set inactive
                         self._delete_set_(set_id)
             else:
                 self.logger.info("RFID-tag not valid: " + rfid_tag)
