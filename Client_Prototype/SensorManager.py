@@ -5,6 +5,7 @@ from datetime import datetime
 import logging
 from pathlib import Path
 from hx711py.hx711 import HX711
+import numpy as np
 
 
 class SensorManager(Thread):
@@ -42,7 +43,7 @@ class SensorManager(Thread):
         self._distance_buffer_ = []
         # TODO: delete:
         self._no_ = 0
-        self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/numbers.txt'
+        self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv'
         Thread.__init__(self)
         self.daemon = True
 
@@ -84,13 +85,13 @@ class SensorManager(Thread):
         :param distance_buffer: Current collection of measured distances to be updated
         :return: [updated repetitions, updated distance_buffer]
         """
+        
         # get current distance from distance sensor.
         # TODO: currently reading from txt file, replace by sensor
         with open(self._numbers_file_) as numbers:
-            print("NO: " + str(self._no_))
             lines = numbers.readlines()
             length = len(lines)
-            distance = lines[self._no_]
+            distance = lines[self._no_].split(",")[1]
         self._no_ += 1
         if self._no_ >= length:
             self._stop_ = True
@@ -108,19 +109,26 @@ class SensorManager(Thread):
         :return: Number of repetitions in the buffer.
         """
         # TODO: Find algorithm to analyze distance buffer properly
-        count = 0
-        threshold = (self._max_ - self._min_)/2
-        no_count = False
-        for distance in distance_buffer:
-            print(distance + 1)
-            if (distance < self._min_) and (no_count is False):
-                count += 1
-                no_count = True
-            elif distance > threshold and no_count:
-                no_count = False
-            else:
-                pass
-        return count
+        rep_val = 0.8
+        under_max = True
+        reps = 0
+        reps_i = []
+        max_val = self._max_
+        min_val = self._min_
+        # distance_buffer = self.runningMeanFast(distance_buffer, 10)
+        for i in range(0, len(distance_buffer) - 1):
+            if under_max:
+                if distance_buffer[i] > (max_val * rep_val):
+                    reps += 1
+                    reps_i += [i]
+                    under_max = False
+            elif distance_buffer[i] < (min_val * (2 - rep_val)):
+                under_max = True
+        print(reps)
+        return reps
+
+    def runningMeanFast(self, x, N):
+        return np.convolve(x, np.ones((N,)) / N)[(N - 1):]
 
     def get_durations(self):
         """
@@ -155,6 +163,6 @@ class SensorManager(Thread):
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                                 rfid=self.rfid_tag, active=True, durations=self._durations_)
-            time.sleep(0.1)
+            # time.sleep(0.01)
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Timeout. Stop recording.')
