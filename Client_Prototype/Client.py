@@ -49,12 +49,12 @@ class Equipment:
         Configures and instantiates the logger.
         """
         # check whether log-directory exists:
-        if not "logs" in os.listdir(self.config_path):
+        if "logs" not in os.listdir(self.config_path):
             os.mkdir(self.config_path + "/logs")
 
         # check whether logging file exists:
         log_name = "logging" + str(datetime.now().date()) + ".log"
-        if not log_name in os.listdir(self.config_path + "/logs"):
+        if log_name not in os.listdir(self.config_path + "/logs"):
             logging_file = open(self.config_path + "/logs/" + log_name, 'w')
             logging_file.close()
 
@@ -96,7 +96,6 @@ class Equipment:
         :return: server response
         """
         # create set
-        # TODO: exercise unit check
         response = json.loads(self.request_manager.new_set(rfid, "").content.decode("utf-8"))
         return response
 

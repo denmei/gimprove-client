@@ -55,10 +55,10 @@ class TestRequestManager(unittest.TestCase):
         sets_after = requests.get(self.list_address).content.decode("utf-8")
         # confirm that set_id exists in second list
         self.assertTrue(set_id in sets_after)
-        # confirm that new set is acive set of user
+        # confirm that new set is active set of user
         user_profile = requests.get(self.user_profile_rfid_address + self.rfid).content
         user_profile = json.loads(user_profile.decode("utf-8"))
-        self.assertEqual(user_profile['active_set'], set_id)
+        self.assertEqual(user_profile['_pr_active_set'], set_id)
 
     def test_update_set(self):
         """
@@ -76,7 +76,7 @@ class TestRequestManager(unittest.TestCase):
         user_profile = json.loads(user_profile.decode("utf-8"))
         self.assertEqual(updated_set['repetitions'], content['repetitions'] + 5)
         self.assertEqual(updated_set['weight'], content['weight'] + 5)
-        self.assertEqual(user_profile['active_set'], None)
+        self.assertEqual(user_profile['_pr_active_set'], None)
 
     def test_delete_set(self):
         """
@@ -143,5 +143,7 @@ class TestRequestManager(unittest.TestCase):
 
         # check whether returns true for correct rfid
         response = requests.get(self.user_profile_address + "1")
+        print(self.user_profile_address + "1")
+        print(response.status_code)
         real_rfid = json.loads(response.content.decode("utf-8"))['rfid_tag']
         self.assertTrue(self.request_manager.rfid_is_valid(real_rfid))
