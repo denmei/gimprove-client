@@ -64,19 +64,6 @@ def i2c_write(address, reg, data_p, length):
 
     return ret_val
 
-# Load VL53L0X shared lib 
-tof_lib = CDLL("../bin/vl53l0x_python.so")
-
-# Create read function pointer
-READFUNC = CFUNCTYPE(c_int, c_ubyte, c_ubyte, POINTER(c_ubyte), c_ubyte)
-read_func = READFUNC(i2c_read)
-
-# Create write function pointer
-WRITEFUNC = CFUNCTYPE(c_int, c_ubyte, c_ubyte, POINTER(c_ubyte), c_ubyte)
-write_func = WRITEFUNC(i2c_write)
-
-# pass i2c read and write function pointers to VL53L0X library
-tof_lib.VL53L0X_set_i2c(read_func, write_func)
 
 class VL53L0X(object):
     """VL53L0X ToF."""
@@ -84,6 +71,29 @@ class VL53L0X(object):
     object_number = 0
 
     def __init__(self, address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, **kwargs):
+        """
+
+        :param address:
+        :param TCA9548A_Num:
+        :param TCA9548A_Addr:
+        :param kwargs:
+        """
+
+        # passed code from above
+        # Load VL53L0X shared lib
+        tof_lib = CDLL("../bin/vl53l0x_python.so")
+
+        # Create read function pointer
+        READFUNC = CFUNCTYPE(c_int, c_ubyte, c_ubyte, POINTER(c_ubyte), c_ubyte)
+        read_func = READFUNC(i2c_read)
+
+        # Create write function pointer
+        WRITEFUNC = CFUNCTYPE(c_int, c_ubyte, c_ubyte, POINTER(c_ubyte), c_ubyte)
+        write_func = WRITEFUNC(i2c_write)
+
+        # pass i2c read and write function pointers to VL53L0X library
+        tof_lib.VL53L0X_set_i2c(read_func, write_func)
+
         """Initialize the VL53L0X ToF Sensor from ST"""
         self.device_address = address
         self.TCA9548A_Device = TCA9548A_Num

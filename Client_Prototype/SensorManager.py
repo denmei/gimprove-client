@@ -6,7 +6,7 @@ from pathlib import Path
 from hx711py.hx711 import HX711
 import numpy as np
 import time
-# from VL53L0X.python.VL53L0X import VL53L0X
+from VL53L0X.python.VL53L0X import VL53L0X
 
 
 class SensorManager(Thread):
@@ -39,6 +39,7 @@ class SensorManager(Thread):
         self.logger = logging.getLogger('gimprove' + __name__)
         if not testing:
             self._init_hx_weight_()
+            self._init_vl530_distance_()
         self.timeout_delta = timeout_delta
         self.set_id = set_id
         self.rfid_tag = rfid_tag
@@ -71,10 +72,9 @@ class SensorManager(Thread):
         self.hx_weight.tare()
 
     def _init_vl530_distance_(self):
-        # self.tof = VL53L0X.VL53L0X()
+        self.tof = VL53L0X.VL53L0X()
         # Start ranging
-        # self.tof.start_ranging("VL53L0X.VL53L0X_BETTER_ACCURACY_MODE")
-        pass
+        self.tof.start_ranging("VL53L0X.VL53L0X_BETTER_ACCURACY_MODE")
 
     def stop_thread(self):
         """
@@ -188,6 +188,6 @@ class SensorManager(Thread):
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                                 rfid=self.rfid_tag, active=True, durations=self._durations_)
             time.sleep(0.01)
-        # self.tof.stop_ranging()
+        self.tof.stop_ranging()
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Stop recording.')
