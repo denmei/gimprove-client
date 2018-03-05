@@ -149,12 +149,12 @@ class Equipment:
                     # while not time out nor sensor manager ready, do nothing
                     while not timer.is_timed_out() and sensor_manager.is_alive():
                         pass
-                    # stop both threads
                     timer.stop_timer()
                     sensor_manager.stop_thread()
                     # end set
                     self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=sensor_manager.get_repetitions(),
                                    weight=sensor_manager.get_weight(), durations=sensor_manager.get_durations())
+
                 except Exception as e:
                     print(traceback.print_exc())
                     if set_id is not None:

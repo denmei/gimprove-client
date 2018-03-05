@@ -7,6 +7,7 @@ from hx711py.hx711 import HX711
 import numpy as np
 import time
 from VL53L0X.python.VL53L0X import VL53L0X
+from .StreamPlotter import StreamPlotter
 
 
 class SensorManager(Thread):
@@ -52,10 +53,11 @@ class SensorManager(Thread):
         self._durations_ = []
         self._start_time_ = datetime.now()
         self.testing = testing
-
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
+        # self.stream_plotter = StreamPlotter(self._distance_buffer_, 0.5)
+        # self.stream_plotter.start()
 
         # only for testing:
         self._no_ = 0
@@ -187,7 +189,8 @@ class SensorManager(Thread):
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                                 rfid=self.rfid_tag, active=True, durations=self._durations_)
-            time.sleep(0.01)
-        self.tof.stop_ranging()
+            time.sleep(0.05)
+        if not self.testing:
+            self.tof.stop_ranging()
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Stop recording.')
