@@ -7,6 +7,8 @@ from hx711py.hx711 import HX711
 import numpy as np
 import time
 from VL53L0X.python.VL53L0X import VL53L0X
+from .StreamPlotter import StreamPlotter
+import matplotlib.pyplot as plt
 
 
 class SensorManager():
@@ -23,7 +25,7 @@ class SensorManager():
     be changed in the future to increase performance).
     """
 
-    def __init__(self, set_id, rfid_tag, request_manager, min_dist, max_dist, timeout_delta=5, testing=True):
+    def __init__(self, set_id, rfid_tag, request_manager, min_dist, max_dist, timeout_delta=10, testing=True):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param set_id: ID of the current set.
@@ -168,24 +170,36 @@ class SensorManager():
         """
         self.logger.info("Start recording.")
         self._rep_ = 0
+
+        fig = plt.figure()
+        plt.ion()
+        print(datetime.now())
         while not self._stop_:
+            plt.pause(0.01)
             # update repetitions
             old_rep = self._rep_
             self._rep_, self._distance_buffer_ = self._check_reps_(self._rep_, self._distance_buffer_)
             # if new repetition, update all other values
             if old_rep != self._rep_:
                 self._reset_timer_()
+                print(str(self.time_out_time) + " " + str(datetime.now()))
                 # update durations
                 self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
                                                                                         self._start_time_)
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                                 rfid=self.rfid_tag, active=True, durations=self._durations_)
+
             if self.time_out_time < datetime.now():
                 self._stop_ = True
                 break
-            time.sleep(0.01)
+
+            fig.clear()
+            plt.plot(range(len(self._distance_buffer_[-80:])), self._distance_buffer_[-80:])
+            plt.draw()
+
         if not self.testing:
             self.tof.stop_ranging()
+        plt.close()
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Stop recording.')
