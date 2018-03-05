@@ -1,9 +1,8 @@
 import matplotlib.pyplot as plt
-from threading import Thread
 import time
 
 
-class StreamPlotter(Thread):
+class StreamPlotter:
 
     def __init__(self, distance_buffer, sleep):
         self.fig = plt.figure()
@@ -12,9 +11,6 @@ class StreamPlotter(Thread):
         self.distance_buffer = distance_buffer
         self.timer_sleep = sleep
         self.plot_data = plt.plot()
-
-        Thread.__init__(self)
-        self.daemon = True
 
     def set_min_line(self, y):
         pass

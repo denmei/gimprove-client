@@ -1,7 +1,6 @@
 import json
 from Client_Prototype.RequestManager import RequestManager
 from Client_Prototype.SensorManager import SensorManager
-from Client_Prototype.Timer import Timer
 import traceback
 import logging
 import os
@@ -135,22 +134,14 @@ class Equipment:
                 try:
                     # init set
                     set_id = self._init_set_record_(rfid_tag)['id']
-                    timer = Timer(self.time_out)
                     # start sensor thread
-                    sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id, timer=timer,
+                    sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id,
                                                    request_manager=self.request_manager,
                                                    min_dist=self.distance_settings['min_dist'],
                                                    max_dist=self.distance_settings['max_dist'],
                                                    testing=self.testing)
-                    sensor_manager.isDaemon()
-                    sensor_manager.start()
-                    # start timer
-                    timer.start()
-                    # while not time out nor sensor manager ready, do nothing
-                    while not timer.is_timed_out() and sensor_manager.is_alive():
-                        pass
-                    timer.stop_timer()
-                    sensor_manager.stop_thread()
+
+                    sensor_manager.start_recording()
                     # end set
                     self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=sensor_manager.get_repetitions(),
                                    weight=sensor_manager.get_weight(), durations=sensor_manager.get_durations())

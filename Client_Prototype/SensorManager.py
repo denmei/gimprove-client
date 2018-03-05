@@ -1,16 +1,15 @@
-from threading import Thread
 import os
 from datetime import datetime
+import datetime as dt
 import logging
 from pathlib import Path
 from hx711py.hx711 import HX711
 import numpy as np
 import time
 from VL53L0X.python.VL53L0X import VL53L0X
-from .StreamPlotter import StreamPlotter
 
 
-class SensorManager(Thread):
+class SensorManager():
     """
     Responsible for recording and analyzing the sensor data during one session. Running in a own thread, the
     SensorManager records the sensor-activity until the session is timed out (no new repetition).
@@ -24,12 +23,11 @@ class SensorManager(Thread):
     be changed in the future to increase performance).
     """
 
-    def __init__(self, set_id, rfid_tag, timer, request_manager, min_dist, max_dist, timeout_delta=5, testing=True):
+    def __init__(self, set_id, rfid_tag, request_manager, min_dist, max_dist, timeout_delta=5, testing=True):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param set_id: ID of the current set.
         :param rfid_tag: RFID tag of the active user.
-        :param timer: Reference on the Timer module that stops the process on inactivity.
         :param request_manager: Reference on the request manager for sending updates to the server.
         :param min_dist: minimum value that has to be reached with the distance sensor to count a repetition.
         :param max_dist: maximum value the distance sensor can reach.
@@ -44,7 +42,7 @@ class SensorManager(Thread):
         self.timeout_delta = timeout_delta
         self.set_id = set_id
         self.rfid_tag = rfid_tag
-        self.timer = timer
+        self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
         self._stop_ = False
         self._rep_ = 0
         self._min_ = min_dist
@@ -63,9 +61,6 @@ class SensorManager(Thread):
         self._no_ = 0
         self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv'
 
-        Thread.__init__(self)
-        self.daemon = True
-
     def _init_hx_weight_(self):
         self.hx_weight = HX711(5, 6)
         self.hx_weight.set_reading_format("LSB", "MSB")
@@ -77,12 +72,6 @@ class SensorManager(Thread):
         self.tof = VL53L0X.VL53L0X()
         # Start ranging
         self.tof.start_ranging("VL53L0X.VL53L0X_BETTER_ACCURACY_MODE")
-
-    def stop_thread(self):
-        """
-        Stops the sensormanager.
-        """
-        self._stop_ = True
 
     def get_repetitions(self):
         """
@@ -100,6 +89,9 @@ class SensorManager(Thread):
             weight = self.hx_weight.get_weight(5)
             print("Weightsensor: " + str(weight))
             return weight
+
+    def is_timed_out(self):
+        return self._stop_
 
     def _check_reps_(self, repetitions, distance_buffer):
         """
@@ -151,15 +143,15 @@ class SensorManager(Thread):
                 under_max = True
         return reps
 
+    def _reset_timer_(self):
+        self.time_out_time = datetime.now() + dt.timedelta(seconds=self.timeout_delta)
+
+    def get_durations(self):
+        return self._durations_
+
     @staticmethod
     def _running_mean_(x, n):
         return np.convolve(x, np.ones((n,)) / n)[(n - 1):]
-
-    def get_durations(self):
-        """
-        Returns the durations of the current repetitions.
-        """
-        return self._durations_
 
     @staticmethod
     def _update_durations_starttime_(durations, start_time):
@@ -169,7 +161,7 @@ class SensorManager(Thread):
         durations = durations + [(datetime.now() - start_time).total_seconds()]
         return durations, datetime.now()
 
-    def run(self):
+    def start_recording(self):
         """
         While running, the values of the distance sensor are analyzed. If a new repetition is identified, the current
         value of the weight sensor is taken and a new repetition-request is sent to the server.
@@ -182,14 +174,17 @@ class SensorManager(Thread):
             self._rep_, self._distance_buffer_ = self._check_reps_(self._rep_, self._distance_buffer_)
             # if new repetition, update all other values
             if old_rep != self._rep_:
-                self.timer.reset_timer()
+                self._reset_timer_()
                 # update durations
                 self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
                                                                                         self._start_time_)
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
                                                 rfid=self.rfid_tag, active=True, durations=self._durations_)
-            time.sleep(0.05)
+            if self.time_out_time < datetime.now():
+                self._stop_ = True
+                break
+            time.sleep(0.01)
         if not self.testing:
             self.tof.stop_ranging()
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
