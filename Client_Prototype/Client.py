@@ -24,11 +24,12 @@ class Equipment:
         self._configure_()
         self._configure_logger_()
         self.list_address, self.detail_address, self.userprofile_detail_address = self._load_links_(testing)
-        self.distance_settings, self.weight_settings = self._load_sensor_settings_()
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
                                               userprofile_detail_address=self.userprofile_detail_address)
+        self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager,
+                                                              self.testing)
         self.logger.info("Client instantiated.")
         if not testing:
             self.logger.warning("Running on production environment.")
@@ -79,15 +80,25 @@ class Equipment:
         links_file.close()
         return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link']
 
-    def _load_sensor_settings_(self):
+    @staticmethod
+    def _initialize_sensormanager_(config_file_path, request_manager, testing):
         """
-        Loads the sensor settings from the config.json file
-        :return Dict of distancesensor-settings and dict of weightsensor-settings
+        Creates a sensor manager-instance with the settings specified in the config_file.
+        :return SensorManager-Instance
         """
-        with open(self.config_path + "/config.json") as config_file:
-            settings = json.load(config_file)['sensor_settings']
+        with open(config_file_path) as config_file:
+            settings = json.load(config_file)
         config_file.close()
-        return settings['distance_sensor'], settings['weight_sensor']
+        plot_settings = settings['plot_settings']
+        distance_settings = settings['sensor_settings']['distance_sensor']
+        sensor_manager = SensorManager(request_manager=request_manager,
+                                       min_dist=distance_settings['min_dist'],
+                                       max_dist=distance_settings['max_dist'],
+                                       testing=testing, plot_len=plot_settings['length'],
+                                       frequency=distance_settings['frequency'],
+                                       rep_val=distance_settings['rep_val'],
+                                       timeout_delta=distance_settings['timeout_delta'])
+        return sensor_manager
 
     def _init_set_record_(self, rfid):
         """
@@ -135,16 +146,10 @@ class Equipment:
                     # init set
                     set_id = self._init_set_record_(rfid_tag)['id']
                     # start sensor thread
-                    sensor_manager = SensorManager(rfid_tag=rfid_tag, set_id=set_id,
-                                                   request_manager=self.request_manager,
-                                                   min_dist=self.distance_settings['min_dist'],
-                                                   max_dist=self.distance_settings['max_dist'],
-                                                   testing=self.testing)
-
-                    sensor_manager.start_recording()
+                    self.sensor_manager.start_recording(rfid_tag=rfid_tag, set_id=set_id)
                     # end set
-                    self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=sensor_manager.get_repetitions(),
-                                   weight=sensor_manager.get_weight(), durations=sensor_manager.get_durations())
+                    self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=self.sensor_manager.get_repetitions(),
+                                   weight=self.sensor_manager.get_weight(), durations=self.sensor_manager.get_durations())
 
                 except Exception as e:
                     print(traceback.print_exc())

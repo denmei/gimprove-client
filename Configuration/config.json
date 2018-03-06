@@ -5,10 +5,16 @@
   "sensor_settings": {
     "distance_sensor": {
       "min_dist": 470,
-      "max_dist": 900
+      "max_dist": 900,
+      "frequency": 0.01,
+      "timeout_delta": 10,
+      "rep_val": 0.8
     },
     "weight_sensor": {
 
     }
+  },
+  "plot_settings":  {
+    "length": 60
   }
 }

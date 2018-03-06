@@ -5,13 +5,11 @@ import logging
 from pathlib import Path
 from hx711py.hx711 import HX711
 import numpy as np
-import time
 from VL53L0X.python.VL53L0X import VL53L0X
-from .StreamPlotter import StreamPlotter
 import matplotlib.pyplot as plt
 
 
-class SensorManager():
+class SensorManager:
     """
     Responsible for recording and analyzing the sensor data during one session. Running in a own thread, the
     SensorManager records the sensor-activity until the session is timed out (no new repetition).
@@ -25,11 +23,10 @@ class SensorManager():
     be changed in the future to increase performance).
     """
 
-    def __init__(self, set_id, rfid_tag, request_manager, min_dist, max_dist, timeout_delta=10, testing=True):
+    def __init__(self, request_manager, min_dist, max_dist, timeout_delta=10, testing=True, plot_len=60,
+                 rep_val=0.8, frequency=0.01):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
-        :param set_id: ID of the current set.
-        :param rfid_tag: RFID tag of the active user.
         :param request_manager: Reference on the request manager for sending updates to the server.
         :param min_dist: minimum value that has to be reached with the distance sensor to count a repetition.
         :param max_dist: maximum value the distance sensor can reach.
@@ -42,9 +39,10 @@ class SensorManager():
             self._init_hx_weight_()
             self._init_vl530_distance_()
         self.timeout_delta = timeout_delta
-        self.set_id = set_id
-        self.rfid_tag = rfid_tag
         self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
+        self.plot_len = plot_len
+        self.rep_val = rep_val
+        self.frequency = frequency
         self._stop_ = False
         self._rep_ = 0
         self._min_ = min_dist
@@ -128,20 +126,17 @@ class SensorManager():
          reached again.
         :return: Number of repetitions in the buffer.
         """
-        rep_val = 0.8
         under_max = True
         reps = 0
         reps_i = []
-        max_val = self._max_
-        min_val = self._min_
         distance_buffer = self._running_mean_(distance_buffer, 10)
         for i in range(0, len(distance_buffer) - 1):
             if under_max:
-                if distance_buffer[i] > (max_val * rep_val):
+                if distance_buffer[i] > (self._max_ * self.rep_val):
                     reps += 1
                     reps_i += [i]
                     under_max = False
-            elif distance_buffer[i] < (min_val * (2 - rep_val)):
+            elif distance_buffer[i] < (self._min_ * (2 - self.rep_val)):
                 under_max = True
         return reps
 
@@ -163,39 +158,51 @@ class SensorManager():
         durations = durations + [(datetime.now() - start_time).total_seconds()]
         return durations, datetime.now()
 
-    def start_recording(self):
+    def _reset_(self):
+        self._rep_ = 0
+        self._distance_buffer_ = []
+        self._durations_ = []
+        self.time_out_time = datetime.now() + dt.timedelta(seconds=self.timeout_delta)
+        self._stop_ = False
+        self._no_ = 0
+        self._start_time_ = datetime.now()
+
+    def start_recording(self, set_id, rfid_tag):
         """
         While running, the values of the distance sensor are analyzed. If a new repetition is identified, the current
         value of the weight sensor is taken and a new repetition-request is sent to the server.
         """
+        self._reset_()
+
         self.logger.info("Start recording.")
-        self._rep_ = 0
 
         fig = plt.figure()
         plt.ion()
-        print(datetime.now())
+        plt_line_max = [[0, self.plot_len], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
+        plt_line_min = [[0, self.plot_len], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
         while not self._stop_:
-            plt.pause(0.01)
+            plt.pause(self.frequency)
             # update repetitions
             old_rep = self._rep_
             self._rep_, self._distance_buffer_ = self._check_reps_(self._rep_, self._distance_buffer_)
             # if new repetition, update all other values
             if old_rep != self._rep_:
                 self._reset_timer_()
-                print(str(self.time_out_time) + " " + str(datetime.now()))
                 # update durations
                 self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
                                                                                         self._start_time_)
                 # send update
-                self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=self.set_id,
-                                                rfid=self.rfid_tag, active=True, durations=self._durations_)
+                self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=set_id,
+                                                rfid=rfid_tag, active=True, durations=self._durations_)
 
             if self.time_out_time < datetime.now():
                 self._stop_ = True
                 break
 
             fig.clear()
-            plt.plot(range(len(self._distance_buffer_[-80:])), self._distance_buffer_[-80:])
+            plt.plot(plt_line_max[0], plt_line_max[1])
+            plt.plot(plt_line_min[0], plt_line_min[1])
+            plt.plot((self.plot_len - len(self._distance_buffer_)) * [self._min_] + self._distance_buffer_[-self.plot_len:])
             plt.draw()
 
         if not self.testing:
