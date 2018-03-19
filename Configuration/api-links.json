@@ -2,13 +2,13 @@
   "links": {
     "production-links": {
       "set_list": {
-        "link": "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
+        "link": "https://gimprove-test.herokuapp.com/tracker/set_list_rest/"
       },
       "set_detail": {
-        "link": "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
+        "link": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/"
       },
       "userprofile_detail": {
-        "link": "https://app-smartgym.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
+        "link": "https://gimprove-test.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
       }
     },
     "testing-links": {
