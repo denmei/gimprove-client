@@ -36,8 +36,8 @@ class SensorManager:
         """
         self.logger = logging.getLogger('gimprove' + __name__)
         if not testing:
-            self._init_hx_weight_()
             self._init_vl530_distance_()
+            self._init_hx_weight_()
         self.timeout_delta = timeout_delta
         self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
         self.plot_len = plot_len
