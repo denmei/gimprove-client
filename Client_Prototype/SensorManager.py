@@ -6,7 +6,6 @@ from pathlib import Path
 from hx711py.hx711 import HX711
 import numpy as np
 import matplotlib.pyplot as plt
-from VL53L0X_rasp_python.python.VL53L0X import VL53L0X as VL5
 
 
 class SensorManager:
@@ -69,6 +68,7 @@ class SensorManager:
         self.hx_weight.tare()
 
     def _init_vl530_distance_(self):
+        from VL53L0X_rasp_python.python.VL53L0X import VL53L0X as VL5
         self.tof = VL5()
         # Start ranging
         self.tof.start_ranging("VL53L0X.VL53L0X_BETTER_ACCURACY_MODE")
