@@ -1,10 +1,10 @@
 import RPi.GPIO as GPIO
 import time
-import numpy  # sudo apt-get python-numpy
+import numpy
 
 
 class HX711:
-    def __init__(self, dout, pd_sck, gain=128):
+    def __init__(self, dout, pd_sck, gain=128, reference_unit=1, offset=1):
         self.PD_SCK = pd_sck
         self.DOUT = dout
 
@@ -13,9 +13,9 @@ class HX711:
         GPIO.setup(self.DOUT, GPIO.IN)
 
         self.GAIN = 0
-        self.REFERENCE_UNIT = 1  # The value returned by the hx711 that corresponds to your reference unit AFTER dividing by the SCALE.
+        self.REFERENCE_UNIT = reference_unit  # The value returned by the hx711 that corresponds to your reference unit AFTER dividing by the SCALE.
 
-        self.OFFSET = 1
+        self.OFFSET = offset
         self.lastVal = int(0)
 
         self.LSByte = [2, -1, -1]

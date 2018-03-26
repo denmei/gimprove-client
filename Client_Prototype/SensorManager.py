@@ -22,13 +22,15 @@ class SensorManager:
     be changed in the future to increase performance).
     """
 
-    def __init__(self, request_manager, min_dist, max_dist, timeout_delta=10, testing=True, plot_len=60,
-                 rep_val=0.8, frequency=0.01):
+    def __init__(self, request_manager, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
+                 reference_unit=92, timeout_delta=10, testing=True, plot_len=60, rep_val=0.8, frequency=0.01, offset=1):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param request_manager: Reference on the request manager for sending updates to the server.
         :param min_dist: minimum value that has to be reached with the distance sensor to count a repetition.
         :param max_dist: maximum value the distance sensor can reach.
+        :param byte_format: order in which the bytes are used to build the "long" value.
+        :param bit_format: order of the bits inside each byte.
         :param timeout_delta: If 'timeout_delta' seconds pass without a new repetition, the process stops.
         :param testing: If true, executes in testing mode (uses sensor data). Otherwise, local files are used to
         simulate the sensor input.
@@ -36,7 +38,7 @@ class SensorManager:
         self.logger = logging.getLogger('gimprove' + __name__)
         if not testing:
             self._init_vl530_distance_()
-            self._init_hx_weight_()
+            self._init_hx_weight_(dout, pd_sck, gain, byte_format, bit_format, offset=offset, reference_unit=reference_unit)
         self.timeout_delta = timeout_delta
         self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
         self.plot_len = plot_len
@@ -60,10 +62,10 @@ class SensorManager:
         self._no_ = 0
         self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv'
 
-    def _init_hx_weight_(self):
-        self.hx_weight = HX711(5, 6)
-        self.hx_weight.set_reading_format("LSB", "MSB")
-        self.hx_weight.set_reference_unit(92)
+    def _init_hx_weight_(self, dout, pd_sck, gain, byte_format, bit_format, reference_unit, offset):
+        self.hx_weight = HX711(dout, pd_sck, gain, offset=offset)
+        self.hx_weight.set_reading_format(byte_format=byte_format, bit_format=bit_format)
+        self.hx_weight.set_reference_unit(reference_unit=reference_unit)
         self.hx_weight.reset()
         self.hx_weight.tare()
 

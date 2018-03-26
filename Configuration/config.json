@@ -10,7 +10,12 @@
       "rep_val": 0.8
     },
     "weight_sensor": {
-
+      "dout": 5,
+      "pd_sck": 6,
+      "gain": 128,
+      "byte_format": "LSB",
+      "bit_format": "MSB",
+      "reference_unit": 92
     }
   },
   "plot_settings":  {

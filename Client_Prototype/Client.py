@@ -90,9 +90,16 @@ class Equipment:
         config_file.close()
         plot_settings = settings['plot_settings']
         distance_settings = settings['sensor_settings']['distance_sensor']
+        weight_settings = settings['sensor_settings']['weight_sensor']
         sensor_manager = SensorManager(request_manager=request_manager,
                                        min_dist=distance_settings['min_dist'],
                                        max_dist=distance_settings['max_dist'],
+                                       dout=weight_settings['dout'],
+                                       pd_sck=weight_settings['pd_sck'],
+                                       gain=weight_settings['gain'],
+                                       byte_format=weight_settings['byte_format'],
+                                       bit_format=weight_settings['bit_format'],
+                                       reference_unit=weight_settings['reference_unit'],
                                        testing=testing, plot_len=plot_settings['length'],
                                        frequency=distance_settings['frequency'],
                                        rep_val=distance_settings['rep_val'],
