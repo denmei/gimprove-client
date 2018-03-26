@@ -42,7 +42,6 @@ class Equipment:
             configuration = json.load(config_file)
         self.exercise_name = configuration['exercise_name']
         self.equipment_id = configuration['equipment_id']
-        self.time_out = configuration['time_out']
 
     def _configure_logger_(self):
         """

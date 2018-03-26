@@ -1,7 +1,6 @@
 {
   "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
   "exercise_name": "Lat Pulldown",
-  "time_out": 8,
   "sensor_settings": {
     "distance_sensor": {
       "min_dist": 470,

@@ -1,4 +1,4 @@
 from Client_Prototype.Client import Equipment
 
-equipment = Equipment(testing=False)
+equipment = Equipment(testing=True)
 equipment.run()
