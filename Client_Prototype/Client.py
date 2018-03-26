@@ -103,7 +103,12 @@ class Equipment:
                                        testing=testing, plot_len=plot_settings['length'],
                                        frequency=distance_settings['frequency'],
                                        rep_val=distance_settings['rep_val'],
-                                       timeout_delta=distance_settings['timeout_delta'])
+                                       timeout_delta=distance_settings['timeout_delta'],
+                                       address=hex(distance_settings['address']),
+                                       TCA9548A_Num=distance_settings['TCA9548A_Num'],
+                                       TCA9548A_Addr=distance_settings['TCA9548A_Addr'],
+                                       ranging_mode=distance_settings['ranging_mode'])
+        print(hex(distance_settings['address']))
         return sensor_manager
 
     def _init_set_record_(self, rfid):

@@ -23,7 +23,8 @@ class SensorManager:
     """
 
     def __init__(self, request_manager, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
-                 reference_unit=92, timeout_delta=10, testing=True, plot_len=60, rep_val=0.8, frequency=0.01, offset=1):
+                 reference_unit=92, timeout_delta=10, testing=True, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
+                 address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE"):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param request_manager: Reference on the request manager for sending updates to the server.
@@ -37,8 +38,9 @@ class SensorManager:
         """
         self.logger = logging.getLogger('gimprove' + __name__)
         if not testing:
-            self._init_vl530_distance_()
-            self._init_hx_weight_(dout, pd_sck, gain, byte_format, bit_format, offset=offset, reference_unit=reference_unit)
+            self._init_vl530_distance_(address, TCA9548A_Num, TCA9548A_Addr, ranging_mode)
+            self._init_hx_weight_(dout, pd_sck, gain, byte_format, bit_format, offset=offset,
+                                  reference_unit=reference_unit)
         self.timeout_delta = timeout_delta
         self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
         self.plot_len = plot_len
@@ -55,8 +57,6 @@ class SensorManager:
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
-        # self.stream_plotter = StreamPlotter(self._distance_buffer_, 0.5)
-        # self.stream_plotter.start()
 
         # only for testing:
         self._no_ = 0
@@ -69,11 +69,24 @@ class SensorManager:
         self.hx_weight.reset()
         self.hx_weight.tare()
 
-    def _init_vl530_distance_(self):
+    def _init_vl530_distance_(self, address, TCA9548A_Num, TCA9548A_Addr, mode):
         from VL53L0X_rasp_python.python.VL53L0X import VL53L0X as VL5
-        self.tof = VL5()
+        if mode == "VL53L0X_GOOD_ACCURACY_MODE":
+            ranging_mode = 0
+        elif mode == "VL53L0X_BETTER_ACCURACY_MODE":
+            ranging_mode = 1
+        elif mode == "VL53L0X_BEST_ACCURACY_MODE":
+            ranging_mode = 2
+        elif mode == "VL53L0X_LONG_RANGE_MODE":
+            ranging_mode = 3
+        elif mode == "VL53L0X_HIGH_SPEED_MODE":
+            ranging_mode = 4
+        else:
+            self.logger.info("Inserted ranging mode not valid. Continue with default VL53L0X_LONG_RANGE_MODE")
+            ranging_mode = 3
+        self.tof = VL5(address, TCA9548A_Num, TCA9548A_Addr)
         # Start ranging
-        self.tof.start_ranging("VL53L0X.VL53L0X_BETTER_ACCURACY_MODE")
+        self.tof.start_ranging(ranging_mode)
 
     def get_repetitions(self):
         """
@@ -161,6 +174,9 @@ class SensorManager:
         return durations, datetime.now()
 
     def _reset_(self):
+        """
+        Resets all values created during one recording session.
+        """
         self._rep_ = 0
         self._distance_buffer_ = []
         self._durations_ = []

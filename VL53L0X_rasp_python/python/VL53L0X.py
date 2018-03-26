@@ -22,9 +22,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-import time
 from ctypes import *
 import smbus
+import os
+from pathlib import Path
 
 VL53L0X_GOOD_ACCURACY_MODE      = 0   # Good Accuracy mode
 VL53L0X_BETTER_ACCURACY_MODE    = 1   # Better Accuracy mode
@@ -33,6 +34,7 @@ VL53L0X_LONG_RANGE_MODE         = 3   # Longe Range mode
 VL53L0X_HIGH_SPEED_MODE         = 4   # High Speed mode
 
 i2cbus = smbus.SMBus(1)
+
 
 # i2c bus read callback
 def i2c_read(address, reg, data_p, length):
@@ -50,6 +52,7 @@ def i2c_read(address, reg, data_p, length):
 
     return ret_val
 
+
 # i2c bus write callback
 def i2c_write(address, reg, data_p, length):
     ret_val = 0;
@@ -64,9 +67,8 @@ def i2c_write(address, reg, data_p, length):
 
     return ret_val
 
+
 # Load VL53L0X shared lib
-import os
-from pathlib import Path
 path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent)  + "/bin/vl53l0x_python.so"
 tof_lib = CDLL(path)
 
@@ -81,6 +83,7 @@ write_func = WRITEFUNC(i2c_write)
 # pass i2c read and write function pointers to VL53L0X library
 tof_lib.VL53L0X_set_i2c(read_func, write_func)
 
+
 class VL53L0X(object):
     """VL53L0X ToF."""
 
@@ -94,7 +97,7 @@ class VL53L0X(object):
         self.my_object_number = VL53L0X.object_number
         VL53L0X.object_number += 1
 
-    def start_ranging(self, mode = VL53L0X_GOOD_ACCURACY_MODE):
+    def start_ranging(self, mode=VL53L0X_GOOD_ACCURACY_MODE):
         """Start VL53L0X ToF Sensor Ranging"""
         tof_lib.startRanging(self.my_object_number, mode, self.device_address, self.TCA9548A_Device, self.TCA9548A_Address)
         
@@ -113,7 +116,7 @@ class VL53L0X(object):
         Dev = tof_lib.getDev(self.my_object_number)
         budget = c_uint(0)
         budget_p = pointer(budget)
-        Status =  tof_lib.VL53L0X_GetMeasurementTimingBudgetMicroSeconds(Dev, budget_p)
+        Status = tof_lib.VL53L0X_GetMeasurementTimingBudgetMicroSeconds(Dev, budget_p)
         if (Status == 0):
             return (budget.value + 1000)
         else:
