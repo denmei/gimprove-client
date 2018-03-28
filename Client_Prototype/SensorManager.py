@@ -38,9 +38,10 @@ class SensorManager:
         """
         self.logger = logging.getLogger('gimprove' + __name__)
         if not testing:
-            self._init_vl530_distance_(address, TCA9548A_Num, TCA9548A_Addr, ranging_mode)
-            self._init_hx_weight_(dout, pd_sck, gain, byte_format, bit_format, offset=offset,
-                                  reference_unit=reference_unit)
+            self._init_vl530_distance_(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr,
+                                       mode=ranging_mode)
+            self._init_hx_weight_(dout=dout, pd_sck=pd_sck, gain=gain, byte_format=byte_format, bit_format=bit_format,
+                                  offset=offset, reference_unit=reference_unit)
         self.timeout_delta = timeout_delta
         self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
         self.plot_len = plot_len
@@ -84,7 +85,7 @@ class SensorManager:
         else:
             self.logger.info("Inserted ranging mode not valid. Continue with default VL53L0X_LONG_RANGE_MODE")
             ranging_mode = 3
-        self.tof = VL5(address, TCA9548A_Num, TCA9548A_Addr)
+        self.tof = VL5(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr)
         # Start ranging
         self.tof.start_ranging(ranging_mode)
 

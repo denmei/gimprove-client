@@ -11,7 +11,7 @@
       "address": 41,
       "TCA9548A_Num": 255,
       "TCA9548A_Addr": 0,
-      "ranging_mode": "VL53L0X.VL53L0X_BETTER_ACCURACY_MODE"
+      "ranging_mode": "VL53L0X_BETTER_ACCURACY_MODE"
     },
     "weight_sensor": {
       "dout": 5,

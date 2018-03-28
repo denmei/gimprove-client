@@ -108,7 +108,6 @@ class Equipment:
                                        TCA9548A_Num=distance_settings['TCA9548A_Num'],
                                        TCA9548A_Addr=distance_settings['TCA9548A_Addr'],
                                        ranging_mode=distance_settings['ranging_mode'])
-        print(hex(distance_settings['address']))
         return sensor_manager
 
     def _init_set_record_(self, rfid):

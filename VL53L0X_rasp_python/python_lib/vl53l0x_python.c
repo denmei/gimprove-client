@@ -55,7 +55,7 @@ void print_pal_error(VL53L0X_Error Status)
 {
     char buf[VL53L0X_MAX_STRING_LENGTH];
     VL53L0X_GetPalErrorString(Status, buf);
-    printf("API Status: %i : %s\n", Status, buf);
+    printf("fAPI Status: %i : %s\n", Status, buf);
 }
 
 VL53L0X_Error WaitMeasurementDataReady(VL53L0X_DEV Dev)
