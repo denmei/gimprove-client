@@ -172,6 +172,3 @@ class Equipment:
 if __name__ == '__main__':
     equipment = Equipment(testing=True)
     equipment.run()
-
-
-

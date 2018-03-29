@@ -132,6 +132,7 @@ class SensorManager:
                 self._stop_ = True
         else:
             distance = self.tof.get_distance()
+        print("Distance: " + str(distance) + "mm")
         # update distance buffer
         distance_buffer += [int(distance)]
         # calculate repetitions and update repetitions-value
