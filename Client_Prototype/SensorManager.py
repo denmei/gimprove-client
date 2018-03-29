@@ -40,7 +40,7 @@ class SensorManager:
         self.logger = logging.getLogger('gimprove' + __name__)
         if not testing:
             GPIO.cleanup()
-            self._init_vl530_distance_(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr,
+            self.ranging_mode = self._init_vl530_distance_(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr,
                                        mode=ranging_mode)
             self._init_hx_weight_(dout=dout, pd_sck=pd_sck, gain=gain, byte_format=byte_format, bit_format=bit_format,
                                   offset=offset, reference_unit=reference_unit)
@@ -90,8 +90,7 @@ class SensorManager:
         self.tof = VL5(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr)
         # If there are errors with the Distance Sensor, uncomment the next line:
         # self.tof = VL5()
-        # Start ranging
-        self.tof.start_ranging(ranging_mode)
+        return ranging_mode
 
     def get_repetitions(self):
         """
@@ -203,6 +202,9 @@ class SensorManager:
         plt.ion()
         plt_line_max = [[0, self.plot_len], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
         plt_line_min = [[0, self.plot_len], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
+        if not self.testing:
+            # Start ranging
+            self.tof.start_ranging(self.ranging_mode)
         while not self._stop_:
             plt.pause(self.frequency)
             # update repetitions
