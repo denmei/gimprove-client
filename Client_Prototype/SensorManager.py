@@ -90,6 +90,8 @@ class SensorManager:
         self.tof = VL5(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr)
         # If there are errors with the Distance Sensor, uncomment the next line:
         # self.tof = VL5()
+        # Start ranging
+        self.tof.start_ranging(ranging_mode)
         return ranging_mode
 
     def get_repetitions(self):
@@ -203,9 +205,6 @@ class SensorManager:
         plt.ion()
         plt_line_max = [[0, self.plot_len], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
         plt_line_min = [[0, self.plot_len], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
-        if not self.testing:
-            # Start ranging
-            self.tof.start_ranging(self.ranging_mode)
         while not self._stop_:
             plt.pause(self.frequency)
             # update repetitions
@@ -220,7 +219,6 @@ class SensorManager:
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=set_id,
                                                 rfid=rfid_tag, active=True, durations=self._durations_)
-
             if self.time_out_time < datetime.now():
                 self._stop_ = True
                 break
@@ -230,9 +228,6 @@ class SensorManager:
             plt.plot(plt_line_min[0], plt_line_min[1])
             plt.plot((self.plot_len - len(self._distance_buffer_)) * [self._min_] + self._distance_buffer_[-self.plot_len:])
             plt.draw()
-
-        if not self.testing:
-            self.tof.stop_ranging()
         plt.close()
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Stop recording.')
