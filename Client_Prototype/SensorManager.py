@@ -87,9 +87,9 @@ class SensorManager:
         else:
             self.logger.info("Inserted ranging mode not valid. Continue with default VL53L0X_LONG_RANGE_MODE")
             ranging_mode = 3
-        self.tof = VL5(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr)
+        # self.tof = VL5(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr)
         # If there are errors with the Distance Sensor, uncomment the next line:
-        # self.tof = VL5()
+        self.tof = VL5()
         # Start ranging
         self.tof.start_ranging(ranging_mode)
         return ranging_mode
@@ -134,7 +134,7 @@ class SensorManager:
                 self._stop_ = True
         else:
             distance = self.tof.get_distance()
-        print("Distance: " + str(distance) + "mm")
+        # print("Distance: " + str(distance) + "mm")
         # update distance buffer
         distance_buffer += [int(distance)]
         # calculate repetitions and update repetitions-value
@@ -148,7 +148,7 @@ class SensorManager:
          reached again.
         :return: Number of repetitions in the buffer.
         """
-        under_max = True
+        under_max = (distance_buffer[0] < (self._min_ * (2 - self.rep_val)))
         reps = 0
         reps_i = []
         distance_buffer = self._running_mean_(distance_buffer, 10)
@@ -212,6 +212,7 @@ class SensorManager:
             self._rep_, self._distance_buffer_ = self._check_reps_(self._rep_, self._distance_buffer_)
             # if new repetition, update all other values
             if old_rep != self._rep_:
+                print(self._rep_)
                 self._reset_timer_()
                 # update durations
                 self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
