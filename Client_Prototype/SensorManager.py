@@ -87,9 +87,9 @@ class SensorManager:
         else:
             self.logger.info("Inserted ranging mode not valid. Continue with default VL53L0X_LONG_RANGE_MODE")
             ranging_mode = 3
-        # TODO
-        # self.tof = VL5(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr)
-        self.tof = VL5()
+        self.tof = VL5(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr)
+        # If there are errors with the Distance Sensor, uncomment the next line:
+        # self.tof = VL5()
         # Start ranging
         self.tof.start_ranging(ranging_mode)
 
