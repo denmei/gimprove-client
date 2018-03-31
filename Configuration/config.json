@@ -23,6 +23,12 @@
     }
   },
   "plot_settings": {
+    "plot": "False",
     "length": 60
+  },
+  "terminal_settings": {
+    "print_weight": "True",
+    "print_distance": "True",
+    "print_undermax": "True"
   }
 }

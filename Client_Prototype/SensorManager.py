@@ -25,7 +25,8 @@ class SensorManager:
 
     def __init__(self, request_manager, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
                  reference_unit=92, timeout_delta=10, testing=True, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
-                 address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE"):
+                 address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
+                 print_distance=True, print_weight=True, print_undermax=False):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param request_manager: Reference on the request manager for sending updates to the server.
@@ -57,9 +58,16 @@ class SensorManager:
         self._durations_ = []
         self._start_time_ = datetime.now()
         self.testing = testing
+        self.plot = plot
+        self.print_distance = print_distance
+        self.print_weight = print_weight
+        self.print_undermax = print_undermax
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
+
+        print(self._max_ * self.rep_val)
+        print(self._min_ * (2 - self.rep_val))
 
         # only for testing:
         self._no_ = 0
@@ -108,7 +116,8 @@ class SensorManager:
             return 10
         else:
             weight = self.hx_weight.get_weight(5)
-            print("Weightsensor: " + str(weight))
+            if self.print_weight:
+                print("Weightsensor: " + str(weight))
             return weight
 
     def is_timed_out(self):
@@ -134,6 +143,8 @@ class SensorManager:
                 self._stop_ = True
         else:
             distance = self.tof.get_distance()
+        if self.print_distance:
+            print('Distance: %s mm' % distance)
         # print("Distance: " + str(distance) + "mm")
         # update distance buffer
         distance_buffer += [int(distance)]
@@ -160,6 +171,8 @@ class SensorManager:
                     under_max = False
             elif distance_buffer[i] < (self._min_ * (2 - self.rep_val)):
                 under_max = True
+        if self.print_undermax:
+            print('Undermax: %s' %under_max)
         return reps
 
     def _reset_timer_(self):
@@ -201,10 +214,13 @@ class SensorManager:
 
         self.logger.info("Start recording.")
 
-        fig = plt.figure()
-        plt.ion()
-        plt_line_max = [[0, self.plot_len], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
-        plt_line_min = [[0, self.plot_len], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
+        fig = None
+
+        if self.plot:
+            fig = plt.figure()
+            plt.ion()
+            plt_line_max = [[0, self.plot_len], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
+            plt_line_min = [[0, self.plot_len], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
         while not self._stop_:
             plt.pause(self.frequency)
             # update repetitions
@@ -224,11 +240,14 @@ class SensorManager:
                 self._stop_ = True
                 break
 
-            fig.clear()
-            plt.plot(plt_line_max[0], plt_line_max[1])
-            plt.plot(plt_line_min[0], plt_line_min[1])
-            plt.plot((self.plot_len - len(self._distance_buffer_)) * [self._min_] + self._distance_buffer_[-self.plot_len:])
-            plt.draw()
-        plt.close()
+            if self.plot:
+                fig.clear()
+                plt.plot(plt_line_max[0], plt_line_max[1])
+                plt.plot(plt_line_min[0], plt_line_min[1])
+                plt.plot((self.plot_len - len(self._distance_buffer_)) * [self._min_] + self._distance_buffer_[-self.plot_len:])
+                plt.draw()
+
+        if self.plot:
+            plt.close()
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Stop recording.')
