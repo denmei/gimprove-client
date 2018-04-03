@@ -91,6 +91,7 @@ class Equipment:
         plot_settings = settings['plot_settings']
         distance_settings = settings['sensor_settings']['distance_sensor']
         weight_settings = settings['sensor_settings']['weight_sensor']
+        terminal_settings = settings['terminal_settings']
         sensor_manager = SensorManager(request_manager=request_manager,
                                        min_dist=distance_settings['min_dist'],
                                        max_dist=distance_settings['max_dist'],
@@ -100,14 +101,19 @@ class Equipment:
                                        byte_format=weight_settings['byte_format'],
                                        bit_format=weight_settings['bit_format'],
                                        reference_unit=weight_settings['reference_unit'],
-                                       testing=testing, plot_len=plot_settings['length'],
+                                       testing=testing,
+                                       plot_len=plot_settings['length'],
+                                       plot=(plot_settings['plot'] == 'True'),
                                        frequency=distance_settings['frequency'],
                                        rep_val=distance_settings['rep_val'],
                                        timeout_delta=distance_settings['timeout_delta'],
                                        address=hex(distance_settings['address']),
                                        TCA9548A_Num=distance_settings['TCA9548A_Num'],
                                        TCA9548A_Addr=distance_settings['TCA9548A_Addr'],
-                                       ranging_mode=distance_settings['ranging_mode'])
+                                       ranging_mode=distance_settings['ranging_mode'],
+                                       print_weight=(terminal_settings['print_weight'] == 'True'),
+                                       print_distance=(terminal_settings['print_distance'] == 'True'),
+                                       print_undermax=(terminal_settings['print_undermax'] == 'True'))
         return sensor_manager
 
     def _init_set_record_(self, rfid):

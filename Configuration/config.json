@@ -29,6 +29,6 @@
   "terminal_settings": {
     "print_weight": "True",
     "print_distance": "True",
-    "print_undermax": "True"
+    "print_undermax": "False"
   }
 }
