@@ -24,7 +24,7 @@ class SensorManager:
     """
 
     def __init__(self, request_manager, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
-                 reference_unit=92, timeout_delta=10, testing=True, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
+                 reference_unit=92, timeout_delta=10, use_sensors=False, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
                  address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
                  print_distance=True, print_weight=True, print_undermax=False, final_plot=False):
         """
@@ -39,7 +39,7 @@ class SensorManager:
         simulate the sensor input.
         """
         self.logger = logging.getLogger('gimprove' + __name__)
-        if not testing:
+        if use_sensors:
             GPIO.cleanup()
             self.ranging_mode = self._init_vl530_distance_(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr,
                                        mode=ranging_mode)
@@ -57,7 +57,7 @@ class SensorManager:
         self.request_manager = request_manager
         self._durations_ = []
         self._start_time_ = datetime.now()
-        self.testing = testing
+        self.use_sensors = use_sensors
         self.plot = plot
         self.print_distance = print_distance
         self.print_weight = print_weight
@@ -110,7 +110,7 @@ class SensorManager:
         """
         Returns the current weight measured.
         """
-        if self.testing:
+        if not self.use_sensors:
             return 10
         else:
             weight = self.hx_weight.get_weight(5)
@@ -131,7 +131,7 @@ class SensorManager:
         """
         
         # get current distance. If testing, use distance.csv, otherwise data from sensor
-        if self.testing:
+        if not self.use_sensors:
             with open(self._numbers_file_) as numbers:
                 lines = numbers.readlines()
                 length = len(lines)
@@ -202,6 +202,11 @@ class SensorManager:
         self._stop_ = False
         self._no_ = 0
         self._start_time_ = datetime.now()
+
+    def quit(self):
+        if self.use_sensors:
+            self.tof.stop_ranging()
+            GPIO.cleanup()
 
     def start_recording(self, set_id, rfid_tag):
         """

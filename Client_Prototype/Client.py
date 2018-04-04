@@ -15,11 +15,10 @@ class Equipment:
     In case of a connection error, the results will be cached an resent at another point of time.
     """
 
-    def __init__(self, testing=True):
+    def __init__(self):
         """
         :param testing: If true, runs in test mode (APIs of the test-environment). Else, production environment is used.
         """
-        self.testing = testing
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
         self._configure_logger_()
@@ -29,11 +28,8 @@ class Equipment:
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
                                               userprofile_detail_address=self.userprofile_detail_address)
-        self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager,
-                                                              self.testing)
+        self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager)
         self.logger.info("Client instantiated.")
-        if not testing:
-            self.logger.warning("Running on production environment.")
 
     def _configure_(self):
         """
@@ -88,7 +84,7 @@ class Equipment:
         return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link']
 
     @staticmethod
-    def _initialize_sensormanager_(config_file_path, request_manager, testing):
+    def _initialize_sensormanager_(config_file_path, request_manager):
         """
         Creates a sensor manager-instance with the settings specified in the config_file.
         :return SensorManager-Instance
@@ -96,6 +92,7 @@ class Equipment:
         with open(config_file_path) as config_file:
             settings = json.load(config_file)
         config_file.close()
+        sensor_settings = settings['sensor_settings']
         plot_settings = settings['plot_settings']
         distance_settings = settings['sensor_settings']['distance_sensor']
         weight_settings = settings['sensor_settings']['weight_sensor']
@@ -109,7 +106,7 @@ class Equipment:
                                        byte_format=weight_settings['byte_format'],
                                        bit_format=weight_settings['bit_format'],
                                        reference_unit=weight_settings['reference_unit'],
-                                       testing=testing,
+                                       use_sensors=(sensor_settings['use_sensors'] == 'True'),
                                        plot_len=plot_settings['length'],
                                        plot=(plot_settings['plot'] == 'True'),
                                        frequency=distance_settings['frequency'],
@@ -167,6 +164,7 @@ class Equipment:
             # check validity of rfid tag.
             set_id = None
             if rfid_tag == 'quit':
+                self.sensor_manager.quit()
                 break
             elif self.request_manager.rfid_is_valid(rfid_tag):
                 try:
