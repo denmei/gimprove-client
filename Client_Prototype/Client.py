@@ -162,11 +162,13 @@ class Equipment:
         """
         while True:
             # start waiting for rfid tag
-            rfid_tag = input('RFID (0006921147):')
+            rfid_tag = input('RFID (0006921147) or quit:')
             self.logger.info("RFID-read: " + rfid_tag)
             # check validity of rfid tag.
             set_id = None
-            if self.request_manager.rfid_is_valid(rfid_tag):
+            if rfid_tag == 'quit':
+                break
+            elif self.request_manager.rfid_is_valid(rfid_tag):
                 try:
                     # init set
                     set_id = self._init_set_record_(rfid_tag)['id']
