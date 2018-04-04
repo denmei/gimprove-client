@@ -23,7 +23,8 @@ class Equipment:
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
         self._configure_logger_()
-        self.list_address, self.detail_address, self.userprofile_detail_address = self._load_links_(testing)
+        self.list_address, self.detail_address, self.userprofile_detail_address = \
+            self._load_links_(self.config_path + "/config.json")
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
@@ -65,17 +66,24 @@ class Equipment:
         self.logger = logging.getLogger('gimprove' + __name__)
         logging.getLogger("requests").setLevel(logging.WARNING)
 
-    def _load_links_(self, testing=True):
+    def _load_links_(self, config_file_path):
         """
         Loads the links for the APIs of the GImprove-Server.
         :param testing: If true, the APIs of the testing environment are loaded. Else production environment.
         :return [link set_list, link to set_detail, link to userprofile_detail(rfid)]
         """
+        with open(config_file_path) as config_file:
+            settings = json.load(config_file)
+        config_file.close()
+        communication_settings = settings['communication']
+        environment = communication_settings['environment']
         with open(self.config_path + "/api-links.json") as links_file:
-            if not testing:
+            if environment == 'Test':
+                links = json.load(links_file)['links']['test-links']
+            elif environment == 'Production':
                 links = json.load(links_file)['links']['production-links']
             else:
-                links = json.load(links_file)['links']['testing-links']
+                links = json.load(links_file)['links']['local-links']
         links_file.close()
         return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link']
 
@@ -113,7 +121,8 @@ class Equipment:
                                        ranging_mode=distance_settings['ranging_mode'],
                                        print_weight=(terminal_settings['print_weight'] == 'True'),
                                        print_distance=(terminal_settings['print_distance'] == 'True'),
-                                       print_undermax=(terminal_settings['print_undermax'] == 'True'))
+                                       print_undermax=(terminal_settings['print_undermax'] == 'True'),
+                                       final_plot=(plot_settings['final_plot'] == 'True'))
         return sensor_manager
 
     def _init_set_record_(self, rfid):

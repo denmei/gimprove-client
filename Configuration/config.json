@@ -24,11 +24,15 @@
   },
   "plot_settings": {
     "plot": "False",
-    "length": 60
+    "length": 5,
+    "final_plot": "False"
   },
   "terminal_settings": {
     "print_weight": "True",
     "print_distance": "True",
     "print_undermax": "False"
+  },
+  "communication": {
+    "environment": "Test"
   }
 }

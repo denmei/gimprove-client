@@ -26,7 +26,7 @@ class SensorManager:
     def __init__(self, request_manager, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
                  reference_unit=92, timeout_delta=10, testing=True, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
                  address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
-                 print_distance=True, print_weight=True, print_undermax=False):
+                 print_distance=True, print_weight=True, print_undermax=False, final_plot=False):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param request_manager: Reference on the request manager for sending updates to the server.
@@ -62,12 +62,10 @@ class SensorManager:
         self.print_distance = print_distance
         self.print_weight = print_weight
         self.print_undermax = print_undermax
+        self.final_plot = final_plot
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
-
-        print(self._max_ * self.rep_val)
-        print(self._min_ * (2 - self.rep_val))
 
         # only for testing:
         self._no_ = 0
@@ -249,5 +247,15 @@ class SensorManager:
 
         if self.plot:
             plt.close()
+
+        if self.final_plot and not self.plot:
+            plt_line_max = [[0, len(self._distance_buffer_)], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
+            plt_line_min = [[0, len(self._distance_buffer_)], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
+            plt.plot(plt_line_max[0], plt_line_max[1])
+            plt.plot(plt_line_min[0], plt_line_min[1])
+            plt.plot((self.plot_len - len(self._distance_buffer_)) * [self._min_] + self._distance_buffer_)
+            plt.tight_layout()
+            plt.show()
+
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
         self.logger.info('Stop recording.')

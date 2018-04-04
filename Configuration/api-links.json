@@ -2,6 +2,17 @@
   "links": {
     "production-links": {
       "set_list": {
+        "link": "https://gimprove-production.herokuapp.com/tracker/set_list_rest/"
+      },
+      "set_detail": {
+        "link": "https://gimprove-production.herokuapp.com/tracker/set_detail_rest/"
+      },
+      "userprofile_detail": {
+        "link": "https://gimprove-production.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
+      }
+    },
+    "test-links": {
+      "set_list": {
         "link": "https://gimprove-test.herokuapp.com/tracker/set_list_rest/"
       },
       "set_detail": {
@@ -11,7 +22,7 @@
         "link": "https://gimprove-test.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
       }
     },
-    "testing-links": {
+    "local-links": {
       "set_list": {
         "link": "http://127.0.0.1:8000/tracker/set_list_rest/"
       },
