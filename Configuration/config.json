@@ -24,8 +24,8 @@
     }
   },
   "plot_settings": {
-    "plot": "False",
-    "length": 5,
+    "plot": "True",
+    "length": 10,
     "final_plot": "False"
   },
   "terminal_settings": {
