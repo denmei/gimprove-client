@@ -59,7 +59,7 @@ class RequestManager:
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
-        self.logger.info("Sent update request. Reps: %s, Weight: %s, Status: %s" % (repetitions, weight, response.status_code))
+        self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code, response.content))
         return response
 
     def new_set(self, rfid, exercise_unit=""):
