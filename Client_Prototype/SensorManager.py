@@ -116,7 +116,7 @@ class SensorManager:
             weight = self.hx_weight.get_weight(5)
             if self.print_weight:
                 print("Weightsensor: " + str(weight))
-            return weight
+            return int(weight)
 
     def is_timed_out(self):
         return self._stop_
