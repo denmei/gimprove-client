@@ -70,7 +70,7 @@ class RequestManager:
         :return: Server response
         """
         data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise_name': self.exercise_name,
-                'rfid': rfid, 'date_time': datetime.now().astimezone(),
+                'rfid': rfid, 'date_time': datetime.now(),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
         response = requests.post(self.list_address, data=data)
         if response.status_code != 200 and response.status_code != 201:
