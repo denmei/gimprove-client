@@ -54,7 +54,7 @@ class RequestManager:
         """
         address = self.detail_address + set_id
         data = {'repetitions': repetitions, 'weight': weight, 'exercise_name': self.exercise_name,
-                'equipment_id': self.equipment_id, 'date_time': datetime.now().astimezone(),
+                'equipment_id': self.equipment_id, 'date_time': datetime.now(),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
