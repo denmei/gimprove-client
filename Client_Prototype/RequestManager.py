@@ -5,6 +5,7 @@ import json
 import random
 import traceback
 import logging
+import pytz
 
 
 class RequestManager:
@@ -22,6 +23,7 @@ class RequestManager:
         self.cache_path = os.path.join(cache_path, "client_cache.txt")
         self.userprofile_detail_address = userprofile_detail_address
         self._check_cache_file_()
+        self.local_tz = pytz.timezone('Europe/Berlin')
 
     def rfid_is_valid(self, rfid):
         """
@@ -54,7 +56,7 @@ class RequestManager:
         """
         address = self.detail_address + set_id
         data = {'repetitions': repetitions, 'weight': weight, 'exercise_name': self.exercise_name,
-                'equipment_id': self.equipment_id, 'date_time': str(datetime.now().astimezone()),
+                'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
@@ -70,7 +72,7 @@ class RequestManager:
         :return: Server response
         """
         data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise_name': self.exercise_name,
-                'rfid': rfid, 'date_time': str(datetime.now().astimezone()),
+                'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
         response = requests.post(self.list_address, data=data)
         if response.status_code != 200 and response.status_code != 201:
