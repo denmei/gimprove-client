@@ -11,8 +11,8 @@ class TestClient(unittest.TestCase):
     def setUp(self):
         logging.disable(logging.CRITICAL)
         self.exercise_name = 'Lat Pulldown'
-        self.equipment_id = "fded5e7ff5044992bb70949f3aec172c"
-        self.equipment = Equipment(testing=True)
+        self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
+        self.equipment = Equipment()
         self.rfid = "0006921147"
 
         # self.list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"

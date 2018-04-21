@@ -19,7 +19,7 @@ class TestRequestManager(unittest.TestCase):
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
         self.exercise_name = 'Lat Pulldown'
-        self.equipment_id = "fded5e7ff5044992bb70949f3aec172c"
+        self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
         self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
         self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + \
                                "/Configuration/client_cache.txt"
@@ -143,7 +143,5 @@ class TestRequestManager(unittest.TestCase):
 
         # check whether returns true for correct rfid
         response = requests.get(self.user_profile_address + "1")
-        print(self.user_profile_address + "1")
-        print(response.status_code)
         real_rfid = json.loads(response.content.decode("utf-8"))['rfid_tag']
         self.assertTrue(self.request_manager.rfid_is_valid(real_rfid))
