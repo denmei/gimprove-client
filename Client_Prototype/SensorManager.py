@@ -115,7 +115,7 @@ class SensorManager:
         if (not self.use_sensors) and (reps is not None):
             with open(self._weights_file_) as weights:
                 lines = weights.readlines()
-                weight = lines[reps-1].split(",")[1].split(".")[0]
+                weight = lines[reps-1].split(",")[1].split("\n")[0]
                 print("Weight-File: " + str(weight))
         elif self.use_sensors:
             weight = self.hx_weight.get_weight(5)
@@ -123,8 +123,8 @@ class SensorManager:
                 print("Weightsensor: " + str(weight))
         else:
             weight = 10
-        self._weight_ = weight
-        return int(weight)
+        self._weight_ = float(weight)
+        return float(weight)
 
     def get_last_weight(self):
         return self._weight_
