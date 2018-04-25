@@ -174,7 +174,7 @@ class Equipment:
                     self.sensor_manager.start_recording(rfid_tag=rfid_tag, set_id=set_id)
                     # end set
                     self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=self.sensor_manager.get_repetitions(),
-                                   weight=self.sensor_manager.get_weight(), durations=self.sensor_manager.get_durations())
+                                   weight=self.sensor_manager.get_last_weight(), durations=self.sensor_manager.get_durations())
 
                 except Exception as e:
                     print(traceback.print_exc())

@@ -68,8 +68,10 @@ class SensorManager:
         self._distance_buffer_ = []
 
         # only for testing:
+        self._weight_ = 0
         self._no_ = 0
         self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv'
+        self._weights_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv'
 
     def _init_hx_weight_(self, dout, pd_sck, gain, byte_format, bit_format, reference_unit, offset):
         self.hx_weight = HX711(dout, pd_sck, gain, offset=offset)
@@ -106,17 +108,26 @@ class SensorManager:
         """
         return self._rep_
 
-    def get_weight(self):
+    def _get_weight_(self, reps=None):
         """
         Returns the current weight measured.
         """
-        if not self.use_sensors:
-            return 10
-        else:
+        if (not self.use_sensors) and (reps is not None):
+            with open(self._weights_file_) as weights:
+                lines = weights.readlines()
+                weight = lines[reps-1].split(",")[1].split(".")[0]
+                print("Weight-File: " + str(weight))
+        elif self.use_sensors:
             weight = self.hx_weight.get_weight(5)
             if self.print_weight:
                 print("Weightsensor: " + str(weight))
-            return int(weight)
+        else:
+            weight = 10
+        self._weight_ = weight
+        return int(weight)
+
+    def get_last_weight(self):
+        return self._weight_
 
     def is_timed_out(self):
         return self._stop_
@@ -129,7 +140,6 @@ class SensorManager:
         :param distance_buffer: Current collection of measured distances to be updated
         :return: [updated repetitions, updated distance_buffer]
         """
-        
         # get current distance. If testing, use distance.csv, otherwise data from sensor
         if not self.use_sensors:
             with open(self._numbers_file_) as numbers:
@@ -237,8 +247,8 @@ class SensorManager:
                 self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
                                                                                         self._start_time_)
                 # send update
-                self.request_manager.update_set(repetitions=self._rep_, weight=self.get_weight(), set_id=set_id,
-                                                rfid=rfid_tag, active=True, durations=self._durations_)
+                self.request_manager.update_set(repetitions=self._rep_, weight=self._get_weight_(self._rep_),
+                                                set_id=set_id, rfid=rfid_tag, active=True, durations=self._durations_)
             if self.time_out_time < datetime.now():
                 self._stop_ = True
                 break
