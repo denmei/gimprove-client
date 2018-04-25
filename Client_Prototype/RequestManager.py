@@ -61,6 +61,7 @@ class RequestManager:
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
+        # TODO: Adapt logger
         self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code, response.content))
         return response
 

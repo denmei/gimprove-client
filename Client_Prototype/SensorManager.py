@@ -108,7 +108,7 @@ class SensorManager:
         """
         return self._rep_
 
-    def _get_weight_(self, reps=None):
+    def _measure_weight_(self, reps=None):
         """
         Returns the current weight measured.
         """
@@ -123,8 +123,13 @@ class SensorManager:
                 print("Weightsensor: " + str(weight))
         else:
             weight = 10
-        self._weight_ = float(weight)
-        return float(weight)
+        measured_weight = float(weight)
+        self.set_weight(measured_weight)
+        return measured_weight
+
+    def set_weight(self, weight):
+        if weight >= 0:
+            self._weight_ = weight
 
     def get_last_weight(self):
         return self._weight_
@@ -247,7 +252,7 @@ class SensorManager:
                 self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
                                                                                         self._start_time_)
                 # send update
-                self.request_manager.update_set(repetitions=self._rep_, weight=self._get_weight_(self._rep_),
+                self.request_manager.update_set(repetitions=self._rep_, weight=self._measure_weight_(self._rep_),
                                                 set_id=set_id, rfid=rfid_tag, active=True, durations=self._durations_)
             if self.time_out_time < datetime.now():
                 self._stop_ = True
