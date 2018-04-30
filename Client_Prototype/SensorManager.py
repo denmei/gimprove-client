@@ -197,12 +197,15 @@ class SensorManager:
         else:
             distance = self.tof.get_distance()
         if self.print_distance:
-            print('Distance: %s mm' % distance)
-        # print("Distance: " + str(distance) + "mm")
-        # update distance buffer
-        distance_buffer += [int(distance)]
-        # calculate repetitions and update repetitions-value
-        new_reps = max(self._analyze_distance_buffer_(distance_buffer), repetitions)
+            print("Distance: %s" % distance)
+        if self._min_ <= distance <= self._max_:
+            # update distance buffer
+            distance_buffer += [int(distance)]
+            # calculate repetitions and update repetitions-value
+            new_reps = max(self._analyze_distance_buffer_(distance_buffer), repetitions)
+        else:
+            print("Invalid distance value: %s" % distance)
+            new_reps = repetitions
         return new_reps, distance_buffer
 
     def _analyze_distance_buffer_(self, distance_buffer):
