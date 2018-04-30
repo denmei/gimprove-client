@@ -65,9 +65,10 @@ class SensorManager:
         self.print_weight = print_weight
         self.print_undermax = print_undermax
         self.final_plot = final_plot
-        self.weight_translation = None
         if weight_translation:
-            self._init_weight_translation_()
+            self.weight_translation = self.get_weight_translation()
+        else:
+            self.weight_translation = None
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
@@ -80,18 +81,41 @@ class SensorManager:
         self._weights_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv'
 
     def _init_hx_weight_(self, dout, pd_sck, gain, byte_format, bit_format, reference_unit, offset):
+        """
+        For initializing the weight sensor.
+        :param dout:
+        :param pd_sck:
+        :param gain:
+        :param byte_format:
+        :param bit_format:
+        :param reference_unit:
+        :param offset:
+        :return:
+        """
         self.hx_weight = HX711(dout, pd_sck, gain, offset=offset)
         self.hx_weight.set_reading_format(byte_format=byte_format, bit_format=bit_format)
         self.hx_weight.set_reference_unit(reference_unit=reference_unit)
         self.hx_weight.reset()
         self.hx_weight.tare()
 
-    def _init_weight_translation_(self):
+    def get_weight_translation(self):
+        """
+        Reads translation data from csv. Translation data is used for converting measured weight to the corresponding
+        weight on the machine.
+        """
         directory = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + \
                     '/Configuration/weight_translation.csv'
-        self.weight_translation = pd.read_csv(directory, header=None)
+        return pd.read_csv(directory, header=None)
 
     def _init_vl530_distance_(self, address, TCA9548A_Num, TCA9548A_Addr, mode):
+        """
+        For initializing the distance sensor.
+        :param address:
+        :param TCA9548A_Num:
+        :param TCA9548A_Addr:
+        :param mode:
+        :return:
+        """
         from VL53L0X_rasp_python.python.VL53L0X import VL53L0X as VL5
         if mode == "VL53L0X_GOOD_ACCURACY_MODE":
             ranging_mode = 0
@@ -135,6 +159,7 @@ class SensorManager:
         else:
             weight = 10
         weight = float(weight)
+        # round to closest value in weight translation if available
         if self.weight_translation is not None:
             weights = list(self.weight_translation.iloc[:, 1])
             weight = min(weights, key=lambda x: abs(x-weight))

@@ -16,11 +16,13 @@ Contains files with necessary information to run the application.
 * api-links.json: Links to the GImprove-API (testing and production).
 * config.json: Configuration data for the device (name, id etc.).
 * logging.log: Applikations-Logs.
+* weight_translation.csv: Helps converting measured weight to the weight stack on the machine if option is activated.
+* client_cache.txt: If there are connection problems, all HTTP-Requests from the client will be cached here and sent later.
 
 ## Usage
 To start the client, run the `execute.py` file.
 
-To test the client, execute the following command from the `sm_gym_client` directory: `python3 -m unittest`.
+To test the client, execute the following command from the root-directory: `python3 -m unittest`.
 
 ## Contributing
 **Dennis Meisner:** meisnerdennis@web.de.
