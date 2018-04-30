@@ -162,7 +162,8 @@ class SensorManager:
         # round to closest value in weight translation if available
         if self.weight_translation is not None:
             weights = list(self.weight_translation.iloc[:, 1])
-            weight = min(weights, key=lambda x: abs(x-weight))
+            stack_weights = list(self.weight_translation.iloc[:, 0])
+            weight = stack_weights[min(range(len(weights)), key=lambda x: abs(weights[x]-weight))]
         self.set_weight(weight)
         return weight
 
