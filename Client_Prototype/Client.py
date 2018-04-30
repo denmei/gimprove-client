@@ -82,7 +82,6 @@ class Equipment:
             else:
                 links = json.load(links_file)['links']['local-links']
         links_file.close()
-        print("Links: %s" % links)
         return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link']
 
     @staticmethod

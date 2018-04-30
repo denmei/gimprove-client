@@ -69,6 +69,7 @@ class SensorManager:
 
         # only for testing:
         self._weight_ = 0
+        self._weight_list_ = []
         self._no_ = 0
         self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv'
         self._weights_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv'
@@ -254,6 +255,7 @@ class SensorManager:
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self._measure_weight_(self._rep_),
                                                 set_id=set_id, rfid=rfid_tag, active=True, durations=self._durations_)
+                self._weight_list_ = self._weight_list_ + [self._weight_]
             if self.time_out_time < datetime.now():
                 self._stop_ = True
                 break
@@ -278,4 +280,5 @@ class SensorManager:
             plt.show()
 
         print("Final: rep: " + str(self._rep_) + " Durations: " + str(self._durations_))
+        print("Final: rep: " + str(self._rep_) + " Weights: " + str(self._weight_list_))
         self.logger.info('Stop recording.')
