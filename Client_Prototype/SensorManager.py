@@ -28,7 +28,9 @@ class SensorManager:
                  reference_unit=92, timeout_delta=10, use_sensors=False, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
                  address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
                  print_distance=True, print_weight=True, print_undermax=False, final_plot=False,
-                 weight_translation=False):
+                 weight_translation=False,
+                 distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv',
+                 weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv'):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param request_manager: Reference on the request manager for sending updates to the server.
@@ -77,8 +79,8 @@ class SensorManager:
         self._weight_ = 0
         self._weight_list_ = []
         self._no_ = 0
-        self._numbers_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv'
-        self._weights_file_ = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv'
+        self._numbers_file_ = distances_file
+        self._weights_file_ = weights_file
 
     def _init_hx_weight_(self, dout, pd_sck, gain, byte_format, bit_format, reference_unit, offset):
         """
@@ -198,6 +200,7 @@ class SensorManager:
             distance = self.tof.get_distance()
         if self.print_distance:
             print("Distance: %s" % distance)
+        distance = int(distance)
         if self._min_ <= distance <= self._max_:
             # update distance buffer
             distance_buffer += [int(distance)]

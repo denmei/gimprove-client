@@ -121,7 +121,9 @@ class Equipment:
                                        print_distance=(terminal_settings['print_distance'] == 'True'),
                                        print_undermax=(terminal_settings['print_undermax'] == 'True'),
                                        final_plot=(plot_settings['final_plot'] == 'True'),
-                                       weight_translation=weight_settings['weight_translation'] == 'True')
+                                       weight_translation=weight_settings['weight_translation'] == 'True',
+                                       distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv',
+                                       weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv')
         return sensor_manager
 
     def _init_set_record_(self, rfid):
