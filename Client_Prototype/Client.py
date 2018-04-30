@@ -73,6 +73,7 @@ class Equipment:
         config_file.close()
         communication_settings = settings['communication']
         environment = communication_settings['environment']
+        print("Environment: %s" % environment)
         with open(self.config_path + "/api-links.json") as links_file:
             if environment == 'Test':
                 links = json.load(links_file)['links']['test-links']
@@ -81,6 +82,7 @@ class Equipment:
             else:
                 links = json.load(links_file)['links']['local-links']
         links_file.close()
+        print("Links: %s" % links)
         return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link']
 
     @staticmethod
