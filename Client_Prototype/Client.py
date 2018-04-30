@@ -120,7 +120,8 @@ class Equipment:
                                        print_weight=(terminal_settings['print_weight'] == 'True'),
                                        print_distance=(terminal_settings['print_distance'] == 'True'),
                                        print_undermax=(terminal_settings['print_undermax'] == 'True'),
-                                       final_plot=(plot_settings['final_plot'] == 'True'))
+                                       final_plot=(plot_settings['final_plot'] == 'True'),
+                                       weight_translation=weight_settings['weight_translation'] == 'True')
         return sensor_manager
 
     def _init_set_record_(self, rfid):

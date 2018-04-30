@@ -20,7 +20,8 @@
       "gain": 128,
       "byte_format": "LSB",
       "bit_format": "MSB",
-      "reference_unit": 92
+      "reference_unit": 92,
+      "weight_translation": "True"
     }
   },
   "plot_settings": {

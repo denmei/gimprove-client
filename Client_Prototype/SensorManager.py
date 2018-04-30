@@ -7,6 +7,7 @@ from hx711py.hx711 import HX711
 import numpy as np
 import matplotlib.pyplot as plt
 import RPi.GPIO as GPIO
+import pandas as pd
 
 
 class SensorManager:
@@ -26,7 +27,8 @@ class SensorManager:
     def __init__(self, request_manager, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
                  reference_unit=92, timeout_delta=10, use_sensors=False, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
                  address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
-                 print_distance=True, print_weight=True, print_undermax=False, final_plot=False):
+                 print_distance=True, print_weight=True, print_undermax=False, final_plot=False,
+                 weight_translation=False):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param request_manager: Reference on the request manager for sending updates to the server.
@@ -63,6 +65,9 @@ class SensorManager:
         self.print_weight = print_weight
         self.print_undermax = print_undermax
         self.final_plot = final_plot
+        self.weight_translation = None
+        if weight_translation:
+            self._init_weight_translation_()
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
@@ -80,6 +85,11 @@ class SensorManager:
         self.hx_weight.set_reference_unit(reference_unit=reference_unit)
         self.hx_weight.reset()
         self.hx_weight.tare()
+
+    def _init_weight_translation_(self):
+        directory = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + \
+                    '/Configuration/weight_translation.csv'
+        self.weight_translation = pd.read_csv(directory, header=None)
 
     def _init_vl530_distance_(self, address, TCA9548A_Num, TCA9548A_Addr, mode):
         from VL53L0X_rasp_python.python.VL53L0X import VL53L0X as VL5
@@ -124,9 +134,12 @@ class SensorManager:
                 print("Weightsensor: " + str(weight))
         else:
             weight = 10
-        measured_weight = float(weight)
-        self.set_weight(measured_weight)
-        return measured_weight
+        weight = float(weight)
+        if self.weight_translation is not None:
+            weights = list(self.weight_translation.iloc[:, 1])
+            weight = min(weights, key=lambda x: abs(x-weight))
+        self.set_weight(weight)
+        return weight
 
     def set_weight(self, weight):
         if weight >= 0:
