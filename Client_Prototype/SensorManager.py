@@ -74,6 +74,7 @@ class SensorManager:
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
+        self._total_distances_ = []
 
         # only for testing:
         self._weight_ = 0
@@ -179,7 +180,7 @@ class SensorManager:
     def is_timed_out(self):
         return self._stop_
 
-    def _check_reps_(self, repetitions, distance_buffer):
+    def _check_reps_(self, repetitions, distance_buffer, total_distances):
         """
         Gets distance from distance sensor. Checks whether new repetition has been made. Updates the passed repetitions
         parameter and the distance buffer. Distance buffer contains all distances since the last repetition.
@@ -211,8 +212,9 @@ class SensorManager:
             new_reps = repetitions
         # empty distance_buffer to save memory
         if new_reps > repetitions:
+            total_distances = total_distances + distance_buffer
             distance_buffer = list()
-        return new_reps, distance_buffer
+        return new_reps, distance_buffer, total_distances
 
     def _analyze_distance_buffer_(self, distance_buffer):
         """
@@ -261,6 +263,7 @@ class SensorManager:
         """
         self._rep_ = 0
         self._distance_buffer_ = []
+        self._total_distances_ = []
         self._durations_ = []
         self.time_out_time = datetime.now() + dt.timedelta(seconds=self.timeout_delta)
         self._stop_ = False
@@ -292,7 +295,7 @@ class SensorManager:
             plt.pause(self.frequency)
             # update repetitions
             old_rep = self._rep_
-            self._rep_, self._distance_buffer_ = self._check_reps_(self._rep_, self._distance_buffer_)
+            self._rep_, self._distance_buffer_, self._total_distances_ = self._check_reps_(self._rep_, self._distance_buffer_, self._total_distances_)
             # if new repetition, update all other values
             if old_rep != self._rep_:
                 print(self._rep_)
@@ -319,11 +322,12 @@ class SensorManager:
             plt.close()
 
         if self.final_plot and not self.plot:
-            plt_line_max = [[0, len(self._distance_buffer_)], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
-            plt_line_min = [[0, len(self._distance_buffer_)], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
+            self._total_distances_ = self._total_distances_ + self._distance_buffer_
+            plt_line_max = [[0, len(self._total_distances_)], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
+            plt_line_min = [[0, len(self._total_distances_)], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
             plt.plot(plt_line_max[0], plt_line_max[1])
             plt.plot(plt_line_min[0], plt_line_min[1])
-            plt.plot((self.plot_len - len(self._distance_buffer_)) * [self._min_] + self._distance_buffer_)
+            plt.plot((self.plot_len - len(self._total_distances_)) * [self._min_] + self._total_distances_)
             plt.tight_layout()
             plt.show()
 

@@ -45,11 +45,11 @@ class TestSensorManager(unittest.TestCase):
         Tests validation of distance measurements. Distances outside of the predefined range must be ignored.
         """
         # test invalid measurement
-        reps, buffer = self.sensor_manager._check_reps_(0, [])
+        reps, buffer, total = self.sensor_manager._check_reps_(0, [], list())
         self.assertEqual(reps, 0)
         self.assertEqual(len(buffer), 0)
         # test valid measurement
-        reps, buffer = self.sensor_manager._check_reps_(0, [])
+        reps, buffer, total = self.sensor_manager._check_reps_(0, [], list())
         self.assertEqual(len(buffer), 1)
 
     def test_repetition_detection(self):
@@ -58,14 +58,14 @@ class TestSensorManager(unittest.TestCase):
         """
         distance_buffer = []
         repetitions = 0
+        total = []
         with open(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_long.csv') as numbers:
             lines = numbers.readlines()
             length = len(lines)
-        print(length)
         self.sensor_manager._numbers_file_ = str(
             Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_long.csv'
         for x in range(0, length):
-            repetitions, distance_buffer = self.sensor_manager._check_reps_(repetitions, distance_buffer)
+            repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer, total)
         self.assertEqual(repetitions, 10)
         self.sensor_manager._numbers_file_ = str(
             Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_short.csv'
