@@ -264,6 +264,7 @@ class SensorManager:
         self._rep_ = 0
         self._distance_buffer_ = []
         self._total_distances_ = []
+        self._weight_list_ = []
         self._durations_ = []
         self.time_out_time = datetime.now() + dt.timedelta(seconds=self.timeout_delta)
         self._stop_ = False
