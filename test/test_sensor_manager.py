@@ -9,7 +9,6 @@ import os
 
 
 class TestSensorManager(unittest.TestCase):
-    # TODO: Check whether caching works when creating/updating/deleting
 
     def setUp(self):
         logging.disable(logging.CRITICAL)
@@ -30,13 +29,14 @@ class TestSensorManager(unittest.TestCase):
                                               userprofile_detail_address=self.user_profile_rfid_address)
         self.sensor_manager = SensorManager(
             request_manager=request_manager,
-            min_dist=0,
-            max_dist=100,
-            print_weight='False',
-            print_distance='False',
-            print_undermax='False',
-            final_plot='False',
-            distances_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances.csv',
+            min_dist=470,
+            max_dist=900,
+            use_sensors=False,
+            print_weight=False,
+            print_distance=False,
+            print_undermax=False,
+            final_plot=False,
+            distances_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_short.csv',
             weights_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/weights.csv'
         )
 
@@ -51,3 +51,21 @@ class TestSensorManager(unittest.TestCase):
         # test valid measurement
         reps, buffer = self.sensor_manager._check_reps_(0, [])
         self.assertEqual(len(buffer), 1)
+
+    def test_repetition_detection(self):
+        """
+        Tests whether all repetitions in a file are detected.
+        """
+        distance_buffer = []
+        repetitions = 0
+        with open(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_long.csv') as numbers:
+            lines = numbers.readlines()
+            length = len(lines)
+        print(length)
+        self.sensor_manager._numbers_file_ = str(
+            Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_long.csv'
+        for x in range(0, length):
+            repetitions, distance_buffer = self.sensor_manager._check_reps_(repetitions, distance_buffer)
+        self.assertEqual(repetitions, 10)
+        self.sensor_manager._numbers_file_ = str(
+            Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_short.csv'
