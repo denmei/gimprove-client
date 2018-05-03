@@ -182,7 +182,7 @@ class SensorManager:
     def _check_reps_(self, repetitions, distance_buffer):
         """
         Gets distance from distance sensor. Checks whether new repetition has been made. Updates the passed repetitions
-        parameter and the distance buffer.
+        parameter and the distance buffer. Distance buffer contains all distances since the last repetition.
         :param repetitions: Current count of repetitions to be updated.
         :param distance_buffer: Current collection of measured distances to be updated
         :return: [updated repetitions, updated distance_buffer]
@@ -205,10 +205,13 @@ class SensorManager:
             # update distance buffer
             distance_buffer += [int(distance)]
             # calculate repetitions and update repetitions-value
-            new_reps = max(self._analyze_distance_buffer_(distance_buffer), repetitions)
+            new_reps = repetitions + self._analyze_distance_buffer_(distance_buffer)
         else:
             print("Invalid distance value: %s" % distance)
             new_reps = repetitions
+        # empty distance_buffer to save memory
+        if new_reps > repetitions:
+            distance_buffer = list()
         return new_reps, distance_buffer
 
     def _analyze_distance_buffer_(self, distance_buffer):
