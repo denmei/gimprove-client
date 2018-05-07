@@ -22,12 +22,14 @@ class Equipment:
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
         self._configure_logger_()
-        self.list_address, self.detail_address, self.userprofile_detail_address = \
+        self._upload_logs_(self.config_path + "/logs", self.equipment_id)
+        self.list_address, self.detail_address, self.userprofile_detail_address, self.log_address = \
             self._load_links_(self.config_path + "/config.json")
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
-                                              userprofile_detail_address=self.userprofile_detail_address)
+                                              userprofile_detail_address=self.userprofile_detail_address,
+                                              log_address=self.log_address)
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager)
         self.logger.info("Client instantiated.")
 
@@ -82,7 +84,8 @@ class Equipment:
             else:
                 links = json.load(links_file)['links']['local-links']
         links_file.close()
-        return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link']
+        return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link'], \
+               links['log_address']['link']
 
     @staticmethod
     def _initialize_sensormanager_(config_file_path, request_manager):
@@ -125,6 +128,21 @@ class Equipment:
                                        distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv',
                                        weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv')
         return sensor_manager
+
+    def _upload_logs_(self, logging_path, device_id):
+        """
+        Uploads all available logs before except the one of the current day and deletes them.
+        :param logging_path: Path where logs are stored.
+        :param device_id:  ID of the client.
+        """
+        for log in os.listdir(logging_path):
+            date = datetime.date(datetime.strptime(log.split('logging', 1)[1].split('.log', 1)[0], '%Y-%m-%d'))
+            # upload only files of previous days
+            if date < date.today():
+                success = self.request_manager.upload_log_file(os.path.join(logging_path, log), device_id, date)
+                # delete files after successful upload
+                if success.status_code == 201:
+                    os.remove(os.path.join(logging_path, log))
 
     def _init_set_record_(self, rfid):
         """

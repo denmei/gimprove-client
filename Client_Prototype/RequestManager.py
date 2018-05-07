@@ -13,7 +13,8 @@ class RequestManager:
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
 
-    def __init__(self, detail_address, list_address, userprofile_detail_address, exercise_name, equipment_id, cache_path):
+    def __init__(self, detail_address, list_address, userprofile_detail_address, exercise_name, equipment_id, cache_path,
+                 log_address):
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
@@ -21,6 +22,7 @@ class RequestManager:
         self.equipment_id = equipment_id
         self.path = cache_path
         self.cache_path = os.path.join(cache_path, "client_cache.txt")
+        self.log_address = log_address
         self.userprofile_detail_address = userprofile_detail_address
         self._check_cache_file_()
         self.local_tz = pytz.timezone('Europe/Berlin')
@@ -89,6 +91,19 @@ class RequestManager:
         response = requests.delete(address)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("delete", address, "", str(response.status_code))
+        return response
+
+    def upload_log_file(self, path_to_file, device_id, date):
+        """
+        Uploads a log-file to the server.
+        :param path_to_file: Path to the logfile to be uploaded.
+        :param device_id: Id of the client.
+        :param date: Date of the logfile.
+        :return: Response of the post-request.
+        """
+        files = {'upload_file': open(path_to_file, 'rb')}
+        data = {'device_id': device_id, 'date': date}
+        response = requests.post(self.log_address, files=files, data=data)
         return response
 
     def cache_request(self, method, address, data, status_code):
