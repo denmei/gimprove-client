@@ -22,7 +22,6 @@ class Equipment:
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
         self._configure_logger_()
-        self._upload_logs_(self.config_path + "/logs", self.equipment_id)
         self.list_address, self.detail_address, self.userprofile_detail_address, self.log_address = \
             self._load_links_(self.config_path + "/config.json")
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
@@ -32,6 +31,7 @@ class Equipment:
                                               log_address=self.log_address)
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager)
         self.logger.info("Client instantiated.")
+        self._upload_logs_(self.config_path + "/logs", self.equipment_id)
 
     def _configure_(self):
         """

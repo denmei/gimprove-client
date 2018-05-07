@@ -39,7 +39,7 @@
         "link": "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
       },
       "log_address": {
-        "link": ""
+        "link": "http://127.0.0.1:8000/tracker/log_rest/"
       }
     }
   }

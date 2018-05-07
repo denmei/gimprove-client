@@ -14,6 +14,7 @@ class TestSensorManager(unittest.TestCase):
         logging.disable(logging.CRITICAL)
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
+        self.log_address = "http://127.0.0.1:8000/tracker/log_rest/"
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
         self.exercise_name = 'Lat Pulldown'
@@ -24,9 +25,10 @@ class TestSensorManager(unittest.TestCase):
         self.rfid = "0006921147"
 
         request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
-                                              exercise_name=self.exercise_name, equipment_id=self.equipment_id,
-                                              cache_path=self.cache_path,
-                                              userprofile_detail_address=self.user_profile_rfid_address)
+                                         exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+                                         cache_path=self.cache_path,
+                                         userprofile_detail_address=self.user_profile_rfid_address,
+                                         log_address=self.log_address)
         self.sensor_manager = SensorManager(
             request_manager=request_manager,
             min_dist=470,

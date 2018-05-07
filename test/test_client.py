@@ -4,6 +4,9 @@ import requests
 import json
 import random
 import logging
+import os
+import datetime
+import shutil
 
 
 class TestClient(unittest.TestCase):
@@ -15,10 +18,19 @@ class TestClient(unittest.TestCase):
         self.equipment = Equipment()
         self.rfid = "0006921147"
 
-        # self.list_address = "https://app-smartgym.herokuapp.com/tracker/set_list_rest/"
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
-        # self.detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
+        self.log_address = "http://127.0.0.1:8000/tracker/log_rest/"
+
+        # create test-logs
+        if "logs" not in os.listdir("test"):
+            os.mkdir("test/logs")
+        open(os.path.join('test/logs', "logging" + str(datetime.date.today())) + ".log", 'a').close()
+        open(os.path.join('test/logs', "logging" + str((datetime.date.today()) - datetime.timedelta(days=1))) + ".log", 'a').close()
+
+    def tearDown(self):
+        # delete test-logs
+        shutil.rmtree('test/logs')
 
     def test_init_set_record(self):
         """
@@ -55,3 +67,11 @@ class TestClient(unittest.TestCase):
         self.assertEqual(len(response_after.content), len(response_before.content))
         self.assertTrue(len(response_middle.content) > len(response_before.content))
         self.assertTrue(len(response_middle.content) > len(response_after.content))
+
+    def test_log_upload(self):
+        """
+        Only files prior to the current day may be uploaded. If upload was successful, the file must be deleted.
+        """
+        len1 = len(os.listdir('test/logs'))
+        self.equipment._upload_logs_('test/logs', self.equipment_id)
+        self.assertEqual(len1 -1, len(os.listdir('test/logs')))

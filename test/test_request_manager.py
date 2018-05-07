@@ -20,15 +20,16 @@ class TestRequestManager(unittest.TestCase):
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
+        self.log_address = ""
         self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
         self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + \
                                "/Configuration/client_cache.txt"
         self.rfid = "0006921147"
-
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
-                                              userprofile_detail_address=self.user_profile_rfid_address)
+                                              userprofile_detail_address=self.user_profile_rfid_address,
+                                              log_address=self.log_address)
 
     def tearDown(self):
         """
@@ -36,7 +37,9 @@ class TestRequestManager(unittest.TestCase):
         """
         pass
         # if os.path.isfile(self.cache_file_path):
-         #   os.remove(self.cache_file_path)
+        #   os.remove(self.cache_file_path)
+        # TODO: Delete log-dummy
+
 
     def test_new_set(self):
         """
@@ -106,7 +109,7 @@ class TestRequestManager(unittest.TestCase):
             self.assertEqual(count_begin, 1)
         else:
             self.assertTrue(count_after1 - 1 == count_begin)
-        # successfull requests may not be cached
+        # successful requests may not be cached
         self.request_manager.cache_request(method="update", address=self.detail_address + "test",
                                            data={'weight': 10, 'rfid': '0006921147', 'active': 'False',
                                                  'exercise_name': 'Lat Pulldown', 'date_time': '2018-02-15T21:21:23Z',
@@ -126,6 +129,7 @@ class TestRequestManager(unittest.TestCase):
                 pass
             return i + 1
 
+    # TODO
     def test_empty_cache(self):
         """
         Tests whether the test_empty_cache method reads all messages in the cache file and sends them, and removes them
