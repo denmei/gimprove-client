@@ -1,1 +1,0 @@
-{"method": "new", "address": "http://127.0.0.1:8000/tracker/set_list_rest/", "data": {"exercise_unit": "", "repetitions": 0, "weight": 0, "exercise_name": "Lat Pulldown", "rfid": "0006921147#", "date_time": "2018-05-10 17:59:35.390113+02:00", "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf", "active": "True", "durations": "[]"}, "status_code": "400"}

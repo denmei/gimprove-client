@@ -71,7 +71,7 @@ class TestRequestManager(unittest.TestCase):
         repetitions = content['repetitions'] + 5
         self.request_manager.update_set(repetitions=repetitions, weight=content['weight'] + 5,
                                         set_id=content['id'], rfid=self.rfid, active=False,
-                                        durations=random.sample(range(1, 20), repetitions))
+                                        durations=random.sample(range(1, 20), repetitions), end=False)
         updated_set = requests.get(self.detail_address + content['id']).content
         updated_set = json.loads(updated_set.decode("utf-8"))
         user_profile = requests.get(self.user_profile_rfid_address + self.rfid).content

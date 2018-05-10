@@ -61,8 +61,8 @@ class RequestManager:
         data = {'repetitions': repetitions, 'weight': weight, "exercise_name": self.exercise_name,
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
-        response = requests.put(address, data=data)
         self.websocket_manager.send(json.dumps(data))
+        response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
         # TODO: Adapt logger
@@ -79,8 +79,8 @@ class RequestManager:
         data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise_name': self.exercise_name,
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
-        response = requests.post(self.list_address, data=data)
         self.websocket_manager.send(json.dumps(data))
+        response = requests.post(self.list_address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("new", self.list_address, data, str(response.status_code))
         self.logger.info("Sent creation request. Status: %s" % response.status_code)

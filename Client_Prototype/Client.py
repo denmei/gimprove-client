@@ -182,6 +182,7 @@ class Equipment:
                 self.logger.info("RFID-tag not valid: " + rfid_tag)
                 print("Not a valid rfid tag")
 
+
 if __name__ == '__main__':
     equipment = Equipment()
     equipment.run()
