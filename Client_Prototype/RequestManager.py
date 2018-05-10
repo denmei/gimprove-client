@@ -6,6 +6,7 @@ import random
 import traceback
 import logging
 import pytz
+from Client_Prototype.WebSocketManager import WebSocketManager
 
 
 class RequestManager:
@@ -13,7 +14,8 @@ class RequestManager:
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
 
-    def __init__(self, detail_address, list_address, userprofile_detail_address, exercise_name, equipment_id, cache_path):
+    def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, exercise_name,
+                 equipment_id, cache_path):
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
@@ -24,6 +26,7 @@ class RequestManager:
         self.userprofile_detail_address = userprofile_detail_address
         self._check_cache_file_()
         self.local_tz = pytz.timezone('Europe/Berlin')
+        self.websocket_manager = WebSocketManager(websocket_address, equipment_id)
 
     def rfid_is_valid(self, rfid):
         """
@@ -59,6 +62,7 @@ class RequestManager:
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
         response = requests.put(address, data=data)
+        self.websocket_manager.send(data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
         # TODO: Adapt logger
@@ -76,6 +80,7 @@ class RequestManager:
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
         response = requests.post(self.list_address, data=data)
+        self.websocket_manager.send(data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("new", self.list_address, data, str(response.status_code))
         self.logger.info("Sent creation request. Status: %s" % response.status_code)
@@ -87,6 +92,7 @@ class RequestManager:
         """
         address = self.detail_address + set_id
         response = requests.delete(address)
+        self.websocket_manager.send(set_id)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("delete", address, "", str(response.status_code))
         return response

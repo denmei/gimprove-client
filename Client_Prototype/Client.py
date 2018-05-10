@@ -1,7 +1,6 @@
 import json
 from Client_Prototype.RequestManager import RequestManager
 from Client_Prototype.SensorManager import SensorManager
-from Client_Prototype.WebSocketManager import WebSocketManager
 import traceback
 import logging
 import os
@@ -28,13 +27,10 @@ class Equipment:
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
-                                              userprofile_detail_address=self.userprofile_detail_address)
+                                              userprofile_detail_address=self.userprofile_detail_address,
+                                              websocket_address=self.websocket_address)
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager)
-        self.websocket_manager = WebSocketManager(self.websocket_address, self.equipment_id)
-        # self.websocket_manager.daemon = True
-        # self.websocket_manager.start()
         self.logger.info("Client instantiated.")
-        self.websocket_manager.send("Test")
 
     def _configure_(self):
         """

@@ -18,6 +18,7 @@ class TestRequestManager(unittest.TestCase):
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
+        self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
         self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
@@ -26,6 +27,7 @@ class TestRequestManager(unittest.TestCase):
         self.rfid = "0006921147"
 
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
+                                              websocket_address=self.websocket_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
                                               userprofile_detail_address=self.user_profile_rfid_address)
