@@ -1,11 +1,11 @@
 import requests
-from datetime import datetime, timezone
+from datetime import datetime
 import os
-import json
 import random
 import traceback
 import logging
 import pytz
+import json
 from Client_Prototype.WebSocketManager import WebSocketManager
 
 
@@ -46,7 +46,7 @@ class RequestManager:
             cache_file = open(self.cache_path, 'w')
             cache_file.close()
 
-    def update_set(self, repetitions, weight, set_id, rfid, active, durations):
+    def update_set(self, repetitions, weight, set_id, rfid, active, durations, end):
         """
         Update an existing set.
         :param repetitions: Repetitions count.
@@ -58,11 +58,11 @@ class RequestManager:
         :return: Server response.
         """
         address = self.detail_address + set_id
-        data = {'repetitions': repetitions, 'weight': weight, 'exercise_name': self.exercise_name,
+        data = {'repetitions': repetitions, 'weight': weight, "exercise_name": self.exercise_name,
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
         response = requests.put(address, data=data)
-        self.websocket_manager.send(data)
+        self.websocket_manager.send(json.dumps(data))
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
         # TODO: Adapt logger
@@ -80,7 +80,7 @@ class RequestManager:
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
         response = requests.post(self.list_address, data=data)
-        self.websocket_manager.send(data)
+        self.websocket_manager.send(json.dumps(data))
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("new", self.list_address, data, str(response.status_code))
         self.logger.info("Sent creation request. Status: %s" % response.status_code)
@@ -130,7 +130,7 @@ class RequestManager:
                     if message == 'update':
                         self.update_set(repetitions=data['repetitions'], weight=data['weight'],
                                         set_id=str(address.rsplit("/", 1))[1], rfid=data['rfid'], active=data['active'],
-                                        durations=random.sample(range(1, 20), data['repetitions']))
+                                        durations=random.sample(range(1, 20), data['repetitions']), end=False)
                     elif method == 'new':
                         self.new_set(rfid=data['rfid'], exercise_unit=data['exercise_unit'])
                     elif method == 'delete':

@@ -16,9 +16,6 @@ class Equipment:
     """
 
     def __init__(self):
-        """
-        :param testing: If true, runs in test mode (APIs of the test-environment). Else, production environment is used.
-        """
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
         self._configure_logger_()
@@ -66,7 +63,6 @@ class Equipment:
     def _load_links_(self, config_file_path):
         """
         Loads the links for the APIs of the GImprove-Server.
-        :param testing: If true, the APIs of the testing environment are loaded. Else production environment.
         :return [link set_list, link to set_detail, link to userprofile_detail(rfid)]
         """
         with open(config_file_path) as config_file:
@@ -139,7 +135,7 @@ class Equipment:
         :return: server response
         """
         return self.request_manager.update_set(rfid=rfid_tag, set_id=set_id, active=False, repetitions=repetitions,
-                                               weight=weight, durations=durations)
+                                               weight=weight, durations=durations, end=True)
 
     def _delete_set_(self, set_id):
         """
@@ -187,5 +183,5 @@ class Equipment:
                 print("Not a valid rfid tag")
 
 if __name__ == '__main__':
-    equipment = Equipment(testing=True)
+    equipment = Equipment()
     equipment.run()
