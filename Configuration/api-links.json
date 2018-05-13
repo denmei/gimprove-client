@@ -11,7 +11,7 @@
         "link": "https://gimprove-production.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
       },
       "websocket": {
-        "link": ""
+        "link": "ws://gimprove-production.herokuapp.com/ws/tracker/"
       }
     },
     "test-links": {
@@ -25,7 +25,7 @@
         "link": "https://gimprove-test.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
       },
       "websocket": {
-        "link": ""
+        "link": "ws://gimprove-test.herokuapp.com/ws/tracker/"
       }
     },
     "local-links": {
