@@ -44,7 +44,7 @@ class WebSocketManager(threading.Thread):
         self.logger = logging.getLogger('gimprove' + __name__)
         self.address = address
         self.ws = create_connection(self.address)
-        self.logger.info("Websocket: Created connection.")
+        self.logger.info("Websocket: Created connection to %s." % address)
 
     def send(self, message):
         self.ws.send(str(message).encode())

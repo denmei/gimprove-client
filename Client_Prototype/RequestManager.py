@@ -66,6 +66,9 @@ class RequestManager:
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
+        print(end)
+        print(response.status_code)
+        print(address)
         self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code, response.content))
         return response
 
@@ -93,7 +96,7 @@ class RequestManager:
         """
         address = self.detail_address + set_id
         response = requests.delete(address)
-        self.websocket_manager.send(set_id)
+        # self.websocket_manager.send(set_id)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("delete", address, "", str(response.status_code))
         return response

@@ -304,7 +304,7 @@ class SensorManager:
                                                                                         self._start_time_)
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self._measure_weight_(self._rep_),
-                                                set_id=set_id, rfid=rfid_tag, active=True, durations=self._durations_)
+                                                set_id=set_id, rfid=rfid_tag, active=True, durations=self._durations_, end=False)
                 self._weight_list_ = self._weight_list_ + [self._weight_]
             if self.time_out_time < datetime.now():
                 self._stop_ = True

@@ -19,6 +19,11 @@ class TestClient(unittest.TestCase):
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
         # self.detail_address = "https://app-smartgym.herokuapp.com/tracker/set_detail_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
+        self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
+
+        self.equipment.request_manager.detail_address = self.detail_address
+        self.equipment.request_manager.list_address = self.list_address
+        self.equipment.request_manager.websocket_manager.address = self.websocket_address
 
     def test_init_set_record(self):
         """

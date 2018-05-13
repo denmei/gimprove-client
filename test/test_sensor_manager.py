@@ -13,6 +13,7 @@ class TestSensorManager(unittest.TestCase):
     def setUp(self):
         logging.disable(logging.CRITICAL)
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
+        self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
@@ -24,9 +25,10 @@ class TestSensorManager(unittest.TestCase):
         self.rfid = "0006921147"
 
         request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
-                                              exercise_name=self.exercise_name, equipment_id=self.equipment_id,
-                                              cache_path=self.cache_path,
-                                              userprofile_detail_address=self.user_profile_rfid_address)
+                                         exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+                                         cache_path=self.cache_path,
+                                         userprofile_detail_address=self.user_profile_rfid_address,
+                                         websocket_address=self.websocket_address)
         self.sensor_manager = SensorManager(
             request_manager=request_manager,
             min_dist=470,
