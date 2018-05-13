@@ -16,18 +16,16 @@ class Equipment:
     """
 
     def __init__(self):
-        """
-        :param testing: If true, runs in test mode (APIs of the test-environment). Else, production environment is used.
-        """
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
         self._configure_logger_()
-        self.list_address, self.detail_address, self.userprofile_detail_address = \
+        self.list_address, self.detail_address, self.userprofile_detail_address, self.websocket_address = \
             self._load_links_(self.config_path + "/config.json")
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
-                                              userprofile_detail_address=self.userprofile_detail_address)
+                                              userprofile_detail_address=self.userprofile_detail_address,
+                                              websocket_address=self.websocket_address)
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager)
         self.logger.info("Client instantiated.")
 
@@ -65,7 +63,6 @@ class Equipment:
     def _load_links_(self, config_file_path):
         """
         Loads the links for the APIs of the GImprove-Server.
-        :param testing: If true, the APIs of the testing environment are loaded. Else production environment.
         :return [link set_list, link to set_detail, link to userprofile_detail(rfid)]
         """
         with open(config_file_path) as config_file:
@@ -82,7 +79,8 @@ class Equipment:
             else:
                 links = json.load(links_file)['links']['local-links']
         links_file.close()
-        return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link']
+        return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link'], \
+               links['websocket']['link']
 
     @staticmethod
     def _initialize_sensormanager_(config_file_path, request_manager):
@@ -141,7 +139,7 @@ class Equipment:
         :return: server response
         """
         return self.request_manager.update_set(rfid=rfid_tag, set_id=set_id, active=False, repetitions=repetitions,
-                                               weight=weight, durations=durations)
+                                               weight=weight, durations=durations, end=True)
 
     def _delete_set_(self, set_id):
         """
@@ -188,6 +186,7 @@ class Equipment:
                 self.logger.info("RFID-tag not valid: " + rfid_tag)
                 print("Not a valid rfid tag")
 
+
 if __name__ == '__main__':
-    equipment = Equipment(testing=True)
+    equipment = Equipment()
     equipment.run()
