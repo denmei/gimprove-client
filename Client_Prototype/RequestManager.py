@@ -27,6 +27,8 @@ class RequestManager:
         self._check_cache_file_()
         self.local_tz = pytz.timezone('Europe/Berlin')
         self.websocket_manager = WebSocketManager(websocket_address, equipment_id)
+        self.websocket_manager.setDaemon(True)
+        self.websocket_manager.start()
 
     def rfid_is_valid(self, rfid):
         """

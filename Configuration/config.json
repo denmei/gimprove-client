@@ -27,7 +27,7 @@
   "plot_settings": {
     "plot": "False",
     "length": 10,
-    "final_plot": "True"
+    "final_plot": "False"
   },
   "terminal_settings": {
     "print_weight": "True",

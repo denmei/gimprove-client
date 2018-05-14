@@ -5,33 +5,10 @@ from autobahn.twisted.websocket import WebSocketClientFactory
 import threading
 import websocket
 import logging
-from websocket import create_connection
 
-"""
-class ClientProtocol(WebSocketClientProtocol):
 
-    connections = list()
-
-    def onOpen(self):
-        print("OPEN")
-        self.connections.append(self)
-        print(self.connections)
-        # self.sendMessage(u'{"message":"hallo"}'.encode('utf8'))
-
-    def onMessage(self, payload, isBinary):
-        if isBinary:
-            print("Binary message received: {0} bytes".format(len(payload)))
-        else:
-            print("Text message received: {0}".format(payload.decode('utf8')))
-        # self.sendMessage(payload=payload)
-
-    @classmethod
-    def send(cls, message):
-        payload = str(message).encode()
-        for c in cls.connections:
-            print("SENT")
-            reactor.callFromThread(cls.sendMessage, c, payload)
-"""
+def on_close(ws):
+    print("Websocket: closed")
 
 
 class WebSocketManager(threading.Thread):
@@ -43,8 +20,11 @@ class WebSocketManager(threading.Thread):
         super(WebSocketManager, self).__init__()
         self.logger = logging.getLogger('gimprove' + __name__)
         self.address = address
-        self.ws = create_connection(self.address)
+        self.ws = websocket.WebSocketApp(self.address, on_close=on_close)
         self.logger.info("Websocket: Created connection to %s." % address)
+
+    def run(self):
+        self.ws.run_forever()
 
     def send(self, message):
         self.ws.send(str(message).encode())
