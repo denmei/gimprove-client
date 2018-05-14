@@ -62,7 +62,10 @@ class RequestManager:
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
         websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': str(False)}.items()))
-        self.websocket_manager.send(json.dumps(websocket_data))
+        try:
+            self.websocket_manager.send(json.dumps(websocket_data))
+        except Exception as e:
+            self.logger.debug("RequestManager: %s" % e)
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
@@ -83,7 +86,10 @@ class RequestManager:
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
         websocket_data = dict(list(data.items()) + list({'type': 'new', 'end': str(False)}.items()))
-        self.websocket_manager.send(json.dumps(websocket_data))
+        try:
+            self.websocket_manager.send(json.dumps(websocket_data))
+        except Exception as e:
+            self.logger.debug("RequestManager: %s" % e)
         response = requests.post(self.list_address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("new", self.list_address, data, str(response.status_code))

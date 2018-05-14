@@ -35,6 +35,6 @@
     "print_undermax": "False"
   },
   "communication": {
-    "environment": "Test"
+    "environment": "local"
   }
 }
