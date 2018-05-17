@@ -30,6 +30,10 @@ class RequestManager:
         self.websocket_manager.setDaemon(True)
         self.websocket_manager.start()
 
+    def check_ws_connection(self):
+        if not self.websocket_manager.is_alive():
+            self.websocket_manager.start()
+
     def rfid_is_valid(self, rfid):
         """
         Checks whether there exists a Userprofile for a specific RFID.
