@@ -39,8 +39,6 @@ class SensorManager:
         :param byte_format: order in which the bytes are used to build the "long" value.
         :param bit_format: order of the bits inside each byte.
         :param timeout_delta: If 'timeout_delta' seconds pass without a new repetition, the process stops.
-        :param testing: If true, executes in testing mode (uses sensor data). Otherwise, local files are used to
-        simulate the sensor input.
         """
         self.logger = logging.getLogger('gimprove' + __name__)
         if use_sensors:
@@ -306,7 +304,7 @@ class SensorManager:
                                                                                         self._start_time_)
                 # send update
                 self.request_manager.update_set(repetitions=self._rep_, weight=self._measure_weight_(self._rep_),
-                                                set_id=set_id, rfid=rfid_tag, active=True, durations=self._durations_)
+                                                set_id=set_id, rfid=rfid_tag, active=True, durations=self._durations_, end=False)
                 self._weight_list_ = self._weight_list_ + [self._weight_]
             if self.time_out_time < datetime.now():
                 self._stop_ = True

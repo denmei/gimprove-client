@@ -1,11 +1,12 @@
 import requests
-from datetime import datetime, timezone
+from datetime import datetime
 import os
-import json
 import random
 import traceback
 import logging
 import pytz
+import json
+from Client_Prototype.WebSocketManager import WebSocketManager
 
 
 class RequestManager:
@@ -13,8 +14,8 @@ class RequestManager:
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
 
-    def __init__(self, detail_address, list_address, userprofile_detail_address, exercise_name, equipment_id, cache_path,
-                 log_address):
+    def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, exercise_name,
+                 equipment_id, cache_path):
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
@@ -22,10 +23,16 @@ class RequestManager:
         self.equipment_id = equipment_id
         self.path = cache_path
         self.cache_path = os.path.join(cache_path, "client_cache.txt")
-        self.log_address = log_address
         self.userprofile_detail_address = userprofile_detail_address
         self._check_cache_file_()
         self.local_tz = pytz.timezone('Europe/Berlin')
+        self.websocket_manager = WebSocketManager(websocket_address, equipment_id)
+        self.websocket_manager.setDaemon(True)
+        self.websocket_manager.start()
+
+    def check_ws_connection(self):
+        if not self.websocket_manager.is_alive():
+            self.websocket_manager.start()
 
     def rfid_is_valid(self, rfid):
         """
@@ -45,7 +52,7 @@ class RequestManager:
             cache_file = open(self.cache_path, 'w')
             cache_file.close()
 
-    def update_set(self, repetitions, weight, set_id, rfid, active, durations):
+    def update_set(self, repetitions, weight, set_id, rfid, active, durations, end):
         """
         Update an existing set.
         :param repetitions: Repetitions count.
@@ -57,13 +64,20 @@ class RequestManager:
         :return: Server response.
         """
         address = self.detail_address + set_id
-        data = {'repetitions': repetitions, 'weight': weight, 'exercise_name': self.exercise_name,
+        data = {'repetitions': repetitions, 'weight': weight, "exercise_name": self.exercise_name,
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
+        websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': str(False)}.items()))
+        try:
+            self.websocket_manager.send(json.dumps(websocket_data))
+        except Exception as e:
+            self.logger.debug("RequestManager: %s" % e)
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("update", address, data, str(response.status_code))
-        # TODO: Adapt logger
+        print(end)
+        print(response.status_code)
+        print(address)
         self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code, response.content))
         return response
 
@@ -77,6 +91,11 @@ class RequestManager:
         data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise_name': self.exercise_name,
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
+        websocket_data = dict(list(data.items()) + list({'type': 'new', 'end': str(False)}.items()))
+        try:
+            self.websocket_manager.send(json.dumps(websocket_data))
+        except Exception as e:
+            self.logger.debug("RequestManager: %s" % e)
         response = requests.post(self.list_address, data=data)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("new", self.list_address, data, str(response.status_code))
@@ -89,6 +108,7 @@ class RequestManager:
         """
         address = self.detail_address + set_id
         response = requests.delete(address)
+        # self.websocket_manager.send(set_id)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_request("delete", address, "", str(response.status_code))
         return response
@@ -139,7 +159,7 @@ class RequestManager:
                     if message == 'update':
                         self.update_set(repetitions=data['repetitions'], weight=data['weight'],
                                         set_id=str(address.rsplit("/", 1))[1], rfid=data['rfid'], active=data['active'],
-                                        durations=random.sample(range(1, 20), data['repetitions']))
+                                        durations=random.sample(range(1, 20), data['repetitions']), end=False)
                     elif method == 'new':
                         self.new_set(rfid=data['rfid'], exercise_unit=data['exercise_unit'])
                     elif method == 'delete':

@@ -20,6 +20,7 @@ class TestClient(unittest.TestCase):
 
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
+<<<<<<< HEAD
         self.log_address = "http://127.0.0.1:8000/tracker/log_rest/"
 
         # create test-logs
@@ -31,6 +32,13 @@ class TestClient(unittest.TestCase):
     def tearDown(self):
         # delete test-logs
         shutil.rmtree('test/logs')
+=======
+        self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
+
+        self.equipment.request_manager.detail_address = self.detail_address
+        self.equipment.request_manager.list_address = self.list_address
+        self.equipment.request_manager.websocket_manager.address = self.websocket_address
+>>>>>>> master
 
     def test_init_set_record(self):
         """
