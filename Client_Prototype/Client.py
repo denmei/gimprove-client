@@ -6,6 +6,7 @@ import logging
 import os
 from pathlib import Path
 from datetime import datetime
+from Client_Prototype.s3Manager import s3Manager
 
 
 class Equipment:
@@ -28,7 +29,7 @@ class Equipment:
                                               websocket_address=self.websocket_address)
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager)
         self.logger.info("Client instantiated.")
-        self._upload_logs_(self.config_path + "/logs", self.equipment_id)
+        self._upload_logs_(self.config_path + "/logs", self.equipment_id, self.bucket, self.environment)
 
     def _configure_(self):
         """
@@ -38,6 +39,8 @@ class Equipment:
             configuration = json.load(config_file)
         self.exercise_name = configuration['exercise_name']
         self.equipment_id = configuration['equipment_id']
+        self.environment = configuration['communication']['environment']
+        self.bucket = configuration['aws']['bucket']
 
     def _configure_logger_(self):
         """
@@ -125,20 +128,24 @@ class Equipment:
                                        weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv')
         return sensor_manager
 
-    def _upload_logs_(self, logging_path, device_id):
+    def _upload_logs_(self, logging_path, device_id, bucket_name, environment):
         """
         Uploads all available logs before except the one of the current day and deletes them.
         :param logging_path: Path where logs are stored.
         :param device_id:  ID of the client.
         """
+        s3_manager = s3Manager(bucket_name, environment)
         for log in os.listdir(logging_path):
             date = datetime.date(datetime.strptime(log.split('logging', 1)[1].split('.log', 1)[0], '%Y-%m-%d'))
             # upload only files of previous days
             if date < date.today():
-                success = self.request_manager.upload_log_file(os.path.join(logging_path, log), device_id, date)
-                # delete files after successful upload
-                if success.status_code == 201:
+                try:
+                    s3_manager.upload_logs_to_s3(os.path.join(logging_path, log), device_id, log)
                     os.remove(os.path.join(logging_path, log))
+                except Exception as e:
+                    self.logger.debug(e)
+                    break
+
 
     def _init_set_record_(self, rfid):
         """

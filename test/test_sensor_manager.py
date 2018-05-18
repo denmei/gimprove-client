@@ -29,11 +29,7 @@ class TestSensorManager(unittest.TestCase):
                                          exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                          cache_path=self.cache_path,
                                          userprofile_detail_address=self.user_profile_rfid_address,
-<<<<<<< HEAD
-                                         log_address=self.log_address)
-=======
                                          websocket_address=self.websocket_address)
->>>>>>> master
         self.sensor_manager = SensorManager(
             request_manager=request_manager,
             min_dist=470,

@@ -30,8 +30,7 @@ class TestRequestManager(unittest.TestCase):
                                               websocket_address=self.websocket_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
-                                              userprofile_detail_address=self.user_profile_rfid_address,
-                                              log_address=self.log_address)
+                                              userprofile_detail_address=self.user_profile_rfid_address)
 
     def tearDown(self):
         """

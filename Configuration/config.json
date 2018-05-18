@@ -36,5 +36,8 @@
   },
   "communication": {
     "environment": "Test"
+  },
+  "aws": {
+    "bucket": "rasppi-logs"
   }
 }

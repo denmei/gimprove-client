@@ -20,25 +20,13 @@ class TestClient(unittest.TestCase):
 
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
-<<<<<<< HEAD
-        self.log_address = "http://127.0.0.1:8000/tracker/log_rest/"
 
-        # create test-logs
-        if "logs" not in os.listdir("test"):
-            os.mkdir("test/logs")
-        open(os.path.join('test/logs', "logging" + str(datetime.date.today())) + ".log", 'a').close()
-        open(os.path.join('test/logs', "logging" + str((datetime.date.today()) - datetime.timedelta(days=1))) + ".log", 'a').close()
-
-    def tearDown(self):
-        # delete test-logs
-        shutil.rmtree('test/logs')
-=======
         self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
 
         self.equipment.request_manager.detail_address = self.detail_address
         self.equipment.request_manager.list_address = self.list_address
         self.equipment.request_manager.websocket_manager.address = self.websocket_address
->>>>>>> master
+
 
     def test_init_set_record(self):
         """
@@ -75,11 +63,3 @@ class TestClient(unittest.TestCase):
         self.assertEqual(len(response_after.content), len(response_before.content))
         self.assertTrue(len(response_middle.content) > len(response_before.content))
         self.assertTrue(len(response_middle.content) > len(response_after.content))
-
-    def test_log_upload(self):
-        """
-        Only files prior to the current day may be uploaded. If upload was successful, the file must be deleted.
-        """
-        len1 = len(os.listdir('test/logs'))
-        self.equipment._upload_logs_('test/logs', self.equipment_id)
-        self.assertEqual(len1 -1, len(os.listdir('test/logs')))
