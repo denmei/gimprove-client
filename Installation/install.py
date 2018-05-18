@@ -1,6 +1,6 @@
 import os
 
-# os.system("pip install -r requirements.txt --no-index --find-links file: requirements.txt")
+# load required packages and install
 os.system("pip3 install numpy==1.14.2")
 os.system("pip3 install twisted==18.4.0")
 os.system("pip3 install matplotlib==2.1.1")
@@ -12,4 +12,9 @@ os.system("pip3 install websocket-client==0.47.0")
 os.system("sudo apt-get install python-smbus")
 os.system("sudo apt-get install i2c-tools")
 os.system("sudo reboot now")
+
+# configure aws
+os.system("pip install awscli --upgrade --user")
+os.system("complete -C aws_completer aws")
+os.system("aws configure")
 
