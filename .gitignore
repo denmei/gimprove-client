@@ -5,3 +5,4 @@ Configuration/logs/
 smbus/
 venv/
 client_cache.txt
+credentials.json
