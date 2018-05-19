@@ -1,8 +1,6 @@
 import unittest
 from Client_Prototype.SensorManager import SensorManager
 from Client_Prototype.RequestManager import RequestManager
-import json
-import random
 import logging
 from pathlib import Path
 import os

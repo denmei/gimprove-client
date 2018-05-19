@@ -1,7 +1,3 @@
-import asyncio
-from twisted.internet import reactor
-from autobahn.twisted.websocket import WebSocketClientProtocol
-from autobahn.twisted.websocket import WebSocketClientFactory
 import threading
 import websocket
 import logging

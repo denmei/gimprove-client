@@ -1,7 +1,6 @@
 import unittest
 from Client_Prototype.RequestManager import RequestManager
 import requests
-from datetime import datetime
 import json
 import random
 import logging
