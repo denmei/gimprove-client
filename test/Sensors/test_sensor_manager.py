@@ -1,6 +1,6 @@
 import unittest
 from Client_Prototype.Sensors.SensorManager import SensorManager
-from Client_Prototype.Communication.RequestManager import RequestManager
+from Client_Prototype.Communication.MessageQueue import MessageQueue
 import logging
 from pathlib import Path
 import os
@@ -18,18 +18,12 @@ class TestSensorManager(unittest.TestCase):
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
-        self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
-        self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + \
-                               "/Configuration/client_cache.txt"
         self.rfid = "0006921147"
 
-        request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
-                                         exercise_name=self.exercise_name, equipment_id=self.equipment_id,
-                                         cache_path=self.cache_path,
-                                         userprofile_detail_address=self.user_profile_rfid_address,
-                                         websocket_address=self.websocket_address)
+        print(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_short.csv')
+
         self.sensor_manager = SensorManager(
-            request_manager=request_manager,
+            queue=MessageQueue(),
             min_dist=470,
             max_dist=900,
             use_sensors=False,
@@ -37,8 +31,8 @@ class TestSensorManager(unittest.TestCase):
             print_distance=False,
             print_undermax=False,
             final_plot=False,
-            distances_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_short.csv',
-            weights_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/weights.csv'
+            distances_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_short.csv',
+            weights_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_short.csv'
         )
 
     def test_distance_validation(self):
@@ -60,13 +54,13 @@ class TestSensorManager(unittest.TestCase):
         distance_buffer = []
         repetitions = 0
         total = []
-        with open(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_long.csv') as numbers:
+        with open(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv') as numbers:
             lines = numbers.readlines()
             length = len(lines)
-        self.sensor_manager._numbers_file_ = str(
-            Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_long.csv'
+        self.sensor_manager._numbers_file_ = \
+            str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv'
         for x in range(0, length):
             repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer, total)
         self.assertEqual(repetitions, 10)
-        self.sensor_manager._numbers_file_ = str(
-            Path(os.path.dirname(os.path.realpath(__file__)))) + '/distances_short.csv'
+        self.sensor_manager._numbers_file_ = \
+            str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv'

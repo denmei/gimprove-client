@@ -104,7 +104,7 @@ class SensorManager:
         Reads translation data from csv. Translation data is used for converting measured weight to the corresponding
         weight on the machine.
         """
-        directory = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + \
+        directory = str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + \
                     '/Configuration/weight_translation.csv'
         return pd.read_csv(directory, header=None)
 

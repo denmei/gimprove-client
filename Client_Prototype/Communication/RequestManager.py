@@ -1,8 +1,5 @@
 import requests
 from datetime import datetime
-import os
-import random
-import traceback
 import logging
 import pytz
 import json
@@ -15,7 +12,6 @@ class RequestManager(threading.Thread):
     """
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
-
     def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, exercise_name,
                  equipment_id, cache_path, message_queue):
         super(RequestManager, self).__init__()
@@ -24,7 +20,7 @@ class RequestManager(threading.Thread):
         self.list_address = list_address
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
-        self.cache_manager = CacheManager(cache_path)
+        self.cache_manager = CacheManager(cache_path, self)
         self.message_queue = message_queue
         self.userprofile_detail_address = userprofile_detail_address
         self.local_tz = pytz.timezone('Europe/Berlin')

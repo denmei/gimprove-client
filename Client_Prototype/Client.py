@@ -27,7 +27,7 @@ class Equipment:
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
                                               userprofile_detail_address=self.userprofile_detail_address,
-                                              websocket_address=self.websocket_address, queue=self.message_queue)
+                                              websocket_address=self.websocket_address, message_queue=self.message_queue)
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.message_queue)
         self.logger.info("Client instantiated.")
         self._upload_logs_(self.config_path + "/logs", self.equipment_id, self.bucket, self.environment)
