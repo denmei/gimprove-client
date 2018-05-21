@@ -6,8 +6,9 @@ import logging
 import os
 from pathlib import Path
 from datetime import datetime
+from queue import LifoQueue
 from Client_Prototype.s3Manager import s3Manager
-
+from Client_Prototype.MessageQueue import MessageQueue
 
 class Equipment:
     """
@@ -22,12 +23,13 @@ class Equipment:
         self._configure_logger_()
         self.list_address, self.detail_address, self.userprofile_detail_address, self.websocket_address = \
         self._load_links_(self.config_path + "/config.json")
+        self.message_queue = MessageQueue()
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
                                               userprofile_detail_address=self.userprofile_detail_address,
-                                              websocket_address=self.websocket_address)
-        self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.request_manager)
+                                              websocket_address=self.websocket_address, queue=self.message_queue)
+        self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.message_queue)
         self.logger.info("Client instantiated.")
         self._upload_logs_(self.config_path + "/logs", self.equipment_id, self.bucket, self.environment)
 
@@ -87,7 +89,7 @@ class Equipment:
                links['websocket']['link']
 
     @staticmethod
-    def _initialize_sensormanager_(config_file_path, request_manager):
+    def _initialize_sensormanager_(config_file_path, message_queue):
         """
         Creates a sensor manager-instance with the settings specified in the config_file.
         :return SensorManager-Instance
@@ -100,7 +102,7 @@ class Equipment:
         distance_settings = settings['sensor_settings']['distance_sensor']
         weight_settings = settings['sensor_settings']['weight_sensor']
         terminal_settings = settings['terminal_settings']
-        sensor_manager = SensorManager(request_manager=request_manager,
+        sensor_manager = SensorManager(queue=message_queue,
                                        min_dist=distance_settings['min_dist'],
                                        max_dist=distance_settings['max_dist'],
                                        dout=weight_settings['dout'],
@@ -145,7 +147,6 @@ class Equipment:
                 except Exception as e:
                     self.logger.debug(e)
                     break
-
 
     def _init_set_record_(self, rfid):
         """

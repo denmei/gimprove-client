@@ -24,7 +24,7 @@ class SensorManager:
     be changed in the future to increase performance).
     """
 
-    def __init__(self, request_manager, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
+    def __init__(self, queue, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
                  reference_unit=92, timeout_delta=10, use_sensors=False, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
                  address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
                  print_distance=True, print_weight=True, print_undermax=False, final_plot=False,
@@ -33,7 +33,7 @@ class SensorManager:
                  weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv'):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
-        :param request_manager: Reference on the request manager for sending updates to the server.
+        :param queue: Reference on the message queue where messages can be sent from.
         :param min_dist: minimum value that has to be reached with the distance sensor to count a repetition.
         :param max_dist: maximum value the distance sensor can reach.
         :param byte_format: order in which the bytes are used to build the "long" value.
@@ -56,7 +56,7 @@ class SensorManager:
         self._rep_ = 0
         self._min_ = min_dist
         self._max_ = max_dist
-        self.request_manager = request_manager
+        self.queue = queue
         self._durations_ = []
         self._start_time_ = datetime.now()
         self.use_sensors = use_sensors
@@ -303,7 +303,7 @@ class SensorManager:
                 self._durations_, self._start_time_ = self._update_durations_starttime_(self._durations_,
                                                                                         self._start_time_)
                 # send update
-                self.request_manager.update_set(repetitions=self._rep_, weight=self._measure_weight_(self._rep_),
+                self.queue.put_update(repetitions=self._rep_, weight=self._measure_weight_(self._rep_),
                                                 set_id=set_id, rfid=rfid_tag, active=True, durations=self._durations_, end=False)
                 self._weight_list_ = self._weight_list_ + [self._weight_]
             if self.time_out_time < datetime.now():

@@ -7,15 +7,18 @@ import logging
 import pytz
 import json
 from Client_Prototype.WebSocketManager import WebSocketManager
+from queue import Queue
+import threading
 
 
-class RequestManager:
+class RequestManager(threading.Thread):
     """
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
 
     def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, exercise_name,
-                 equipment_id, cache_path):
+                 equipment_id, cache_path, queue):
+        super(RequestManager, self).__init__()
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
@@ -23,12 +26,27 @@ class RequestManager:
         self.equipment_id = equipment_id
         self.path = cache_path
         self.cache_path = os.path.join(cache_path, "client_cache.txt")
+        self.queue = Queue(maxsize=0)
         self.userprofile_detail_address = userprofile_detail_address
         self._check_cache_file_()
         self.local_tz = pytz.timezone('Europe/Berlin')
         self.websocket_manager = WebSocketManager(websocket_address, equipment_id)
         self.websocket_manager.setDaemon(True)
         self.websocket_manager.start()
+
+    def run(self):
+        while True:
+            if not self.queue.empty():
+                element = self.queue.get()
+                self.queue.task_done()
+                self.__handle_message__(element)
+
+    def __handle_message__(self, message):
+        if "type" in message:
+            type = message.get("type")
+            if type == "update":
+                self.update_set(message.get("repetitions"), message.get("weight"), message.get("set_id"), message.get("rfid"),
+                                message.get("active"), message.get("durations"), message.get("end"))
 
     def check_ws_connection(self):
         if not self.websocket_manager.is_alive():
