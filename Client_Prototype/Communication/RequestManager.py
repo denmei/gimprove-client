@@ -6,8 +6,8 @@ import traceback
 import logging
 import pytz
 import json
-from Client_Prototype.WebSocketManager import WebSocketManager
-from queue import Queue
+from Client_Prototype.Communication.WebSocketManager import WebSocketManager
+from Client_Prototype.Communication.CacheManager import CacheManager
 import threading
 
 
@@ -17,18 +17,16 @@ class RequestManager(threading.Thread):
     """
 
     def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, exercise_name,
-                 equipment_id, cache_path, queue):
+                 equipment_id, cache_path, message_queue):
         super(RequestManager, self).__init__()
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
-        self.path = cache_path
-        self.cache_path = os.path.join(cache_path, "client_cache.txt")
-        self.queue = Queue(maxsize=0)
+        self.cache_manager = CacheManager(cache_path)
+        self.message_queue = message_queue
         self.userprofile_detail_address = userprofile_detail_address
-        self._check_cache_file_()
         self.local_tz = pytz.timezone('Europe/Berlin')
         self.websocket_manager = WebSocketManager(websocket_address, equipment_id)
         self.websocket_manager.setDaemon(True)
@@ -36,17 +34,21 @@ class RequestManager(threading.Thread):
 
     def run(self):
         while True:
-            if not self.queue.empty():
-                element = self.queue.get()
-                self.queue.task_done()
+            element = self.message_queue.get()
+            if element is not None:
                 self.__handle_message__(element)
 
     def __handle_message__(self, message):
+        """
+        Handles a message from the message_queue.
+        :param message:
+        :return:
+        """
         if "type" in message:
             type = message.get("type")
             if type == "update":
-                self.update_set(message.get("repetitions"), message.get("weight"), message.get("set_id"), message.get("rfid"),
-                                message.get("active"), message.get("durations"), message.get("end"))
+                self.update_set(message.get("repetitions"), message.get("weight"), message.get("set_id"),
+                                message.get("rfid"), message.get("active"), message.get("durations"), message.get("end"))
 
     def check_ws_connection(self):
         if not self.websocket_manager.is_alive():
@@ -61,14 +63,6 @@ class RequestManager(threading.Thread):
         if response.status_code == 200:
             return True
         return False
-
-    def _check_cache_file_(self):
-        """
-        Checks whether there is a cache_file in the specified directory. If not, a new file will be created.
-        """
-        if not os.path.isfile(self.cache_path):
-            cache_file = open(self.cache_path, 'w')
-            cache_file.close()
 
     def update_set(self, repetitions, weight, set_id, rfid, active, durations, end):
         """
@@ -92,7 +86,7 @@ class RequestManager(threading.Thread):
             self.logger.debug("RequestManager: %s" % e)
         response = requests.put(address, data=data)
         if response.status_code != 200 and response.status_code != 201:
-            self.cache_request("update", address, data, str(response.status_code))
+            self.cache_manager.cache_request("update", address, data, str(response.status_code))
         print(end)
         print(response.status_code)
         print(address)
@@ -116,7 +110,7 @@ class RequestManager(threading.Thread):
             self.logger.debug("RequestManager: %s" % e)
         response = requests.post(self.list_address, data=data)
         if response.status_code != 200 and response.status_code != 201:
-            self.cache_request("new", self.list_address, data, str(response.status_code))
+            self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code))
         self.logger.info("Sent creation request. Status: %s" % response.status_code)
         return response
 
@@ -128,72 +122,5 @@ class RequestManager(threading.Thread):
         response = requests.delete(address)
         # self.websocket_manager.send(set_id)
         if response.status_code != 200 and response.status_code != 201:
-            self.cache_request("delete", address, "", str(response.status_code))
+            self.cache_manager.cache_request("delete", address, "", str(response.status_code))
         return response
-
-    def upload_log_file(self, path_to_file, device_id, date):
-        """
-        Uploads a log-file to the server.
-        :param path_to_file: Path to the logfile to be uploaded.
-        :param device_id: Id of the client.
-        :param date: Date of the logfile.
-        :return: Response of the post-request.
-        """
-        files = {'upload_file': open(path_to_file, 'rb')}
-        data = {'device_id': device_id, 'date': date}
-        response = requests.post(self.log_address, files=files, data=data)
-        return response
-
-    def cache_request(self, method, address, data, status_code):
-        """
-        Caches a request if there is a connection/server error. Delete all prior cached messages that belong to the same
-        set.
-        """
-        if status_code[0] == "5" or status_code[0] == "4":
-            with open(self.cache_path, "a") as cache_file:
-                cache_file.write(json.dumps({'method': method, 'address': address, 'data': data, 'status_code': status_code}) + "\n")
-                cache_file.close()
-            self.logger.info("Cached request.")
-            return True
-        else:
-            return False
-
-    def empty_cache(self):
-        """
-        Tries to send all cached exercises to the server. And deletes the messages.
-        Attention: If requests fails, the request is written back to the cache -> not try again in the same session!
-        :return: True if no error occured, else false.
-        """
-        os.rename(self.cache_path, self.path + "buffer_cache.txt")
-        self._check_cache_file_()
-        try:
-            with open(self.path + "buffer_cache.txt", "r+") as cache_file:
-                for line in cache_file:
-                    message = json.loads(line)
-                    response = None
-                    method = message['method']
-                    address = message['address']
-                    data = message['data']
-                    if message == 'update':
-                        self.update_set(repetitions=data['repetitions'], weight=data['weight'],
-                                        set_id=str(address.rsplit("/", 1))[1], rfid=data['rfid'], active=data['active'],
-                                        durations=random.sample(range(1, 20), data['repetitions']), end=False)
-                    elif method == 'new':
-                        self.new_set(rfid=data['rfid'], exercise_unit=data['exercise_unit'])
-                    elif method == 'delete':
-                        self.delete_set(data['id'])
-                    # if request was not successfull, try to cache it again
-                    if response is not None:
-                        status_code = response.status_code
-                        self.cache_request(method, address, data, status_code)
-                os.remove(self.path + "buffer_cache.txt")
-                self.logger.info("Cache empty.")
-                return True
-        except Exception as e:
-            print("Exception RequestManager: " + str(e))
-            print(traceback.print_exc())
-            # if an error occurs, recreate the cache and delete the buffer
-            os.remove(self.cache_path)
-            os.rename(self.path + "buffer_cache.txt", self.cache_path)
-            self.logger.warning("Cache empty did not work.")
-            return False

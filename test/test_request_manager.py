@@ -1,5 +1,5 @@
 import unittest
-from Client_Prototype.RequestManager import RequestManager
+from Client_Prototype.Communication.RequestManager import RequestManager
 import requests
 import json
 import random

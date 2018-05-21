@@ -1,14 +1,13 @@
 import json
-from Client_Prototype.RequestManager import RequestManager
-from Client_Prototype.SensorManager import SensorManager
+from Client_Prototype.Communication.RequestManager import RequestManager
+from Client_Prototype.Sensors.SensorManager import SensorManager
 import traceback
 import logging
 import os
 from pathlib import Path
 from datetime import datetime
-from queue import LifoQueue
-from Client_Prototype.s3Manager import s3Manager
-from Client_Prototype.MessageQueue import MessageQueue
+from Client_Prototype.Communication.s3Manager import s3Manager
+from Client_Prototype.Communication.MessageQueue import MessageQueue
 
 class Equipment:
     """

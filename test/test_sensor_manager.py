@@ -1,6 +1,6 @@
 import unittest
-from Client_Prototype.SensorManager import SensorManager
-from Client_Prototype.RequestManager import RequestManager
+from Client_Prototype.Sensors.SensorManager import SensorManager
+from Client_Prototype.Communication.RequestManager import RequestManager
 import logging
 from pathlib import Path
 import os

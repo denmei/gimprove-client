@@ -1,7 +1,7 @@
 import unittest
 import logging
 import os
-from Client_Prototype.s3Manager import s3Manager
+from Client_Prototype.Communication.s3Manager import s3Manager
 from pathlib import Path
 
 
