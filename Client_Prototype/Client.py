@@ -9,6 +9,7 @@ from datetime import datetime
 from Client_Prototype.Communication.s3Manager import s3Manager
 from Client_Prototype.Communication.MessageQueue import MessageQueue
 
+
 class Equipment:
     """
     Represents a component to upgrade a gym machine. Can record new exercise units and send the results to the

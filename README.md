@@ -7,7 +7,21 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component. The f
 * Sending results to the GImprove-server using the GImprove-API (HTTP) and via a Websocket-Connection
 
 ## Install
-All necessary packages are listed in the `requirements.txt`-file. 
+To install all required packages, run `python3 install.py` from the root directory.
+
+To setup AWS for uploading the log-Files to S3:
+* Create `/.aws`: `mkdir /.aws` and cd into the new directory
+* Create the configuration file with `touch config`, open the file and paste: 
+```
+[default]
+region = eu-central-1
+```
+* Create the credentials file with `touch credentials` and enter the following (replace *** with your credentials!):
+```
+[default]
+aws_access_key_id = ***
+aws_secret_access_key = ***
+```
 
 ## Usage
 To **run** the client, run the `execute.py` file with `python3 execute.py` from the root-directory.
