@@ -22,9 +22,9 @@ class TestRequestManager(unittest.TestCase):
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
         self.log_address = ""
-        self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
-        self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + \
-                               "/Configuration/client_cache.txt"
+        self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data"
+        self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + \
+                               "/test_data/client_cache.txt"
         self.rfid = "0006921147"
         self.message_queue = MessageQueue()
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
@@ -95,17 +95,6 @@ class TestRequestManager(unittest.TestCase):
         # confirm that set is not in database anymore
         sets_after = requests.get(self.list_address).content.decode("utf-8")
         self.assertFalse(new_set['id'] in sets_after)
-
-    def _count_file_lines(self, path):
-        """
-        Counts lines of a text file.
-        :return: 1 if number of lines <= 1, else number of lines.
-        """
-        i = 0
-        with open(path) as count_file:
-            for i, l in enumerate(count_file):
-                pass
-            return i + 1
 
     def test_rfid_exists(self):
         """

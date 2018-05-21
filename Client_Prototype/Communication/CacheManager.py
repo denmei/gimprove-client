@@ -10,8 +10,9 @@ class CacheManager:
     def __init__(self, cache_path, request_manager):
         self.logger = logging.getLogger('gimprove' + __name__)
         self.path = cache_path
-        self.cache_path = os.path.join(cache_path, "cache.txt")
+        self.cache_path = os.path.join(cache_path, "client_cache.txt")
         self.request_manager = request_manager
+        self._check_cache_file_()
 
     def _check_cache_file_(self):
         """

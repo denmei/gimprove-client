@@ -26,7 +26,8 @@ aws_secret_access_key = ***
 ## Usage
 To **run** the client, run the `execute.py` file with `python3 execute.py` from the root-directory.
 
-To **test** the client, execute the following command from the root-directory: `python3 -m unittest`.
+To **test** the client, execute the following command from the root-directory: `python3 -m unittest`. The server must be
+running locally on 127.0.0.1:8000.
 
 ## Built with
 * <a href="https://github.com/johnbryanmoore/VL53L0X_rasp_python">VL53L0X_rasp_python</a>: Python interface to the 
