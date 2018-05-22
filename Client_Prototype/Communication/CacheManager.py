@@ -22,6 +22,13 @@ class CacheManager:
             cache_file = open(self.cache_path, 'w')
             cache_file.close()
 
+    def get_cache_size(self):
+        size = 0
+        with open(self.cache_path, 'r') as cache_file:
+            for i, row in enumerate(cache_file):
+                size += 1
+        return size
+
     def cache_request(self, method, address, data, status_code):
         """
         Caches a request if there is a connection/server error. Delete all prior cached messages that belong to the same

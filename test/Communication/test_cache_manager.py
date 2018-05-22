@@ -12,6 +12,7 @@ class TestCacheManager(unittest.TestCase):
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
+        self.token_address = "http://127.0.0.1:8000/get_auth_token/"
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
         self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
         self.exercise_name = 'Lat Pulldown'
@@ -27,7 +28,8 @@ class TestCacheManager(unittest.TestCase):
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
                                               userprofile_detail_address=self.user_profile_rfid_address,
-                                              message_queue=self.message_queue)
+                                              token_address=self.token_address,
+                                              message_queue=self.message_queue, password="blahblah")
         self.cache_manager = CacheManager(self.cache_path, self.request_manager)
 
     def _count_file_lines(self, path):

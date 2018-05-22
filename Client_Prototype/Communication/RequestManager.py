@@ -12,8 +12,8 @@ class RequestManager(threading.Thread):
     """
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
-    def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, exercise_name,
-                 equipment_id, cache_path, message_queue):
+    def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, token_address, exercise_name,
+                 equipment_id, cache_path, message_queue, password, token=None):
         super(RequestManager, self).__init__()
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
@@ -22,6 +22,7 @@ class RequestManager(threading.Thread):
         self.equipment_id = equipment_id
         self.cache_manager = CacheManager(cache_path, self)
         self.message_queue = message_queue
+        self.header = self.__init_header__(token_address, token, equipment_id, password)
         self.userprofile_detail_address = userprofile_detail_address
         self.local_tz = pytz.timezone('Europe/Berlin')
         self.websocket_manager = WebSocketManager(websocket_address, equipment_id)
@@ -33,6 +34,18 @@ class RequestManager(threading.Thread):
             element = self.message_queue.get()
             if element is not None:
                 self.__handle_message__(element)
+
+    def __init_header__(self, token_address, token, user, password):
+        """
+        Creates the authentication header using the token. Gets a new token if passed token is None.
+        :param token:
+        :return:
+        """
+        # TODO: Replace Dennis by equipment ID!
+        if token is None:
+            token = json.loads(requests.post(token_address, data={'username': "dennis", 'password': password})
+                               .content.decode()).get("token")
+        return {'Authorization': 'Token ' + str(token)}
 
     def __handle_message__(self, message):
         """
@@ -55,7 +68,7 @@ class RequestManager(threading.Thread):
         Checks whether there exists a Userprofile for a specific RFID.
         :return: True if there is an Userprofile with the RFID, else False.
         """
-        response = requests.get(self.userprofile_detail_address + rfid)
+        response = requests.get(self.userprofile_detail_address + rfid, headers=self.header)
         if response.status_code == 200:
             return True
         return False
@@ -80,12 +93,9 @@ class RequestManager(threading.Thread):
             self.websocket_manager.send(json.dumps(websocket_data))
         except Exception as e:
             self.logger.debug("RequestManager: %s" % e)
-        response = requests.put(address, data=data)
+        response = requests.put(address, data=data, headers=self.header)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_manager.cache_request("update", address, data, str(response.status_code))
-        print(end)
-        print(response.status_code)
-        print(address)
         self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code, response.content))
         return response
 
@@ -104,7 +114,7 @@ class RequestManager(threading.Thread):
             self.websocket_manager.send(json.dumps(websocket_data))
         except Exception as e:
             self.logger.debug("RequestManager: %s" % e)
-        response = requests.post(self.list_address, data=data)
+        response = requests.post(self.list_address, data=data, headers=self.header)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code))
         self.logger.info("Sent creation request. Status: %s" % response.status_code)
@@ -115,7 +125,7 @@ class RequestManager(threading.Thread):
         Sends a request to delete the set with the specified set_id.
         """
         address = self.detail_address + set_id
-        response = requests.delete(address)
+        response = requests.delete(address, headers=self.header)
         # self.websocket_manager.send(set_id)
         if response.status_code != 200 and response.status_code != 201:
             self.cache_manager.cache_request("delete", address, "", str(response.status_code))

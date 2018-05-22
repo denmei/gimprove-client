@@ -1,5 +1,6 @@
 {
   "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+  "password": "blahblah",
   "exercise_name": "Lat Pulldown",
   "sensor_settings": {
     "use_sensors": "False",
@@ -35,7 +36,7 @@
     "print_undermax": "False"
   },
   "communication": {
-    "environment": "Test"
+    "environment": "Local"
   },
   "aws": {
     "bucket": "rasppi-logs"

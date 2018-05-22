@@ -18,6 +18,7 @@ class TestRequestManager(unittest.TestCase):
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
         self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
         self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
+        self.token_address = "http://127.0.0.1:8000/get_auth_token/"
         self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
@@ -32,7 +33,11 @@ class TestRequestManager(unittest.TestCase):
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
                                               userprofile_detail_address=self.user_profile_rfid_address,
-                                              message_queue=self.message_queue)
+                                              token_address=self.token_address,
+                                              message_queue=self.message_queue, password="blahblah")
+        token = json.loads(requests.post(self.token_address, data={'username': "dennis", 'password': "blahblah"}).
+                           content.decode()).get("token")
+        self.header = {'Authorization': 'Token ' + str(token)}
 
     def tearDown(self):
         """
@@ -43,14 +48,13 @@ class TestRequestManager(unittest.TestCase):
         #   os.remove(self.cache_file_path)
         # TODO: Delete log-dummy
 
-
     def test_new_set(self):
         """
         Make request to create new set. Test whether set exists afterwards and did not before. New set must be
         user's active set after creation.
         """
         # get list of available sets
-        sets_before = requests.get(self.list_address).content.decode("utf-8")
+        sets_before = requests.get(self.list_address, headers=self.header).content.decode("utf-8")
         # make request
         response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
         content = json.loads(response.content.decode("utf-8"))
@@ -58,11 +62,11 @@ class TestRequestManager(unittest.TestCase):
         # confirm that set_id is not in first list
         self.assertFalse(set_id in sets_before)
         # get list of available sets
-        sets_after = requests.get(self.list_address).content.decode("utf-8")
+        sets_after = requests.get(self.list_address, headers=self.header).content.decode("utf-8")
         # confirm that set_id exists in second list
         self.assertTrue(set_id in sets_after)
         # confirm that new set is active set of user
-        user_profile = requests.get(self.user_profile_rfid_address + self.rfid).content
+        user_profile = requests.get(self.user_profile_rfid_address + self.rfid, headers=self.header).content
         user_profile = json.loads(user_profile.decode("utf-8"))
         self.assertEqual(user_profile['_pr_active_set'], set_id)
 
@@ -76,9 +80,9 @@ class TestRequestManager(unittest.TestCase):
         self.request_manager.update_set(repetitions=repetitions, weight=content['weight'] + 5,
                                         set_id=content['id'], rfid=self.rfid, active=False,
                                         durations=random.sample(range(1, 20), repetitions), end=False)
-        updated_set = requests.get(self.detail_address + content['id']).content
+        updated_set = requests.get(self.detail_address + content['id'], headers=self.header).content
         updated_set = json.loads(updated_set.decode("utf-8"))
-        user_profile = requests.get(self.user_profile_rfid_address + self.rfid).content
+        user_profile = requests.get(self.user_profile_rfid_address + self.rfid, headers=self.header).content
         user_profile = json.loads(user_profile.decode("utf-8"))
         self.assertEqual(updated_set['repetitions'], content['repetitions'] + 5)
         self.assertEqual(updated_set['weight'], content['weight'] + 5)
@@ -93,7 +97,7 @@ class TestRequestManager(unittest.TestCase):
         new_set = json.loads(response.content.decode("utf-8"))
         self.request_manager.delete_set(new_set['id'])
         # confirm that set is not in database anymore
-        sets_after = requests.get(self.list_address).content.decode("utf-8")
+        sets_after = requests.get(self.list_address, headers=self.header).content.decode("utf-8")
         self.assertFalse(new_set['id'] in sets_after)
 
     def test_rfid_exists(self):
@@ -105,6 +109,21 @@ class TestRequestManager(unittest.TestCase):
         self.assertFalse(self.request_manager.rfid_is_valid(fake_rfid))
 
         # check whether returns true for correct rfid
-        response = requests.get(self.user_profile_address + "1")
+        response = requests.get(self.user_profile_address + "1", headers=self.header)
         real_rfid = json.loads(response.content.decode("utf-8"))['rfid_tag']
         self.assertTrue(self.request_manager.rfid_is_valid(real_rfid))
+
+    def test_auth_error(self):
+        """
+        If requestmanager cannot authenticate and thus not send any message, all messages must be cached.
+        """
+        request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
+                                         websocket_address=self.websocket_address,
+                                         exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+                                         cache_path=self.cache_path,
+                                         userprofile_detail_address=self.user_profile_rfid_address,
+                                         token_address=self.token_address,
+                                         message_queue=self.message_queue, password="false")
+        cache_size_before = request_manager.cache_manager.get_cache_size()
+        request_manager.new_set("test", "test")
+        self.assertEqual(cache_size_before +1, request_manager.cache_manager.get_cache_size())

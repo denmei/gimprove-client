@@ -21,14 +21,16 @@ class Equipment:
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
         self._configure_logger_()
-        self.list_address, self.detail_address, self.userprofile_detail_address, self.websocket_address = \
+        self.list_address, self.detail_address, self.userprofile_detail_address, self.websocket_address, token_address = \
         self._load_links_(self.config_path + "/config.json")
         self.message_queue = MessageQueue()
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.config_path,
                                               userprofile_detail_address=self.userprofile_detail_address,
-                                              websocket_address=self.websocket_address, message_queue=self.message_queue)
+                                              token_address=token_address,
+                                              websocket_address=self.websocket_address, message_queue=self.message_queue,
+                                              password=self.password, token=None)
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.message_queue)
         self.logger.info("Client instantiated.")
         self._upload_logs_(self.config_path + "/logs", self.equipment_id, self.bucket, self.environment)
@@ -43,6 +45,7 @@ class Equipment:
         self.equipment_id = configuration['equipment_id']
         self.environment = configuration['communication']['environment']
         self.bucket = configuration['aws']['bucket']
+        self.password = configuration['password']
 
     def _configure_logger_(self):
         """
@@ -86,7 +89,7 @@ class Equipment:
                 links = json.load(links_file)['links']['local-links']
         links_file.close()
         return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link'], \
-               links['websocket']['link']
+               links['websocket']['link'], links['token_auth']['link']
 
     @staticmethod
     def _initialize_sensormanager_(config_file_path, message_queue):
