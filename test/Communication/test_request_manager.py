@@ -7,10 +7,10 @@ import random
 import logging
 from pathlib import Path
 import os
+import time
 
 
 class TestRequestManager(unittest.TestCase):
-    # TODO: Check whether caching works when creating/updating/deleting
 
     def setUp(self):
         logging.disable(logging.CRITICAL)
@@ -43,10 +43,8 @@ class TestRequestManager(unittest.TestCase):
         """
         Deletes chache file after tests.
         """
-        pass
-        # if os.path.isfile(self.cache_file_path):
-        #   os.remove(self.cache_file_path)
-        # TODO: Delete log-dummy
+        if os.path.isfile(self.cache_file_path):
+            os.remove(self.cache_file_path)
 
     def test_new_set(self):
         """
@@ -126,4 +124,19 @@ class TestRequestManager(unittest.TestCase):
                                          message_queue=self.message_queue, password="false")
         cache_size_before = request_manager.cache_manager.get_cache_size()
         request_manager.new_set("test", "test")
-        self.assertEqual(cache_size_before +1, request_manager.cache_manager.get_cache_size())
+        self.assertEqual(cache_size_before + 1, request_manager.cache_manager.get_cache_size())
+
+    def test_thread_messaging(self):
+        """
+        Messages passed to the requestmanager's Messagequeue must be broadcasted to the server.
+        """
+        self.request_manager.start()
+        response = self.request_manager.new_set(self.rfid)
+        set_id = json.loads(response.content.decode("utf-8"))['id']
+        repetitions_1 = json.loads(requests.get(self.detail_address + set_id, headers=self.header).content.decode()).get('repetitions')
+        self.message_queue.put_update(repetitions=1, weight=10, set_id=set_id, rfid=self.rfid, active=False,
+                                      durations=[0.1], end=False)
+        time.sleep(1)
+        repetitions_2 = json.loads(
+            requests.get(self.detail_address + set_id, headers=self.header).content.decode()).get('repetitions')
+        self.assertEqual(repetitions_1 + 1, repetitions_2)

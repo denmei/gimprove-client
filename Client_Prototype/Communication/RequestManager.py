@@ -15,6 +15,7 @@ class RequestManager(threading.Thread):
     def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, token_address, exercise_name,
                  equipment_id, cache_path, message_queue, password, token=None):
         super(RequestManager, self).__init__()
+        self.daemon = True
         self.logger = logging.getLogger('gimprove' + __name__)
         self.detail_address = detail_address
         self.list_address = list_address
