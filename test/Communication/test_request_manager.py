@@ -8,6 +8,7 @@ import logging
 from pathlib import Path
 import os
 import time
+from unittest import mock
 
 
 class TestRequestManager(unittest.TestCase):
@@ -140,3 +141,7 @@ class TestRequestManager(unittest.TestCase):
         repetitions_2 = json.loads(
             requests.get(self.detail_address + set_id, headers=self.header).content.decode()).get('repetitions')
         self.assertEqual(repetitions_1 + 1, repetitions_2)
+
+    # TODO: Test connection error
+    def test_connection_error(self):
+        pass
