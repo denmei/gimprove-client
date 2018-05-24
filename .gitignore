@@ -6,3 +6,4 @@ smbus/
 venv/
 client_cache.txt
 credentials.json
+.credentials.json

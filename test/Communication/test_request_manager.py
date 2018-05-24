@@ -8,19 +8,18 @@ import logging
 from pathlib import Path
 import os
 import time
-from unittest import mock
+from Client_Prototype.Helpers.Configurator import Configurator
 
 
 class TestRequestManager(unittest.TestCase):
 
     def setUp(self):
         logging.disable(logging.CRITICAL)
-        self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
-        self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
-        self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
-        self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
-        self.token_address = "http://127.0.0.1:8000/get_auth_token/"
-        self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
+        self.configurator = Configurator(config_path=str(Path(os.path.dirname(os.path.realpath(__file__))))
+                                                     + "/test_data", config_file_name="config.json",
+                                         api_links_name="api-links.json", environment="local")
+        self.list_address, self.detail_address, self.userprofile_rfid_address, self.userprofile_detail_address, \
+            self.websocket_address, self.token_address = self.configurator.get_api_links()
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
         self.log_address = ""
@@ -29,13 +28,9 @@ class TestRequestManager(unittest.TestCase):
                                "/test_data/client_cache.txt"
         self.rfid = "0006921147"
         self.message_queue = MessageQueue()
-        self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
-                                              websocket_address=self.websocket_address,
-                                              exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+        self.request_manager = RequestManager(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
-                                              userprofile_detail_address=self.user_profile_rfid_address,
-                                              token_address=self.token_address,
-                                              message_queue=self.message_queue, password="blahblah")
+                                              message_queue=self.message_queue, configurator=self.configurator)
         token = json.loads(requests.post(self.token_address, data={'username': "dennis", 'password': "blahblah"}).
                            content.decode()).get("token")
         self.header = {'Authorization': 'Token ' + str(token)}
@@ -65,7 +60,7 @@ class TestRequestManager(unittest.TestCase):
         # confirm that set_id exists in second list
         self.assertTrue(set_id in sets_after)
         # confirm that new set is active set of user
-        user_profile = requests.get(self.user_profile_rfid_address + self.rfid, headers=self.header).content
+        user_profile = requests.get(self.userprofile_rfid_address + self.rfid, headers=self.header).content
         user_profile = json.loads(user_profile.decode("utf-8"))
         self.assertEqual(user_profile['_pr_active_set'], set_id)
 
@@ -81,7 +76,7 @@ class TestRequestManager(unittest.TestCase):
                                         durations=random.sample(range(1, 20), repetitions), end=False)
         updated_set = requests.get(self.detail_address + content['id'], headers=self.header).content
         updated_set = json.loads(updated_set.decode("utf-8"))
-        user_profile = requests.get(self.user_profile_rfid_address + self.rfid, headers=self.header).content
+        user_profile = requests.get(self.userprofile_rfid_address + self.rfid, headers=self.header).content
         user_profile = json.loads(user_profile.decode("utf-8"))
         self.assertEqual(updated_set['repetitions'], content['repetitions'] + 5)
         self.assertEqual(updated_set['weight'], content['weight'] + 5)
@@ -108,7 +103,7 @@ class TestRequestManager(unittest.TestCase):
         self.assertFalse(self.request_manager.rfid_is_valid(fake_rfid))
 
         # check whether returns true for correct rfid
-        response = requests.get(self.user_profile_address + "1", headers=self.header)
+        response = requests.get(self.userprofile_detail_address + "1", headers=self.header)
         real_rfid = json.loads(response.content.decode("utf-8"))['rfid_tag']
         self.assertTrue(self.request_manager.rfid_is_valid(real_rfid))
 
@@ -116,13 +111,9 @@ class TestRequestManager(unittest.TestCase):
         """
         If requestmanager cannot authenticate and thus not send any message, all messages must be cached.
         """
-        request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
-                                         websocket_address=self.websocket_address,
-                                         exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+        request_manager = RequestManager(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                          cache_path=self.cache_path,
-                                         userprofile_detail_address=self.user_profile_rfid_address,
-                                         token_address=self.token_address,
-                                         message_queue=self.message_queue, password="false")
+                                         message_queue=self.message_queue, configurator=self.configurator)
         cache_size_before = request_manager.cache_manager.get_cache_size()
         request_manager.new_set("test", "test")
         self.assertEqual(cache_size_before + 1, request_manager.cache_manager.get_cache_size())

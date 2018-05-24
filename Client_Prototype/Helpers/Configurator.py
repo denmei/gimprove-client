@@ -16,6 +16,9 @@ class Configurator:
         with open(os.path.join(config_path, config_file_name)) as config_file:
             self.configuration = json.load(config_file)
             config_file.close()
+        with open(os.path.join(config_path, ".credentials.json")) as cred_file:
+            self.credentials = json.load(cred_file)
+            config_file.close()
         if environment is None:
             self.environment = str(self.configuration['communication']['environment']).lower()
         else:
@@ -26,6 +29,15 @@ class Configurator:
     def set_token(self, new_token):
         self.configuration['communication']['tokens'][self.environment] = new_token
         self.__update_file__()
+
+    def get_password(self):
+        return self.credentials['password']
+
+    def get_username(self):
+        return self.credentials['username']
+
+    def get_token(self):
+        return self.configuration['communication']['tokens'][self.environment]
 
     def get_environment(self):
         """
@@ -66,7 +78,7 @@ class Configurator:
                 links = json.load(links_file)['links']['local-links']
         links_file.close()
         return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link'], \
-               links['websocket']['link'], links['token_auth']['link']
+               links['userprofile_detail2']['link'], links['websocket']['link'], links['token_auth']['link']
 
     def __configure_logger__(self):
         """

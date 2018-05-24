@@ -23,17 +23,14 @@ class Equipment:
         self._configure_()
         self.logger = logging.getLogger('gimprove' + __name__)
         logging.getLogger("requests").setLevel(logging.WARNING)
-        self.configurator = Configurator(self.config_path, "config.json", environment=environment)
-        self.list_address, self.detail_address, self.userprofile_detail_address, self.websocket_address, token_address \
-            = self.configurator.get_api_links()
+        self.configurator = Configurator(self.config_path, "config.json", api_links_name='api-links.json',
+                                         environment=environment)
+        self.list_address, self.detail_address, self.userprofile_detail_address,  self.userprofile_detail_address2, \
+            self.websocket_address, token_address = self.configurator.get_api_links()
         self.message_queue = MessageQueue()
-        self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
-                                              exercise_name=self.exercise_name, equipment_id=self.equipment_id,
-                                              cache_path=self.config_path,
-                                              userprofile_detail_address=self.userprofile_detail_address,
-                                              token_address=token_address,
-                                              websocket_address=self.websocket_address, message_queue=self.message_queue,
-                                              password=self.password, token=None)
+        self.request_manager = RequestManager(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+                                              cache_path=self.config_path, message_queue=self.message_queue,
+                                              configurator=self.configurator)
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.message_queue)
         self.logger.info("Client instantiated.")
         self._upload_logs_(self.config_path + "/logs", self.equipment_id, self.bucket, self.environment)

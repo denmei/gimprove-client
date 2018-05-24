@@ -2,6 +2,7 @@ import unittest
 from Client_Prototype.Communication.CacheManager import CacheManager
 from Client_Prototype.Communication.RequestManager import RequestManager
 from Client_Prototype.Communication.MessageQueue import MessageQueue
+from Client_Prototype.Helpers.Configurator import Configurator
 from pathlib import Path
 import os
 
@@ -9,12 +10,11 @@ import os
 class TestCacheManager(unittest.TestCase):
 
     def setUp(self):
-        self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"
-        self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
-        self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
-        self.token_address = "http://127.0.0.1:8000/get_auth_token/"
-        self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
-        self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
+        configurator = Configurator(config_path=str(Path(os.path.dirname(os.path.realpath(__file__))))
+                                                     + "/test_data", config_file_name="config.json",
+                                         api_links_name="api-links.json", environment="local")
+        self.list_address, self.detail_address, self.userprofile_rfid_address, self.userprofile_detail_address, \
+            self.websocket_address, self.token_address = configurator.get_api_links()
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
         self.log_address = ""
@@ -23,13 +23,9 @@ class TestCacheManager(unittest.TestCase):
                                "/test_data/client_cache.txt"
         self.rfid = "0006921147"
         self.message_queue = MessageQueue()
-        self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
-                                              websocket_address=self.websocket_address,
-                                              exercise_name=self.exercise_name, equipment_id=self.equipment_id,
+        self.request_manager = RequestManager(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
-                                              userprofile_detail_address=self.user_profile_rfid_address,
-                                              token_address=self.token_address,
-                                              message_queue=self.message_queue, password="blahblah")
+                                              message_queue=self.message_queue, configurator=configurator)
         self.cache_manager = CacheManager(self.cache_path, self.request_manager)
 
     def _count_file_lines(self, path):

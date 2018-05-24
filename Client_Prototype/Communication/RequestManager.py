@@ -12,21 +12,20 @@ class RequestManager(threading.Thread):
     """
     Caches messages that could not be sent to the server. Manages duplicates and the sequence of the messages.
     """
-    def __init__(self, detail_address, list_address, websocket_address, userprofile_detail_address, token_address, exercise_name,
-                 equipment_id, cache_path, message_queue, password, token=None):
+    def __init__(self, configurator, exercise_name, equipment_id, cache_path, message_queue):
         super(RequestManager, self).__init__()
         self.daemon = True
         self.logger = logging.getLogger('gimprove' + __name__)
-        self.detail_address = detail_address
-        self.list_address = list_address
+        self.list_address, self.detail_address, self.userprofile_detail_address, self.userprofile_detail_address2, \
+            self.websocket_address, token_address = configurator.get_api_links()
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
         self.cache_manager = CacheManager(cache_path, self)
         self.message_queue = message_queue
-        self.header = self.__init_header__(token_address, token, equipment_id, password)
-        self.userprofile_detail_address = userprofile_detail_address
+        self.header = self.__init_header__(token_address, configurator.get_token(), configurator.get_username(),
+                                           configurator.get_password())
         self.local_tz = pytz.timezone('Europe/Berlin')
-        self.websocket_manager = WebSocketManager(websocket_address, equipment_id)
+        self.websocket_manager = WebSocketManager(self.websocket_address, equipment_id)
         self.websocket_manager.setDaemon(True)
         self.websocket_manager.start()
 
@@ -42,9 +41,8 @@ class RequestManager(threading.Thread):
         :param token:
         :return:
         """
-        # TODO: Replace Dennis by equipment ID!
         if token is None:
-            token = json.loads(requests.post(token_address, data={'username': "rasppi-1", 'password': password})
+            token = json.loads(requests.post(token_address, data={'username': user, 'password': password})
                                .content.decode()).get("token")
         return {'Authorization': 'Token ' + str(token)}
 

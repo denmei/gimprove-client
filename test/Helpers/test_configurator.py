@@ -23,12 +23,19 @@ class TestConfigurator(unittest.TestCase):
         self.assertEqual(test_file['communication']['tokens']['local'], "test-token")
         self.assertTrue(self.__config_file_correct__(self.keys))
 
+    def test_get_api_keys(self):
+        pass
+
+    def test_get_environment(self):
+        pass
+
     def __config_file_correct__(self, keys):
         """
         Checks whether the config-file is correct.
         :param keys: Keys that must be in the config-file.
         :return: True if all keys are there, False otherwiese.
         """
+        # TODO: check rest of the kys
         test_file = self.__read_json_testfile__()
         return keys == test_file.keys()
 
@@ -59,8 +66,8 @@ class TestConfigurator(unittest.TestCase):
         """
         try:
             os.remove(os.path.join(self.config_path, "config_test.json"))
-        except:
-            print("!!!!")
+        except Exception as e:
+            print("Error when trying to delete config_test.json: " + str(e))
         with open(os.path.join(self.config_path, "config_test.json"), 'w') as config_file:
             json.dump(self.data_saved, config_file, indent=4)
             config_file.close()
