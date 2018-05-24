@@ -1,0 +1,55 @@
+{
+  "links": {
+    "production-links": {
+      "set_list": {
+        "link": "https://gimprove-production.herokuapp.com/tracker/set_list_rest/"
+      },
+      "set_detail": {
+        "link": "https://gimprove-production.herokuapp.com/tracker/set_detail_rest/"
+      },
+      "userprofile_detail": {
+        "link": "https://gimprove-production.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
+      },
+      "websocket": {
+        "link": "ws://gimprove-production.herokuapp.com/ws/tracker/"
+      },
+      "token_auth": {
+        "link": "http://gimprove-production.herokuapp.com/get_auth_token/"
+      }
+    },
+    "test-links": {
+      "set_list": {
+        "link": "https://gimprove-test.herokuapp.com/tracker/set_list_rest/"
+      },
+      "set_detail": {
+        "link": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/"
+      },
+      "userprofile_detail": {
+        "link": "https://gimprove-test.herokuapp.com/tracker/userprofile_detail_rfid_rest/"
+      },
+      "websocket": {
+        "link": "ws://gimprove-test.herokuapp.com/ws/tracker/"
+      },
+      "token_auth": {
+        "link": "http://gimprove-test.herokuapp.com/get_auth_token/"
+      }
+    },
+    "local-links": {
+      "set_list": {
+        "link": "http://127.0.0.1:8000/tracker/set_list_rest/"
+      },
+      "set_detail": {
+        "link": "http://127.0.0.1:8000/tracker/set_detail_rest/"
+      },
+      "userprofile_detail": {
+        "link": "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
+      },
+      "websocket": {
+        "link": "ws://127.0.0.1:8000/ws/tracker/"
+      },
+      "token_auth": {
+        "link": "http://127.0.0.1:8000/get_auth_token/"
+      }
+    }
+  }
+}

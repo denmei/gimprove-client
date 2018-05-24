@@ -12,7 +12,7 @@ class TestClient(unittest.TestCase):
         logging.disable(logging.CRITICAL)
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
-        self.equipment = Equipment()
+        self.equipment = Equipment(environment="local")
         self.rfid = "0006921147"
 
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"

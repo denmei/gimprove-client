@@ -44,7 +44,7 @@ class RequestManager(threading.Thread):
         """
         # TODO: Replace Dennis by equipment ID!
         if token is None:
-            token = json.loads(requests.post(token_address, data={'username': "dennis", 'password': password})
+            token = json.loads(requests.post(token_address, data={'username': "rasppi-1", 'password': password})
                                .content.decode()).get("token")
         return {'Authorization': 'Token ' + str(token)}
 

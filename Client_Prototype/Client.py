@@ -8,6 +8,7 @@ from pathlib import Path
 from datetime import datetime
 from Client_Prototype.Communication.s3Manager import s3Manager
 from Client_Prototype.Communication.MessageQueue import MessageQueue
+from Client_Prototype.Helpers.Configurator import Configurator
 
 
 class Equipment:
@@ -17,12 +18,14 @@ class Equipment:
     In case of a connection error, the results will be cached an resent at another point of time.
     """
 
-    def __init__(self):
+    def __init__(self, environment=None):
         self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         self._configure_()
-        self._configure_logger_()
-        self.list_address, self.detail_address, self.userprofile_detail_address, self.websocket_address, token_address = \
-        self._load_links_(self.config_path + "/config.json")
+        self.logger = logging.getLogger('gimprove' + __name__)
+        logging.getLogger("requests").setLevel(logging.WARNING)
+        self.configurator = Configurator(self.config_path, "config.json", environment=environment)
+        self.list_address, self.detail_address, self.userprofile_detail_address, self.websocket_address, token_address \
+            = self.configurator.get_api_links()
         self.message_queue = MessageQueue()
         self.request_manager = RequestManager(detail_address=self.detail_address, list_address=self.list_address,
                                               exercise_name=self.exercise_name, equipment_id=self.equipment_id,
@@ -46,50 +49,6 @@ class Equipment:
         self.environment = configuration['communication']['environment']
         self.bucket = configuration['aws']['bucket']
         self.password = configuration['password']
-
-    def _configure_logger_(self):
-        """
-        Configures and instantiates the logger.
-        """
-        # check whether log-directory exists:
-        if "logs" not in os.listdir(self.config_path):
-            os.mkdir(self.config_path + "/logs")
-
-        # check whether logging file exists:
-        log_name = "logging" + str(datetime.now().date()) + ".log"
-        if log_name not in os.listdir(self.config_path + "/logs"):
-            logging_file = open(self.config_path + "/logs/" + log_name, 'w')
-            logging_file.close()
-
-        logging.basicConfig(
-            filename=self.config_path + "/logs/" + log_name,
-            format="%(name)s %(levelname) - 10s %(asctime)s %(funcName)s %(message)s",
-            level=logging.INFO
-        )
-        self.logger = logging.getLogger('gimprove' + __name__)
-        logging.getLogger("requests").setLevel(logging.WARNING)
-
-    def _load_links_(self, config_file_path):
-        """
-        Loads the links for the APIs of the GImprove-Server.
-        :return [link set_list, link to set_detail, link to userprofile_detail(rfid)]
-        """
-        with open(config_file_path) as config_file:
-            settings = json.load(config_file)
-        config_file.close()
-        communication_settings = settings['communication']
-        environment = communication_settings['environment']
-        print("Environment: %s" % environment)
-        with open(self.config_path + "/api-links.json") as links_file:
-            if environment == 'Test':
-                links = json.load(links_file)['links']['test-links']
-            elif environment == 'Production':
-                links = json.load(links_file)['links']['production-links']
-            else:
-                links = json.load(links_file)['links']['local-links']
-        links_file.close()
-        return links['set_list']['link'], links['set_detail']['link'], links['userprofile_detail']['link'], \
-               links['websocket']['link'], links['token_auth']['link']
 
     @staticmethod
     def _initialize_sensormanager_(config_file_path, message_queue):
