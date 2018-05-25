@@ -8,9 +8,9 @@ import os
 class TestConfigurator(unittest.TestCase):
 
     def setUp(self):
-        self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data"
+        self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration"
         # save content of test-configuration
-        with open(os.path.join(self.config_path, "config_test.json")) as config_file:
+        with open(os.path.join(self.config_path, "config.json")) as config_file:
             self.data_saved = json.load(config_file)
             config_file.close()
         self.keys = self.__get_keys_from_file__(os.path.join(self.config_path, "config_test.json"))

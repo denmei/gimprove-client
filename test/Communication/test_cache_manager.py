@@ -10,8 +10,8 @@ import os
 class TestCacheManager(unittest.TestCase):
 
     def setUp(self):
-        configurator = Configurator(config_path=str(Path(os.path.dirname(os.path.realpath(__file__))))
-                                                     + "/test_data", config_file_name="config.json",
+        configurator = Configurator(config_path=str(Path(os.path.dirname(os.path.realpath(__file__))).parent)
+                                                     + "/Configuration", config_file_name="config.json",
                                          api_links_name="api-links.json", environment="local")
         self.list_address, self.detail_address, self.userprofile_rfid_address, self.userprofile_detail_address, \
             self.websocket_address, self.token_address = configurator.get_api_links()

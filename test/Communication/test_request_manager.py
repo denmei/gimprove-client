@@ -15,8 +15,8 @@ class TestRequestManager(unittest.TestCase):
 
     def setUp(self):
         logging.disable(logging.CRITICAL)
-        self.configurator = Configurator(config_path=str(Path(os.path.dirname(os.path.realpath(__file__))))
-                                                     + "/test_data", config_file_name="config.json",
+        self.configurator = Configurator(config_path=str(Path(os.path.dirname(os.path.realpath(__file__))).parent)
+                                                     + "/Configuration", config_file_name="config.json",
                                          api_links_name="api-links.json", environment="local")
         self.list_address, self.detail_address, self.userprofile_rfid_address, self.userprofile_detail_address, \
             self.websocket_address, self.token_address = self.configurator.get_api_links()

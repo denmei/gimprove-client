@@ -1,0 +1,4 @@
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-05-25 08:15:35,736 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-05-25 08:15:35,737 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-05-25 08:15:35,739 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-05-25 08:15:35,740 empty_cache Cache empty.
