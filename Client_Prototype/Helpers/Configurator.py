@@ -2,6 +2,7 @@ import json
 import os
 import logging
 from datetime import datetime
+import requests
 
 
 class Configurator:
@@ -37,7 +38,12 @@ class Configurator:
         return self.credentials['username']
 
     def get_token(self):
-        return self.configuration['communication']['tokens'][self.environment]
+        token = self.configuration['communication']['tokens'][self.environment]
+        if token == "":
+            token = json.loads(requests.post(self.get_api_links()[5], data={'username': self.get_username(), 'password': self.get_password()})
+                               .content.decode()).get("token")
+            self.set_token(token)
+        return token
 
     def get_environment(self):
         """
@@ -49,7 +55,7 @@ class Configurator:
     def get_api_links(self):
         """
         Returns relevant API-links for the current environment
-        :return: List of Api-Links: [Set_List, Set_Detail, Userprofile_Detail, Websocket, Token_Auth]
+        :return: List of Api-Links: [Set_List, Set_Detail, Userprofile_Detail_RFID, Userprofile_Detail, Websocket, Token_Auth]
         """
         return self.links
 

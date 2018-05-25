@@ -1,49 +1,49 @@
 {
-  "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
-  "password": "blahblah",
-  "exercise_name": "Lat Pulldown",
-  "sensor_settings": {
-    "use_sensors": "False",
-    "distance_sensor": {
-      "min_dist": 470,
-      "max_dist": 900,
-      "frequency": 0.01,
-      "timeout_delta": 30,
-      "rep_val": 0.8,
-      "address": 41,
-      "TCA9548A_Num": 255,
-      "TCA9548A_Addr": 0,
-      "ranging_mode": "VL53L0X_LONG_RANGE_MODE"
+    "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+    "password": "blahblah",
+    "exercise_name": "Lat Pulldown",
+    "sensor_settings": {
+        "use_sensors": "False",
+        "distance_sensor": {
+            "min_dist": 470,
+            "max_dist": 900,
+            "frequency": 0.01,
+            "timeout_delta": 30,
+            "rep_val": 0.8,
+            "address": 41,
+            "TCA9548A_Num": 255,
+            "TCA9548A_Addr": 0,
+            "ranging_mode": "VL53L0X_LONG_RANGE_MODE"
+        },
+        "weight_sensor": {
+            "dout": 5,
+            "pd_sck": 6,
+            "gain": 128,
+            "byte_format": "LSB",
+            "bit_format": "MSB",
+            "reference_unit": 92,
+            "weight_translation": "True"
+        }
     },
-    "weight_sensor": {
-      "dout": 5,
-      "pd_sck": 6,
-      "gain": 128,
-      "byte_format": "LSB",
-      "bit_format": "MSB",
-      "reference_unit": 92,
-      "weight_translation": "True"
+    "plot_settings": {
+        "plot": "False",
+        "length": 10,
+        "final_plot": "False"
+    },
+    "terminal_settings": {
+        "print_weight": "True",
+        "print_distance": "True",
+        "print_undermax": "False"
+    },
+    "communication": {
+        "environment": "Local",
+        "tokens": {
+            "local": "0c48960247c76cf43e1031ae6527e54538f2ea5a",
+            "test": "",
+            "production": ""
+        }
+    },
+    "aws": {
+        "bucket": "rasppi-logs"
     }
-  },
-  "plot_settings": {
-    "plot": "False",
-    "length": 10,
-    "final_plot": "False"
-  },
-  "terminal_settings": {
-    "print_weight": "True",
-    "print_distance": "True",
-    "print_undermax": "False"
-  },
-  "communication": {
-    "environment": "Local",
-    "tokens": {
-      "local": "d18d72e3d6d236fd5640dddfab3f66c1696df8b0",
-      "test": "",
-      "production": ""
-    }
-  },
-  "aws": {
-    "bucket": "rasppi-logs"
-  }
 }

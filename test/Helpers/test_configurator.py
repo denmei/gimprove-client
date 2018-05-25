@@ -13,9 +13,9 @@ class TestConfigurator(unittest.TestCase):
         with open(os.path.join(self.config_path, "config.json")) as config_file:
             self.data_saved = json.load(config_file)
             config_file.close()
-        self.keys = self.__get_keys_from_file__(os.path.join(self.config_path, "config_test.json"))
-        self.configurator = Configurator(config_path=self.config_path, config_file_name="config_test.json",
-                                         api_links_name= "api-links_test.json", environment="local")
+        self.keys = self.__get_keys_from_file__(os.path.join(self.config_path, "config.json"))
+        self.configurator = Configurator(config_path=self.config_path, config_file_name="config.json",
+                                         api_links_name="api-links.json", environment="local")
 
     def test_set_token(self):
         self.configurator.set_token("test-token")
@@ -44,7 +44,7 @@ class TestConfigurator(unittest.TestCase):
         Reads the current state of the json-File.
         :return: Json-Content as Dict.
         """
-        with open(os.path.join(self.config_path, "config_test.json")) as config_file:
+        with open(os.path.join(self.config_path, "config.json")) as config_file:
             test_file = json.load(config_file)
             config_file.close()
         return test_file
@@ -65,9 +65,9 @@ class TestConfigurator(unittest.TestCase):
         Removes the test-copy.
         """
         try:
-            os.remove(os.path.join(self.config_path, "config_test.json"))
+            os.remove(os.path.join(self.config_path, "config.json"))
         except Exception as e:
-            print("Error when trying to delete config_test.json: " + str(e))
-        with open(os.path.join(self.config_path, "config_test.json"), 'w') as config_file:
+            print("Error when trying to delete config.json: " + str(e))
+        with open(os.path.join(self.config_path, "config.json"), 'w') as config_file:
             json.dump(self.data_saved, config_file, indent=4)
             config_file.close()

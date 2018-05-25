@@ -41,9 +41,6 @@ class RequestManager(threading.Thread):
         :param token:
         :return:
         """
-        if token is None:
-            token = json.loads(requests.post(token_address, data={'username': user, 'password': password})
-                               .content.decode()).get("token")
         return {'Authorization': 'Token ' + str(token)}
 
     def __handle_message__(self, message):
