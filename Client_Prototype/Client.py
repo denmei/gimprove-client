@@ -25,6 +25,7 @@ class Equipment:
         logging.getLogger("requests").setLevel(logging.WARNING)
         self.configurator = Configurator(self.config_path, "config.json", api_links_name='api-links.json',
                                          environment=environment)
+        self.off_rfid = self.configurator.get_off_rfid()
         self.list_address, self.detail_address, self.userprofile_detail_address,  self.userprofile_detail_address2, \
             self.websocket_address, token_address = self.configurator.get_api_links()
         self.message_queue = MessageQueue()
@@ -148,7 +149,7 @@ class Equipment:
             self.logger.info("RFID-read: " + rfid_tag)
             # check validity of rfid tag.
             set_id = None
-            if rfid_tag == 'quit':
+            if rfid_tag == 'quit' or (rfid_tag == self.off_rfid and len(rfid_tag) > 1):
                 self.sensor_manager.quit()
                 break
             elif self.request_manager.rfid_is_valid(rfid_tag):

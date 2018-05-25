@@ -32,6 +32,9 @@ class Configurator:
         self.configuration['communication']['tokens'][self.environment] = new_token
         self.__update_file__()
 
+    def get_off_rfid(self):
+        return self.configuration['off-rfid']
+
     def get_password(self):
         return self.credentials['password']
 
