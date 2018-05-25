@@ -34,7 +34,7 @@ class CacheManager:
         Caches a request if there is a connection/server error. Delete all prior cached messages that belong to the same
         set.
         """
-        if status_code[0] == "5" or status_code[0] == "4":
+        if status_code[0] == "5" or status_code[0] == "4" or status_code[0] == "x":
             with open(self.cache_path, "a") as cache_file:
                 cache_file.write(
                     json.dumps({'method': method, 'address': address, 'data': data, 'status_code': status_code}) + "\n")

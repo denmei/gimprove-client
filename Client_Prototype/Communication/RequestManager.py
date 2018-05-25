@@ -64,10 +64,15 @@ class RequestManager(threading.Thread):
         Checks whether there exists a Userprofile for a specific RFID.
         :return: True if there is an Userprofile with the RFID, else False.
         """
-        response = requests.get(self.userprofile_detail_address + rfid, headers=self.header)
-        if response.status_code == 200:
+        try:
+            response = requests.get(self.userprofile_detail_address + rfid, headers=self.header)
+            if response.status_code == 200:
+                return True
+            return False
+        except requests.exceptions.RequestException as request_exception:
+            # TODO: Appropriate exception handling
+            self.logger.info("ConnectionError: %s" % request_exception)
             return True
-        return False
 
     def update_set(self, repetitions, weight, set_id, rfid, active, durations, end):
         """
@@ -97,7 +102,7 @@ class RequestManager(threading.Thread):
             return response
         except requests.exceptions.RequestException as request_exception:
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("update", address, data, request_exception)
+            self.cache_manager.cache_request("update", address, data, "x")
             return None
 
     def new_set(self, rfid, exercise_unit=""):
@@ -115,15 +120,15 @@ class RequestManager(threading.Thread):
             self.websocket_manager.send(json.dumps(websocket_data))
         except Exception as e:
             self.logger.debug("RequestManager: %s" % e)
-        response = requests.post(self.list_address, data=data, headers=self.header)
         try:
+            response = requests.post(self.list_address, data=data, headers=self.header)
             if response.status_code != 200 and response.status_code != 201:
                 self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code))
             self.logger.info("Sent creation request. Status: %s" % response.status_code)
             return response
         except requests.exceptions.RequestException as request_exception:
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("new", self.list_address, data, request_exception)
+            self.cache_manager.cache_request("new", self.list_address, data, "x")
             return None
 
     def delete_set(self, set_id):
@@ -139,5 +144,5 @@ class RequestManager(threading.Thread):
             return response
         except requests.exceptions.RequestException as request_exception:
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("delete", address, "", request_exception)
+            self.cache_manager.cache_request("delete", address, "", "x")
             return None

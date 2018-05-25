@@ -5,6 +5,12 @@ import logging
 
 def on_close(ws):
     print("Websocket: closed")
+    ws.close()
+
+
+def on_error(ws):
+    print("ERROR")
+    ws.close()
 
 
 class WebSocketManager(threading.Thread):
@@ -16,7 +22,7 @@ class WebSocketManager(threading.Thread):
         super(WebSocketManager, self).__init__()
         self.logger = logging.getLogger('gimprove' + __name__)
         self.address = address
-        self.ws = websocket.WebSocketApp(self.address, on_close=on_close)
+        self.ws = websocket.WebSocketApp(self.address, on_close=on_close, on_error=on_error)
         self.logger.info("Websocket: Created connection to %s." % address)
 
     def run(self):

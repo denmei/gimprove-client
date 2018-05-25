@@ -26,6 +26,7 @@ class Configurator:
             self.environment = environment
         self.links = self.__load_links__()
         self.__configure_logger__()
+        self.logger = logging.getLogger('gimprove' + __name__)
 
     def set_token(self, new_token):
         self.configuration['communication']['tokens'][self.environment] = new_token
@@ -40,9 +41,12 @@ class Configurator:
     def get_token(self):
         token = self.configuration['communication']['tokens'][self.environment]
         if token == "":
-            token = json.loads(requests.post(self.get_api_links()[5], data={'username': self.get_username(), 'password': self.get_password()})
-                               .content.decode()).get("token")
-            self.set_token(token)
+            try:
+                token = json.loads(requests.post(self.get_api_links()[5], data={'username': self.get_username(), 'password': self.get_password()})
+                                   .content.decode()).get("token")
+                self.set_token(token)
+            except requests.exceptions.RequestException as requestException:
+                self.logger.info("Configurator: Requesterror - %s" % requestException)
         return token
 
     def get_environment(self):
