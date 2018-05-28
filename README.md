@@ -9,6 +9,13 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component. The f
 ## Install
 To install all required packages, run `python3 install.py` from the root directory.
 
+### Setup User
+Communication with the Gimprove-server requires the client to authenticate with his credentials. When setting up the 
+client, you have to enter the credentials in the corresponding file under ```test/Configuration/.credentials.json```.
+
+At the moment, you'll also have to update your equipment-id in ```Configuration/config.json```.
+
+### Setup AWS
 To setup AWS for uploading the log-Files to S3:
 * Create `/.aws`: `mkdir /.aws` and cd into the new directory
 * Create the configuration file with `touch config`, open the file and paste: 

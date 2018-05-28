@@ -49,7 +49,6 @@ class Equipment:
         self.equipment_id = configuration['equipment_id']
         self.environment = configuration['communication']['environment']
         self.bucket = configuration['aws']['bucket']
-        self.password = configuration['password']
 
     @staticmethod
     def _initialize_sensormanager_(config_file_path, message_queue):
