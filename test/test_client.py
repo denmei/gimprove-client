@@ -4,6 +4,8 @@ import requests
 import json
 import random
 import logging
+from pathlib import Path
+import os
 
 
 class TestClient(unittest.TestCase):
@@ -12,7 +14,7 @@ class TestClient(unittest.TestCase):
         logging.disable(logging.CRITICAL)
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
-        self.equipment = Equipment(environment="local")
+        self.equipment = Equipment(environment="local", config_path=os.path.join(str(Path(os.path.dirname(os.path.realpath(__file__)))), "Configuration"))
         self.rfid = "0006921147"
 
         self.list_address = "http://127.0.0.1:8000/tracker/set_list_rest/"

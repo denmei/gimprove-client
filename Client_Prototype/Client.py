@@ -18,8 +18,11 @@ class Equipment:
     In case of a connection error, the results will be cached an resent at another point of time.
     """
 
-    def __init__(self, environment=None):
-        self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
+    def __init__(self, environment=None, config_path=None):
+        if config_path is None:
+            self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
+        else:
+            self.config_path = config_path
         self._configure_()
         self.logger = logging.getLogger('gimprove' + __name__)
         logging.getLogger("requests").setLevel(logging.WARNING)

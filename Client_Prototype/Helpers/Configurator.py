@@ -28,10 +28,6 @@ class Configurator:
         self.__configure_logger__()
         self.logger = logging.getLogger('gimprove' + __name__)
 
-    def set_token(self, new_token):
-        self.configuration['communication']['tokens'][self.environment] = new_token
-        self.__update_file__()
-
     def get_off_rfid(self):
         return self.configuration['off-rfid']
 
@@ -42,12 +38,13 @@ class Configurator:
         return self.credentials['username']
 
     def get_token(self):
-        token = self.configuration['communication']['tokens'][self.environment]
+        token = self.credentials['tokens'][self.environment]
         if token == "":
             try:
                 token = json.loads(requests.post(self.get_api_links()[5], data={'username': self.get_username(), 'password': self.get_password()})
                                    .content.decode()).get("token")
-                self.set_token(token)
+                self.credentials['tokens'][self.environment] = token
+                self.__update_credentials_file__()
             except requests.exceptions.RequestException as requestException:
                 self.logger.info("Configurator: Requesterror - %s" % requestException)
         return token
@@ -66,7 +63,7 @@ class Configurator:
         """
         return self.links
 
-    def __update_file__(self):
+    def __update_config_file__(self):
         """
         Updates the JSON-file for the configuration.
         """
@@ -76,6 +73,17 @@ class Configurator:
             json.dump(self.configuration, config_file, indent=4)
             config_file.close()
         os.remove(os.path.join(self.config_path, "del_config.json"))
+
+    def __update_credentials_file__(self):
+        """
+        Updates the JSON-file for the credentials.
+        """
+        os.rename(os.path.join(self.config_path, ".credentials.json"),
+                  os.path.join(self.config_path, ".del_credentials.json"))
+        with open(os.path.join(self.config_path, ".credentials.json"), 'w') as credentials:
+            json.dump(self.credentials, credentials, indent=4)
+            credentials.close()
+        os.remove(os.path.join(self.config_path, ".del_credentials.json"))
 
     def __load_links__(self):
         """

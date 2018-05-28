@@ -17,15 +17,6 @@ class TestConfigurator(unittest.TestCase):
         self.configurator = Configurator(config_path=self.config_path, config_file_name="config.json",
                                          api_links_name="api-links.json", environment="local")
 
-    def test_set_token(self):
-        """
-        Tests whether a token is saved securely in the configuration file.
-        """
-        self.configurator.set_token("test-token")
-        test_file = self.__read_json_testfile__()
-        self.assertEqual(test_file['communication']['tokens']['local'], "test-token")
-        self.assertTrue(self.__config_file_correct__(self.keys))
-
     def test_get_api_keys(self):
         """
         Tests whether all links from the api-links file are returned.
@@ -53,6 +44,16 @@ class TestConfigurator(unittest.TestCase):
         with open(os.path.join(self.config_path, "config.json")) as config_file:
             test_file = json.load(config_file)
             config_file.close()
+        return test_file
+
+    def __read_json__testcredentials__(self):
+        """
+        Reads the current state of the test-credentials.
+        :return: Json-Content as Dict.
+        """
+        with open(os.path.join(self.config_path, ".credentials.json")) as credentials:
+            test_file = json.load(credentials)
+            credentials.close()
         return test_file
 
     def __read_json_testfile_api__(self):
