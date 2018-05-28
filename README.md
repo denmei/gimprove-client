@@ -11,7 +11,7 @@ To install all required packages, run `python3 install.py` from the root directo
 
 ### Setup User
 Communication with the Gimprove-server requires the client to authenticate with his credentials. When setting up the 
-client, you have to enter the credentials in the corresponding file under ```test/Configuration/.credentials.json```.
+client, you have to enter the credentials.
 
 At the moment, you'll also have to update your equipment-id in ```Configuration/config.json```.
 
