@@ -30,11 +30,9 @@ class RequestManager(threading.Thread):
         self.websocket_manager.start()
 
     def run(self):
-        print("Run requestmanager")
         while True:
             element = self.message_queue.get()
             if element is not None:
-                print("Handle message")
                 self.__handle_message__(element)
 
     def __init_header__(self, token_address, token, user, password):

@@ -20,6 +20,7 @@ class Configurator:
         with open(os.path.join(config_path, ".credentials.json")) as cred_file:
             self.credentials = json.load(cred_file)
             config_file.close()
+        self.__check_credentials__()
         if environment is None:
             self.environment = str(self.configuration['communication']['environment']).lower()
         else:
@@ -27,6 +28,17 @@ class Configurator:
         self.links = self.__load_links__()
         self.__configure_logger__()
         self.logger = logging.getLogger('gimprove' + __name__)
+
+    def __check_credentials__(self):
+        # check token
+        # if token not valid, get new one
+        self.credentials["username"] = input("Enter username:")
+        self.credentials["password"] = input("Enter password:")
+        credentials_provided = (self.credentials["username"] != "" and self.credentials["password"] != "")
+        while not credentials_provided:
+            self.credentials["username"] = input("Enter username:")
+            self.credentials["password"] = input("Enter password:")
+        self.__update_credentials_file__()
 
     def get_off_rfid(self):
         return self.configuration['off-rfid']
@@ -41,8 +53,12 @@ class Configurator:
         token = self.credentials['tokens'][self.environment]
         if token == "":
             try:
-                token = json.loads(requests.post(self.get_api_links()[5], data={'username': self.get_username(), 'password': self.get_password()})
-                                   .content.decode()).get("token")
+                while token == "":
+                    response = requests.post(self.get_api_links()[5], data={'username': self.get_username(), 'password': self.get_password()})
+                    if response.status_code == 401 or response.status_code == 400:
+                        self.__check_credentials__()
+                    else:
+                        token = json.loads(response.content.decode()).get("token")
                 self.credentials['tokens'][self.environment] = token
                 self.__update_credentials_file__()
             except requests.exceptions.RequestException as requestException:
