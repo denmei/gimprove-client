@@ -25,7 +25,8 @@ class RequestManager(threading.Thread):
         self.header = self.__init_header__(token_address, configurator.get_token(), configurator.get_username(),
                                            configurator.get_password())
         self.local_tz = pytz.timezone('Europe/Berlin')
-        self.websocket_manager = WebSocketManager(self.websocket_address, equipment_id)
+        self.configurator = configurator
+        self.websocket_manager = WebSocketManager(self.websocket_address, self.configurator.get_token())
         self.websocket_manager.setDaemon(True)
         self.websocket_manager.start()
 
@@ -57,6 +58,8 @@ class RequestManager(threading.Thread):
 
     def check_ws_connection(self):
         if not self.websocket_manager.is_alive():
+            self.websocket_manager = WebSocketManager(self.websocket_address, self.configurator.get_token())
+            self.websocket_manager.setDaemon(True)
             self.websocket_manager.start()
 
     def rfid_is_valid(self, rfid):
@@ -90,6 +93,7 @@ class RequestManager(threading.Thread):
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
         websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': str(False)}.items()))
+        self.check_ws_connection()
         try:
             self.websocket_manager.send(json.dumps(websocket_data))
         except Exception as e:
@@ -116,6 +120,7 @@ class RequestManager(threading.Thread):
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
         websocket_data = dict(list(data.items()) + list({'type': 'new', 'end': str(False)}.items()))
+        self.check_ws_connection()
         try:
             self.websocket_manager.send(json.dumps(websocket_data))
         except Exception as e:

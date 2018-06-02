@@ -18,7 +18,7 @@ class Configurator:
         with open(os.path.join(config_path, config_file_name)) as config_file:
             self.configuration = json.load(config_file)
             config_file.close()
-        with open(os.path.join(config_path, ".credentials.json")) as cred_file:
+        with open(os.path.join(config_path, ".credentials.json"), 'a') as cred_file:
             self.credentials = json.load(cred_file)
             config_file.close()
         self.__check_gimprove_credentials__()
@@ -44,10 +44,11 @@ class Configurator:
         while not credentials_provided:
             self.credentials["username"] = input("Enter username:")
             self.credentials["password"] = input("Enter password:")
+            credentials_provided = (self.credentials["username"] != "" and self.credentials["password"] != "")
         self.__update_credentials_file__()
 
     def __check_aws_credentials(self):
-        if not ".aws" in os.listdir(Path.home()):
+        if not ".aws" in os.listdir(str(Path.home())):
             print("Could not find aws-credentials. Might cause errors!")
             self.logger.info("AWS credentials not found")
 

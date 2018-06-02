@@ -36,7 +36,7 @@
         "print_undermax": "False"
     },
     "communication": {
-        "environment": "Test"
+        "environment": "local"
     },
     "aws": {
         "bucket": "rasppi-logs"
