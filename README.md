@@ -17,7 +17,8 @@ At the moment, you'll also have to update your equipment-id in ```Configuration/
 
 ### Setup AWS
 To setup AWS for uploading the log-Files to S3:
-* Create `/.aws`: `mkdir /.aws` and cd into the new directory
+* Go to Home directory by executing `cd`
+* Create `/.aws`: `mkdir .aws` and cd into the new directory
 * Create the configuration file with `touch config`, open the file and paste: 
 ```
 [default]
