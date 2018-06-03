@@ -5,6 +5,7 @@ os.system("sudo pip3 install numpy")
 os.system("sudo pip3 install twisted")
 os.system("sudo apt-get install libatlas3-base")
 os.system("sudo pip3 install matplotlib")
+os.system("sudo pip3 install tkinter")
 os.system("sudo pip3 install pandas")
 os.system("sudo pip3 install pytz")
 os.system("sudo pip3 install requests==")
@@ -14,6 +15,8 @@ os.system("sudo pip3 install boto3")
 os.system("sudo apt-get install python-smbus")
 os.system("sudo apt-get install i2c-tools")
 os.system("sudo reboot now")
+
+# maybe necessary for tkinter-problems: sudo apt-get install python3-tk
 
 # configure aws
 #TODO: .aws/credentials + .aws/config

@@ -15,12 +15,14 @@ class Configurator:
         self.config_path = config_path
         self.config_file_name = config_file_name
         self.api_links_name = api_links_name
+        self.__configure_logger__()
+        self.logger = logging.getLogger('gimprove' + __name__)
         with open(os.path.join(config_path, config_file_name)) as config_file:
             self.configuration = json.load(config_file)
             config_file.close()
-        with open(os.path.join(config_path, ".credentials.json"), 'a') as cred_file:
+        with open(os.path.join(config_path, ".credentials.json"), 'r+') as cred_file:
             self.credentials = json.load(cred_file)
-            config_file.close()
+            cred_file.close()
         self.__check_gimprove_credentials__()
         self.__check_aws_credentials()
         if environment is None:
@@ -28,8 +30,6 @@ class Configurator:
         else:
             self.environment = environment
         self.links = self.__load_links__()
-        self.__configure_logger__()
-        self.logger = logging.getLogger('gimprove' + __name__)
 
     def __check_gimprove_credentials__(self, must_provide=False):
         """
