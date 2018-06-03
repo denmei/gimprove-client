@@ -14,8 +14,6 @@ class TestSensorManager(unittest.TestCase):
         self.websocket_address = "ws://127.0.0.1:8000/ws/tracker/"
         self.detail_address = "http://127.0.0.1:8000/tracker/set_detail_rest/"
         self.log_address = "http://127.0.0.1:8000/tracker/log_rest/"
-        self.user_profile_rfid_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rfid_rest/"
-        self.user_profile_address = "http://127.0.0.1:8000/tracker/userprofile_detail_rest/"
         self.exercise_name = 'Lat Pulldown'
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
         self.rfid = "0006921147"
