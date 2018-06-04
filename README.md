@@ -18,7 +18,7 @@ At the moment, you'll also have to update your equipment-id in ```Configuration/
 ### Setup AWS
 To setup AWS for uploading the log-Files to S3:
 * Go to Home directory by executing `cd`
-* Create `/.aws`: `mkdir .aws` and cd into the new directory
+* Create `/.aws` with the command `mkdir .aws` and cd into the new directory
 * Create the configuration file with `touch config`, open the file and paste: 
 ```
 [default]
@@ -31,7 +31,23 @@ aws_access_key_id = ***
 aws_secret_access_key = ***
 ```
 
+### Not on Raspberry Pi
+If you're not using a Raspberry Pi, you might have to execute the following steps
+before executing the `execute.py`-script:
+
+1) In the sm_gym_client-directory, add a new directory named `RPi`
+
+2) In `RPi`, add a new file called `GPIO.py` with the following content:
+```python
+class GPIO:
+    pass
+```
+
+3) Add an empty file named `__init__.py` to the `RPi` directory.
+
+
 ## Usage
+Before running the client, make sure that you're using the correct environment by checking the config.json-file.
 To **run** the client, run the `execute.py` file with `python3 execute.py` from the root-directory.
 
 To **test** the client, execute the following command from the root-directory: `python3 -m unittest`. The server must be
@@ -50,9 +66,11 @@ The Configuration-folder contains files with necessary information to run the ap
 
 * api-links.json: Links to the GImprove-API (testing and production).
 * config.json: Configuration data for the device (name, id etc.).
-* logging.log: Applikations-Logs.
+* logs/logging.log: Applikations-Logs.
 * weight_translation.csv: Helps converting measured weight to the weight stack on the machine if option is activated.
 * client_cache.txt: If there are connection problems, all HTTP-Requests from the client will be cached here and sent later.
+* credentials-template.json: Empty template for the client's credentials.
+* .credentials.json: Contains the credentials for the communication with the Gimprove-Server
 
 
 You can find more detailed information in the Wiki.

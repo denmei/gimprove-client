@@ -92,7 +92,7 @@ class RequestManager(threading.Thread):
         data = {'repetitions': repetitions, 'weight': weight, "exercise_name": self.exercise_name,
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
-        websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': str(False)}.items()))
+        websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': end}.items()))
         self.check_ws_connection()
         try:
             self.websocket_manager.send(json.dumps(websocket_data))
