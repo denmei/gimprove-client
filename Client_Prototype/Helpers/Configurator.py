@@ -5,6 +5,8 @@ from datetime import datetime
 import requests
 from pathlib import Path
 
+CREDENTIALS = {"username": "", "password": "", "tokens": [{"local": ""}, {"test": ""}, {"production": ""}]}
+
 
 class Configurator:
     """
@@ -20,6 +22,7 @@ class Configurator:
         with open(os.path.join(config_path, config_file_name)) as config_file:
             self.configuration = json.load(config_file)
             config_file.close()
+        self.__create_credentials__(config_path)
         with open(os.path.join(config_path, ".credentials.json"), 'r+') as cred_file:
             self.credentials = json.load(cred_file)
             cred_file.close()
@@ -30,6 +33,12 @@ class Configurator:
         else:
             self.environment = environment
         self.links = self.__load_links__()
+
+    def __create_credentials__(self, config_path):
+        if ".credentials.json" not in os.listdir(config_path):
+            with open(os.path.join(config_path, ".credentials.json"), 'w') as cred_file:
+                json.dump(CREDENTIALS, cred_file, indent=4)
+                cred_file.close()
 
     def __check_gimprove_credentials__(self, must_provide=False):
         """
