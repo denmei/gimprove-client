@@ -5,7 +5,7 @@ from datetime import datetime
 import requests
 from pathlib import Path
 
-CREDENTIALS = {"username": "", "password": "", "tokens": [{"local": ""}, {"test": ""}, {"production": ""}]}
+CREDENTIALS = {"username": "", "password": "", "tokens": {"local": "", "test": "", "production": ""}}
 
 
 class Configurator:
