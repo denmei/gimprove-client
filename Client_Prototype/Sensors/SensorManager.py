@@ -8,6 +8,7 @@ import numpy as np
 import matplotlib.pyplot as plt
 import RPi.GPIO as GPIO
 import pandas as pd
+from Client_Prototype.Sensors.DistanceSensor import DistanceSensor
 
 
 class SensorManager:
@@ -43,10 +44,11 @@ class SensorManager:
         self.logger = logging.getLogger('gimprove' + __name__)
         if use_sensors:
             GPIO.cleanup()
-            self.ranging_mode = self._init_vl530_distance_(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr,
-                                       mode=ranging_mode)
             self._init_hx_weight_(dout=dout, pd_sck=pd_sck, gain=gain, byte_format=byte_format, bit_format=bit_format,
                                   offset=offset, reference_unit=reference_unit)
+        self.distance_sensor = DistanceSensor(address=address, TCA9548A_Addr=TCA9548A_Addr, TCA9548A_Num=TCA9548A_Num,
+                                              mode=ranging_mode, fake_distances_path=distances_file,
+                                              use_sensors=use_sensors, print_distance=print_distance)
         self.timeout_delta = timeout_delta
         self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
         self.plot_len = plot_len
@@ -78,7 +80,6 @@ class SensorManager:
         self._weight_ = 0
         self._weight_list_ = []
         self._no_ = 0
-        self._numbers_file_ = distances_file
         self._weights_file_ = weights_file
 
     def _init_hx_weight_(self, dout, pd_sck, gain, byte_format, bit_format, reference_unit, offset):
@@ -107,36 +108,6 @@ class SensorManager:
         directory = str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + \
                     '/Configuration/weight_translation.csv'
         return pd.read_csv(directory, header=None)
-
-    def _init_vl530_distance_(self, address, TCA9548A_Num, TCA9548A_Addr, mode):
-        """
-        For initializing the distance sensor.
-        :param address:
-        :param TCA9548A_Num:
-        :param TCA9548A_Addr:
-        :param mode:
-        :return:
-        """
-        from VL53L0X_rasp_python.python.VL53L0X import VL53L0X as VL5
-        if mode == "VL53L0X_GOOD_ACCURACY_MODE":
-            ranging_mode = 0
-        elif mode == "VL53L0X_BETTER_ACCURACY_MODE":
-            ranging_mode = 1
-        elif mode == "VL53L0X_BEST_ACCURACY_MODE":
-            ranging_mode = 2
-        elif mode == "VL53L0X_LONG_RANGE_MODE":
-            ranging_mode = 3
-        elif mode == "VL53L0X_HIGH_SPEED_MODE":
-            ranging_mode = 4
-        else:
-            self.logger.info("Inserted ranging mode not valid. Continue with default VL53L0X_LONG_RANGE_MODE")
-            ranging_mode = 3
-        # self.tof = VL5(address=address, TCA9548A_Num=TCA9548A_Num, TCA9548A_Addr=TCA9548A_Addr)
-        # If there are errors with the Distance Sensor, uncomment the next line:
-        self.tof = VL5()
-        # Start ranging
-        self.tof.start_ranging(ranging_mode)
-        return ranging_mode
 
     def get_repetitions(self):
         """
@@ -187,20 +158,8 @@ class SensorManager:
         :return: [updated repetitions, updated distance_buffer]
         """
         # get current distance. If testing, use distance.csv, otherwise data from sensor
-        if not self.use_sensors:
-            with open(self._numbers_file_) as numbers:
-                lines = numbers.readlines()
-                length = len(lines)
-                distance = lines[self._no_].split(",")[1]
-            self._no_ += 1
-            if self._no_ >= length:
-                self._stop_ = True
-        else:
-            distance = self.tof.get_distance()
-        if self.print_distance:
-            print("Distance: %s" % distance)
-        distance = int(distance)
-        if self._min_ <= distance <= self._max_:
+        distance = self.distance_sensor.get_distance()
+        if distance is not None and self._min_ <= distance <= self._max_:
             # update distance buffer
             distance_buffer += [int(distance)]
             # calculate repetitions and update repetitions-value
@@ -267,12 +226,12 @@ class SensorManager:
         self.time_out_time = datetime.now() + dt.timedelta(seconds=self.timeout_delta)
         self._stop_ = False
         self._no_ = 0
+        self.distance_sensor.reset_distance_sensor()
         self._start_time_ = datetime.now()
 
     def quit(self):
-        if self.use_sensors:
-            self.tof.stop_ranging()
-            GPIO.cleanup()
+        self.distance_sensor.quit()
+        GPIO.cleanup()
 
     def start_recording(self, set_id, rfid_tag):
         """

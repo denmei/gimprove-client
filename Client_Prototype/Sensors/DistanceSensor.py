@@ -34,7 +34,7 @@ class DistanceSensor:
         else:
             self.logger.info("Inserted ranging mode not valid. Continue with default VL53L0X_LONG_RANGE_MODE")
         # load fake distances
-        self.fake_distances = pd.read_csv(os.path.join(fake_distances_path, "distances.csv"), header=None)
+        self.fake_distances = pd.read_csv(fake_distances_path, header=None)
 
         if use_sensors:
             from VL53L0X_rasp_python.python.VL53L0X import VL53L0X as VL5
@@ -49,10 +49,11 @@ class DistanceSensor:
 
     def get_distance(self):
         if not self.use_sensors:
-            distance = int(self.fake_distances[1][self._no_])
-            self._no_ += 1
             if self._no_ >= len(self.fake_distances):
                 distance = None
+            else:
+                distance = int(self.fake_distances[1][self._no_])
+                self._no_ += 1
         else:
             distance = int(self.tof.get_distance())
         if self.print_distance:
@@ -60,7 +61,8 @@ class DistanceSensor:
         return distance
 
     def quit(self):
-        self.tof.stop_ranging()
+        if self.use_sensors:
+            self.tof.stop_ranging()
 
     def reset_distance_sensor(self):
         self._no_ = 0

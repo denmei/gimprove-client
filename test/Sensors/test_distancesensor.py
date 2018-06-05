@@ -11,7 +11,7 @@ class TestDistanceSensor(unittest.TestCase):
     """
 
     def setUp(self):
-        distance_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/'
+        distance_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv'
         self.distance_sensor = DistanceSensor(address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0,
                                               mode="VL53L0X_BETTER_ACCURACY_MODE", fake_distances_path=distance_path,
                                               use_sensors=False, print_distance=False)

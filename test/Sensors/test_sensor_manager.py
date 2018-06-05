@@ -4,6 +4,7 @@ from Client_Prototype.Communication.MessageQueue import MessageQueue
 import logging
 from pathlib import Path
 import os
+import pandas as pd
 
 
 class TestSensorManager(unittest.TestCase):
@@ -39,8 +40,10 @@ class TestSensorManager(unittest.TestCase):
         reps, buffer, total = self.sensor_manager._check_reps_(0, [], list())
         self.assertEqual(reps, 0)
         self.assertEqual(len(buffer), 0)
+        print(buffer)
         # test valid measurement
         reps, buffer, total = self.sensor_manager._check_reps_(0, [], list())
+        print(buffer)
         self.assertEqual(len(buffer), 1)
 
     def test_repetition_detection(self):
@@ -53,8 +56,8 @@ class TestSensorManager(unittest.TestCase):
         with open(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv') as numbers:
             lines = numbers.readlines()
             length = len(lines)
-        self.sensor_manager._numbers_file_ = \
-            str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv'
+        self.sensor_manager.distance_sensor.fake_distances = \
+            pd.read_csv(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv', header=None)
         for x in range(0, length):
             repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer, total)
         self.assertEqual(repetitions, 10)
