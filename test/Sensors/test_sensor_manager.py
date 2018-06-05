@@ -18,8 +18,6 @@ class TestSensorManager(unittest.TestCase):
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
         self.rfid = "0006921147"
 
-        print(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_short.csv')
-
         self.sensor_manager = SensorManager(
             queue=MessageQueue(),
             min_dist=470,
