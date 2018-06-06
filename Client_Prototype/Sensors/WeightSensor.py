@@ -29,11 +29,12 @@ class WeightSensor:
         """
         Returns the current weight measured.
         """
-        if (not self.use_sensors) and (reps is not None):
-            pre_weight = self._fake_weights_[1][reps]
+        if (not self.use_sensors) and (reps is not None) and (reps >= 1):
+            pre_weight = self._fake_weights_[1][reps-1]
         elif self.use_sensors:
             pre_weight = self.hx_weight.get_weight(5)
         else:
+            self.logger.info("Invalid repetition value. Returned 10.")
             pre_weight = 10
         pre_weight = float(pre_weight)
         # round to closest value in weight translation if available

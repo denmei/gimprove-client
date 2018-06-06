@@ -20,14 +20,14 @@ class TestSensorManager(unittest.TestCase):
         """
         Tests whether weights are read and translated correctly.
         """
-        weight_1 = self.weight_sensor.get_current_weight(reps=0)
+        weight_1 = self.weight_sensor.get_current_weight(reps=1)
         self.assertEqual(weight_1, 9.4)
-        weight_2 = self.weight_sensor.get_current_weight(reps=1)
+        weight_2 = self.weight_sensor.get_current_weight(reps=2)
         self.assertEqual(weight_2, 14.6)
 
     def test_weight_retrieval_not_translate(self):
         self.weight_sensor.translate_weights = False
-        weight_1 = self.weight_sensor.get_current_weight(reps=0)
+        weight_1 = self.weight_sensor.get_current_weight(reps=1)
         self.assertEqual(weight_1, 10.5)
-        weight_2 = self.weight_sensor.get_current_weight(reps=1)
+        weight_2 = self.weight_sensor.get_current_weight(reps=2)
         self.assertEqual(weight_2, 16.2)

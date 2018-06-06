@@ -188,7 +188,8 @@ class SensorManager:
 
     def quit(self):
         self.distance_sensor.quit()
-        GPIO.cleanup()
+        if self.use_sensors:
+            GPIO.cleanup()
 
     def start_recording(self, set_id, rfid_tag):
         """
