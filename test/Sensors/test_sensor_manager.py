@@ -96,3 +96,7 @@ class TestSensorManager(unittest.TestCase):
         # sensor manager must store the last weight
         self.assertEqual(sensor_manager.get_last_weight(), 16.2)
         print(sensor_manager._weight_list_)
+
+    def test_time_out(self):
+        # TODO: SensorManager must time out/stop after predefined period of time.
+        pass

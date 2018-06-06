@@ -65,3 +65,7 @@ class TestClient(unittest.TestCase):
         self.assertEqual(len(response_after.content), len(response_before.content))
         self.assertTrue(len(response_middle.content) > len(response_before.content))
         self.assertTrue(len(response_middle.content) > len(response_after.content))
+
+    def test_run_on_connection_lost(self):
+        # TODO: If there is no connection, the set must be recorded and cached properly
+        pass

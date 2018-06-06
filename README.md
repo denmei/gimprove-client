@@ -1,10 +1,21 @@
 # Gimprove-Client
 
-This program is designed to turn a Raspberry Pi into a Gimprove-component. The functionalities include:
+Gimprove is a lightweight system built to digitalize fitness equipment. Once installed on regular machines, Gimproves
+allows users to automatically track all relevant keyfigures of their activities such as the number of the repetitions
+or the weight used. Users get feedback in realtime and can analyze their progress in the Gimprove App.
+
+Related respositories are:
+1) <a href="">Gimprove Backend</a>: Gimprove Plattform hosting the Gimprove Website and providing the Gimprove-API.
+2) <a href="">Gimprove-App</a>: User Interface.
+
+This program is designed to turn a Raspberry Pi into a Gimprove-component that can be used to upgrade any fitness machine.
+ The functionalities include:
 * User authentification
 * Record the data coming from different sensors
 * Analyzing the sensor data to identify repetitions and weights
 * Sending results to the GImprove-server using the GImprove-API (HTTP) and via a Websocket-Connection
+
+<img src="/readme/client_terminal.JPG">
 
 ## Install
 To install all required packages, run `python3 install.py` from the root directory.

@@ -33,7 +33,8 @@ class SensorManager:
                  weight_translation=False,
                  distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv',
                  weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv',
-                 translation_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/Configuration/weight_translation.csv'):
+                 translation_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) +
+                                  '/Configuration/weight_translation.csv'):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param queue: Reference on the message queue where messages can be sent from.

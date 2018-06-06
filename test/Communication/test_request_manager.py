@@ -63,6 +63,11 @@ class TestRequestManager(unittest.TestCase):
         user_profile = requests.get(self.userprofile_rfid_address + self.rfid, headers=self.header).content
         user_profile = json.loads(user_profile.decode("utf-8"))
         self.assertEqual(user_profile['_pr_active_set'], set_id)
+        # TODO: Test Websocket-communication
+
+    def test_new_set_wifilost(self):
+        # TODO: New Set-requests must be cached properly
+        pass
 
     def test_update_set(self):
         """
@@ -81,6 +86,11 @@ class TestRequestManager(unittest.TestCase):
         self.assertEqual(updated_set['repetitions'], content['repetitions'] + 5)
         self.assertEqual(updated_set['weight'], content['weight'] + 5)
         self.assertEqual(user_profile['_pr_active_set'], None)
+        # TODO: Test Websocket-communication
+
+    def test_update_set_wifilost(self):
+        # TODO: Update-request must be cached properly
+        pass
 
     def test_delete_set(self):
         """
@@ -93,6 +103,11 @@ class TestRequestManager(unittest.TestCase):
         # confirm that set is not in database anymore
         sets_after = requests.get(self.list_address, headers=self.header).content.decode("utf-8")
         self.assertFalse(new_set['id'] in sets_after)
+        # TODO: Test Websocket-communication
+
+    def test_delete_set_wifilost(self):
+        # TODO: Delete-requests must be cached properly
+        pass
 
     def test_rfid_exists(self):
         """
@@ -132,7 +147,3 @@ class TestRequestManager(unittest.TestCase):
         repetitions_2 = json.loads(
             requests.get(self.detail_address + set_id, headers=self.header).content.decode()).get('repetitions')
         self.assertEqual(repetitions_1 + 1, repetitions_2)
-
-    # TODO: Test connection error
-    def test_connection_error(self):
-        pass
