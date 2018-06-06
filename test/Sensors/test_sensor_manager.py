@@ -63,3 +63,6 @@ class TestSensorManager(unittest.TestCase):
         self.assertEqual(repetitions, 10)
         self.sensor_manager._numbers_file_ = \
             str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv'
+
+    def test_weight_retrieval(self):
+        pass
