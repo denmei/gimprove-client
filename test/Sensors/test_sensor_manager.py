@@ -29,7 +29,8 @@ class TestSensorManager(unittest.TestCase):
             print_undermax=False,
             final_plot=False,
             distances_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_short.csv',
-            weights_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_short.csv'
+            weights_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/weights.csv',
+            weight_translation=True
         )
 
     def test_distance_validation(self):
@@ -64,5 +65,34 @@ class TestSensorManager(unittest.TestCase):
         self.sensor_manager._numbers_file_ = \
             str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv'
 
-    def test_weight_retrieval(self):
-        pass
+    def test_weight_retrieval_with_translation(self):
+        """
+        Fake data for weight must be retrieved and translated correctly.
+        """
+        self.assertEqual(self.sensor_manager.get_last_weight(), 0.0)
+        self.assertEqual(self.sensor_manager._measure_weight_(0), 9.4)
+        self.assertEqual(self.sensor_manager._measure_weight_(1), 14.6)
+
+    def test_weight_retrieval_no_translation(self):
+        """
+        Weight-fake data must be retrieved correctly without translation.
+        """
+        sensor_manager = SensorManager(
+            queue=MessageQueue(),
+            min_dist=470,
+            max_dist=900,
+            use_sensors=False,
+            print_weight=False,
+            print_distance=False,
+            print_undermax=False,
+            final_plot=False,
+            distances_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_short.csv',
+            weights_file=str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/weights.csv',
+            weight_translation=False
+        )
+        self.assertEqual(sensor_manager.get_last_weight(), 0.0)
+        self.assertEqual(sensor_manager._measure_weight_(0), 10.5)
+        self.assertEqual(sensor_manager._measure_weight_(1), 16.2)
+        # sensor manager must store the last weight
+        self.assertEqual(sensor_manager.get_last_weight(), 16.2)
+        print(sensor_manager._weight_list_)

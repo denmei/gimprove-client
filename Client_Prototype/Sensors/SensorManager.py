@@ -9,6 +9,7 @@ import matplotlib.pyplot as plt
 import RPi.GPIO as GPIO
 import pandas as pd
 from Client_Prototype.Sensors.DistanceSensor import DistanceSensor
+from Client_Prototype.Sensors.WeightSensor import WeightSensor
 
 
 class SensorManager:
@@ -31,7 +32,8 @@ class SensorManager:
                  print_distance=True, print_weight=True, print_undermax=False, final_plot=False,
                  weight_translation=False,
                  distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv',
-                 weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv'):
+                 weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv',
+                 translation_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/Configuration/weight_translation.csv'):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param queue: Reference on the message queue where messages can be sent from.
@@ -44,11 +46,14 @@ class SensorManager:
         self.logger = logging.getLogger('gimprove' + __name__)
         if use_sensors:
             GPIO.cleanup()
-            self._init_hx_weight_(dout=dout, pd_sck=pd_sck, gain=gain, byte_format=byte_format, bit_format=bit_format,
-                                  offset=offset, reference_unit=reference_unit)
         self.distance_sensor = DistanceSensor(address=address, TCA9548A_Addr=TCA9548A_Addr, TCA9548A_Num=TCA9548A_Num,
                                               mode=ranging_mode, fake_distances_path=distances_file,
                                               use_sensors=use_sensors, print_distance=print_distance)
+        self.weight_sensor = WeightSensor(dout=dout, pd_sck=pd_sck, gain=gain, byte_format=byte_format,
+                                          bit_format=bit_format, reference_unit=reference_unit, offset=offset,
+                                          use_sensors=use_sensors, weight_path=weights_file,
+                                          translation_path=translation_file, print_weight=print_weight,
+                                          translate_weights=weight_translation)
         self.timeout_delta = timeout_delta
         self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
         self.plot_len = plot_len
@@ -67,10 +72,6 @@ class SensorManager:
         self.print_weight = print_weight
         self.print_undermax = print_undermax
         self.final_plot = final_plot
-        if weight_translation:
-            self.weight_translation = self.get_weight_translation()
-        else:
-            self.weight_translation = None
         # buffer for the measured distances
         # Todo: limit size (FIFO)
         self._distance_buffer_ = []
@@ -80,34 +81,6 @@ class SensorManager:
         self._weight_ = 0
         self._weight_list_ = []
         self._no_ = 0
-        self._weights_file_ = weights_file
-
-    def _init_hx_weight_(self, dout, pd_sck, gain, byte_format, bit_format, reference_unit, offset):
-        """
-        For initializing the weight sensor.
-        :param dout:
-        :param pd_sck:
-        :param gain:
-        :param byte_format:
-        :param bit_format:
-        :param reference_unit:
-        :param offset:
-        :return:
-        """
-        self.hx_weight = HX711(dout, pd_sck, gain, offset=offset)
-        self.hx_weight.set_reading_format(byte_format=byte_format, bit_format=bit_format)
-        self.hx_weight.set_reference_unit(reference_unit=reference_unit)
-        self.hx_weight.reset()
-        self.hx_weight.tare()
-
-    def get_weight_translation(self):
-        """
-        Reads translation data from csv. Translation data is used for converting measured weight to the corresponding
-        weight on the machine.
-        """
-        directory = str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + \
-                    '/Configuration/weight_translation.csv'
-        return pd.read_csv(directory, header=None)
 
     def get_repetitions(self):
         """
@@ -119,23 +92,7 @@ class SensorManager:
         """
         Returns the current weight measured.
         """
-        if (not self.use_sensors) and (reps is not None):
-            with open(self._weights_file_) as weights:
-                lines = weights.readlines()
-                weight = lines[reps-1].split(",")[1].split("\n")[0]
-                print("Weight-File: " + str(weight))
-        elif self.use_sensors:
-            weight = self.hx_weight.get_weight(5)
-            if self.print_weight:
-                print("Weightsensor: " + str(weight))
-        else:
-            weight = 10
-        weight = float(weight)
-        # round to closest value in weight translation if available
-        if self.weight_translation is not None:
-            weights = list(self.weight_translation.iloc[:, 1])
-            stack_weights = list(self.weight_translation.iloc[:, 0])
-            weight = stack_weights[min(range(len(weights)), key=lambda x: abs(weights[x]-weight))]
+        weight = self.weight_sensor.get_current_weight(reps)
         self.set_weight(weight)
         return weight
 
