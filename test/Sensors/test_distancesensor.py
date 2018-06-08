@@ -1,5 +1,5 @@
 import unittest
-from Client_Prototype.Sensors.DistanceSensor import DistanceSensor
+from Client_Prototype.HardwareControl.Sensors.DistanceSensor import DistanceSensor
 import logging
 from pathlib import Path
 import os

@@ -1,9 +1,8 @@
 import unittest
-from Client_Prototype.Sensors.WeightSensor import WeightSensor
+from Client_Prototype.HardwareControl.Sensors import WeightSensor
 import logging
 from pathlib import Path
 import os
-import pandas as pd
 
 
 class TestSensorManager(unittest.TestCase):

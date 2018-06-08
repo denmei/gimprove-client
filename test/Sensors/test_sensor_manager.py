@@ -1,5 +1,5 @@
 import unittest
-from Client_Prototype.Sensors.SensorManager import SensorManager
+from Client_Prototype.HardwareControl.Sensors.SensorManager import SensorManager
 from Client_Prototype.Communication.MessageQueue import MessageQueue
 import logging
 from pathlib import Path

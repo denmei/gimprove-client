@@ -3,13 +3,11 @@ from datetime import datetime
 import datetime as dt
 import logging
 from pathlib import Path
-from hx711py.hx711 import HX711
 import numpy as np
 import matplotlib.pyplot as plt
 import RPi.GPIO as GPIO
-import pandas as pd
-from Client_Prototype.Sensors.DistanceSensor import DistanceSensor
-from Client_Prototype.Sensors.WeightSensor import WeightSensor
+from Client_Prototype.HardwareControl.Sensors.DistanceSensor import DistanceSensor
+from Client_Prototype.HardwareControl.Sensors.WeightSensor import WeightSensor
 
 
 class SensorManager:
@@ -31,9 +29,9 @@ class SensorManager:
                  address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
                  print_distance=True, print_weight=True, print_undermax=False, final_plot=False,
                  weight_translation=False,
-                 distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv',
-                 weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv',
-                 translation_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) +
+                 distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/distances.csv',
+                 weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/weights.csv',
+                 translation_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent.parent) +
                                   '/Configuration/weight_translation.csv'):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
@@ -122,6 +120,9 @@ class SensorManager:
             distance_buffer += [int(distance)]
             # calculate repetitions and update repetitions-value
             new_reps = repetitions + self._analyze_distance_buffer_(distance_buffer)
+        elif distance is None:
+            new_reps = repetitions
+            self._stop_ = True
         else:
             print("Invalid distance value: %s" % distance)
             new_reps = repetitions

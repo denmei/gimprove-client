@@ -1,6 +1,6 @@
 import json
 from Client_Prototype.Communication.RequestManager import RequestManager
-from Client_Prototype.Sensors.SensorManager import SensorManager
+from Client_Prototype.HardwareControl.Sensors.SensorManager import SensorManager
 import traceback
 import logging
 import os
