@@ -70,8 +70,8 @@ class TestSensorManager(unittest.TestCase):
         Fake data for weight must be retrieved and translated correctly.
         """
         self.assertEqual(self.sensor_manager.get_last_weight(), 0.0)
-        self.assertEqual(self.sensor_manager._measure_weight_(0), 9.4)
-        self.assertEqual(self.sensor_manager._measure_weight_(1), 14.6)
+        self.assertEqual(self.sensor_manager._measure_weight_(1), 9.4)
+        self.assertEqual(self.sensor_manager._measure_weight_(2), 14.6)
 
     def test_weight_retrieval_no_translation(self):
         """
@@ -91,8 +91,8 @@ class TestSensorManager(unittest.TestCase):
             weight_translation=False
         )
         self.assertEqual(sensor_manager.get_last_weight(), 0.0)
-        self.assertEqual(sensor_manager._measure_weight_(0), 10.5)
-        self.assertEqual(sensor_manager._measure_weight_(1), 16.2)
+        self.assertEqual(sensor_manager._measure_weight_(1), 10.5)
+        self.assertEqual(sensor_manager._measure_weight_(2), 16.2)
         # sensor manager must store the last weight
         self.assertEqual(sensor_manager.get_last_weight(), 16.2)
         print(sensor_manager._weight_list_)

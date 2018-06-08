@@ -91,6 +91,8 @@ class SensorManager:
         """
         Returns the current weight measured.
         """
+        if reps < 1:
+            reps = None
         weight = self.weight_sensor.get_current_weight(reps)
         self.set_weight(weight)
         return weight
