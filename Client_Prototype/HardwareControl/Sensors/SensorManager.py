@@ -155,7 +155,7 @@ class SensorManager:
             elif distance_buffer_smooth[i] < (self._min_ * (2 - self.rep_val)):
                 under_max = True
         if self.print_undermax:
-            print('Undermax: %s' %under_max)
+            print('Undermax: %s' % under_max)
         return reps
 
     def _reset_timer_(self):

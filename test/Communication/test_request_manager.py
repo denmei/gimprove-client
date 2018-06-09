@@ -8,7 +8,16 @@ import logging
 from pathlib import Path
 import os
 import time
+import mock
 from Client_Prototype.Helpers.Configurator import Configurator
+
+
+def connection_error_update(address, data, headers):
+    raise requests.exceptions.ConnectionError
+
+
+def connection_error_new(address, data, headers):
+    raise requests.exceptions.ConnectionError
 
 
 class TestRequestManager(unittest.TestCase):
@@ -42,6 +51,15 @@ class TestRequestManager(unittest.TestCase):
         if os.path.isfile(self.cache_file_path):
             os.remove(self.cache_file_path)
 
+    def get_cache_file(self):
+        cache_list = []
+        with open(self.cache_file_path, "r+") as cache_file:
+            for line in cache_file:
+                message = json.loads(line)
+                cache_list.append(message)
+            cache_file.close()
+        return cache_list
+
     def test_new_set(self):
         """
         Make request to create new set. Test whether set exists afterwards and did not before. New set must be
@@ -65,9 +83,21 @@ class TestRequestManager(unittest.TestCase):
         self.assertEqual(user_profile['_pr_active_set'], set_id)
         # TODO: Test Websocket-communication
 
-    def test_new_set_wifilost(self):
-        # TODO: New Set-requests must be cached properly
-        pass
+    @mock.patch('requests.post', side_effect=connection_error_new)
+    def test_new_set_wifilost(self, mock_get):
+        """
+        New Set-requests must be cached properly
+        """
+        cache_len_prev = len(self.get_cache_file())
+        response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
+        cache = self.get_cache_file()
+        last_cache_message = cache[len(cache) - 1]
+        self.assertEqual(None, response)
+        self.assertEqual("new", last_cache_message['method'])
+        self.assertEqual(last_cache_message['data']['repetitions'], 0)
+        self.assertEqual(last_cache_message['data']['rfid'], self.rfid)
+        self.assertEqual(last_cache_message['data']['weight'], 0)
+        self.assertEqual(cache_len_prev + 1, len(cache))
 
     def test_update_set(self):
         """
@@ -88,9 +118,26 @@ class TestRequestManager(unittest.TestCase):
         self.assertEqual(user_profile['_pr_active_set'], None)
         # TODO: Test Websocket-communication
 
-    def test_update_set_wifilost(self):
-        # TODO: Update-request must be cached properly
-        pass
+    @mock.patch('requests.put', side_effect=connection_error_update)
+    def test_update_set_wifilost(self, mock_put):
+        """
+        Update-request must be cached properly.
+        """
+        cache_len_prev = len(self.get_cache_file())
+        response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
+        content = json.loads(response.content.decode("utf-8"))
+        repetitions = content['repetitions'] + 5
+        self.request_manager.update_set(repetitions=repetitions, weight=content['weight'] + 5,
+                                        set_id=content['id'], rfid=self.rfid, active=False,
+                                        durations=random.sample(range(1, 20), repetitions), end=False)
+        cache = self.get_cache_file()
+        last_cache_message = cache[len(cache) - 1]
+        self.assertEqual(cache_len_prev + 1, len(cache))
+        self.assertEqual(last_cache_message['data']['repetitions'], repetitions)
+        self.assertEqual(last_cache_message['data']['rfid'], self.rfid)
+        self.assertTrue(content['id'] in last_cache_message['address'])
+        self.assertEqual(last_cache_message['method'], "update")
+        self.assertEqual(last_cache_message['data']['weight'], content['weight'] + 5)
 
     def test_delete_set(self):
         """
