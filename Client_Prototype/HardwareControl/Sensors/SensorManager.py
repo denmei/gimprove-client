@@ -107,7 +107,7 @@ class SensorManager:
     def is_timed_out(self):
         return self._stop_
 
-    def _check_reps_(self, repetitions, distance_buffer, total_distances):
+    def _check_reps_(self, repetitions, distance_buffer, total_distances, running_mean=5):
         """
         Gets distance from distance sensor. Checks whether new repetition has been made. Updates the passed repetitions
         parameter and the distance buffer. Distance buffer contains all distances since the last repetition.
@@ -121,7 +121,7 @@ class SensorManager:
             # update distance buffer
             distance_buffer += [int(distance)]
             # calculate repetitions and update repetitions-value
-            new_reps = repetitions + self._analyze_distance_buffer_(distance_buffer)
+            new_reps = repetitions + self._analyze_distance_buffer_(distance_buffer, running_mean)
         elif distance is None:
             new_reps = repetitions
             self._stop_ = True
@@ -134,7 +134,7 @@ class SensorManager:
             distance_buffer = list()
         return new_reps, distance_buffer, total_distances
 
-    def _analyze_distance_buffer_(self, distance_buffer):
+    def _analyze_distance_buffer_(self, distance_buffer, running_mean):
         """
         Counts the number of repetitions in a distance buffer. Simple logic that has to be replaced: Counts if a
          distance is smaller than the min-Value. Then waits until half of the distance between min and max has been
@@ -144,15 +144,17 @@ class SensorManager:
         under_max = (distance_buffer[0] < (self._min_ * (2 - self.rep_val)))
         reps = 0
         reps_i = []
-        distance_buffer = self._running_mean_(distance_buffer, 10)
-        for i in range(0, len(distance_buffer) - 1):
+        distance_buffer_smooth = self._running_mean_(distance_buffer, running_mean)
+        print("x")
+        for i in range(0, len(distance_buffer_smooth)-1):
             if under_max:
-                if distance_buffer[i] > (self._max_ * self.rep_val):
+                if distance_buffer_smooth[i] > (self._max_ * self.rep_val):
                     reps += 1
                     reps_i += [i]
                     under_max = False
-            elif distance_buffer[i] < (self._min_ * (2 - self.rep_val)):
+            elif distance_buffer_smooth[i] < (self._min_ * (2 - self.rep_val)):
                 under_max = True
+            print("UM: %s, dis: %s" % (under_max, distance_buffer_smooth[i]))
         if self.print_undermax:
             print('Undermax: %s' %under_max)
         return reps

@@ -62,8 +62,38 @@ class TestSensorManager(unittest.TestCase):
         for x in range(0, length):
             repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer, total)
         self.assertEqual(repetitions, 10)
-        self.sensor_manager._numbers_file_ = \
-            str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_long.csv'
+
+    def test_repetition_detection_no_middle_value(self):
+        """
+        Tests whether a repetition is detected also if there was no value between under_border and over_border.
+        """
+        distance_buffer = []
+        repetitions = 0
+        total = []
+        with open(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_no_middle.csv') as numbers:
+            lines = numbers.readlines()
+            length = len(lines)
+        self.sensor_manager.distance_sensor.fake_distances = \
+            pd.read_csv(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_no_middle.csv', header=None)
+        for x in range(0, length):
+            repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer, total, 1)
+        self.assertEqual(repetitions, 1)
+
+    def test_repetition_detection_start_at_overborder(self):
+        """
+        Tests whether a repetition is detected also if the set was started when machine was not in start-position.
+        """
+        distance_buffer = []
+        repetitions = 0
+        total = []
+        with open(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_over_border.csv') as numbers:
+            lines = numbers.readlines()
+            length = len(lines)
+        self.sensor_manager.distance_sensor.fake_distances = \
+            pd.read_csv(str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_over_border.csv', header=None)
+        for x in range(0, length):
+            repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer, total, 1)
+        self.assertEqual(repetitions, 1)
 
     def test_weight_retrieval_with_translation(self):
         """
