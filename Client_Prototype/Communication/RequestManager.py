@@ -79,7 +79,7 @@ class RequestManager(threading.Thread):
             self.logger.info("ConnectionError: %s" % request_exception)
             return True
 
-    def update_set(self, repetitions, weight, set_id, rfid, active, durations, end):
+    def update_set(self, repetitions, weight, set_id, rfid, active, durations, end, cache=True):
         """
         Update an existing set.
         :param repetitions: Repetitions count.
@@ -102,17 +102,19 @@ class RequestManager(threading.Thread):
             self.logger.debug("RequestManager: %s" % e)
         try:
             response = requests.put(address, data=data, headers=self.header)
-            if response.status_code != 200 and response.status_code != 201:
+            print(response.content)
+            if response.status_code != 200 and response.status_code != 201 and cache:
                 self.cache_manager.cache_request("update", address, data, str(response.status_code), set_id)
             self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code,
                                                                                        response.content))
             return response
         except requests.exceptions.RequestException as request_exception:
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("update", address, data, '404', set_id)
+            if cache:
+                self.cache_manager.cache_request("update", address, data, '404', set_id)
             return None
 
-    def new_set(self, rfid, exercise_unit=""):
+    def new_set(self, rfid, exercise_unit="", cache=True):
         """
         Sends a request to create a new set.
         :param rfid: User-RFID
@@ -131,18 +133,19 @@ class RequestManager(threading.Thread):
         try:
             response = requests.post(self.list_address, data=data, headers=self.header)
             content = json.loads(response.content.decode("utf-8"))
-            if response.status_code != 200 and response.status_code != 201:
+            if response.status_code != 200 and response.status_code != 201 and cache:
                 self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code), content['id'])
             self.logger.info("Sent creation request. Status: %s" % response.status_code)
             return content
         except requests.exceptions.RequestException as request_exception:
             new_uuid = str(uuid.uuid4()) + "_fake"
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("new", self.list_address, data, new_uuid, new_uuid)
+            if cache:
+                self.cache_manager.cache_request("new", self.list_address, data, new_uuid, new_uuid)
             return {'id': new_uuid, 'date_time': datetime.now(), 'durations': '', 'exercise_unit': 'none',
                     'repetitions': 0, 'weight': 0}
 
-    def delete_set(self, set_id):
+    def delete_set(self, set_id, cache=True):
         """
         Sends a request to delete the set with the specified set_id.
         """
@@ -150,10 +153,11 @@ class RequestManager(threading.Thread):
         response = requests.delete(address, headers=self.header)
         # self.websocket_manager.send(set_id)
         try:
-            if response.status_code != 200 and response.status_code != 201:
+            if response.status_code != 200 and response.status_code != 201 and cache:
                 self.cache_manager.cache_request("delete", address, "", str(response.status_code), set_id)
             return response
         except requests.exceptions.RequestException as request_exception:
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("delete", address, "", "404", set_id)
+            if cache:
+                self.cache_manager.cache_request("delete", address, "", "404", set_id)
             return None
