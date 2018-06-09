@@ -7,6 +7,7 @@ from Client_Prototype.Communication.WebSocketManager import WebSocketManager
 from Client_Prototype.Communication.CacheManager import CacheManager
 import threading
 import uuid
+import os
 
 
 class RequestManager(threading.Thread):
@@ -21,7 +22,7 @@ class RequestManager(threading.Thread):
             self.websocket_address, token_address = configurator.get_api_links()
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
-        self.cache_manager = CacheManager(cache_path, self)
+        self.cache_manager = CacheManager(cache_path, os.path.join(cache_path, "client_cache.txt"), self)
         self.message_queue = message_queue
         self.header = self.__init_header__(token_address, configurator.get_token(), configurator.get_username(),
                                            configurator.get_password())

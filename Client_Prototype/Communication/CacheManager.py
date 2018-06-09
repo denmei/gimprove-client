@@ -3,14 +3,16 @@ import logging
 import json
 import traceback
 import random
+from pandas.io.json import json_normalize
+import pandas as pd
 
 
 class CacheManager:
 
-    def __init__(self, cache_path, request_manager):
+    def __init__(self, cache_path, cache_file_path, request_manager):
         self.logger = logging.getLogger('gimprove' + __name__)
         self.path = cache_path
-        self.cache_path = os.path.join(cache_path, "client_cache.txt")
+        self.cache_path = cache_file_path
         self.request_manager = request_manager
         self._check_cache_file_()
 
@@ -53,9 +55,12 @@ class CacheManager:
         os.rename(self.cache_path, self.path + "buffer_cache.txt")
         self._check_cache_file_()
         try:
+            cache_df = pd.DataFrame()
             with open(self.path + "buffer_cache.txt", "r+") as cache_file:
                 for line in cache_file:
                     message = json.loads(line)
+                    cache_df = cache_df.append(json_normalize(message))
+                    print(json_normalize(message))
                     response = None
                     method = message['method']
                     address = message['address']
@@ -76,6 +81,7 @@ class CacheManager:
                         self.cache_request(method, address, data, status_code)
                 os.remove(self.path + "buffer_cache.txt")
                 self.logger.info("Cache empty.")
+                print(cache_df)
                 return True
         except Exception as e:
             print("Exception RequestManager: " + str(e))

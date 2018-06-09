@@ -5,6 +5,7 @@ from Client_Prototype.Communication.MessageQueue import MessageQueue
 from Client_Prototype.Helpers.Configurator import Configurator
 from pathlib import Path
 import os
+from shutil import copy2
 
 
 class TestCacheManager(unittest.TestCase):
@@ -19,14 +20,18 @@ class TestCacheManager(unittest.TestCase):
         self.equipment_id = "653c9ed38b004f52bbc83fba95dc81cf"
         self.log_address = ""
         self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data"
-        self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + \
-                               "/test_data/client_cache.txt"
+        self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.txt"
         self.rfid = "0006921147"
         self.message_queue = MessageQueue()
         self.request_manager = RequestManager(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
                                               message_queue=self.message_queue, configurator=configurator)
-        self.cache_manager = CacheManager(self.cache_path, self.request_manager)
+        self.cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "client_cache.txt"), self.request_manager)
+        copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.txt",
+              str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache_cp.txt")
+
+        copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test.txt",
+              str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test_cp.txt")
 
     def _count_file_lines(self, path):
         """
@@ -72,5 +77,21 @@ class TestCacheManager(unittest.TestCase):
         """
         self.cache_manager.empty_cache()
 
+    def test_handle_fake_ids(self):
+        """
+        If a set could not be initialized properly, a fake id is used. Once there is a connection, the client manager
+        must create a set with a valid id and with the latest data (repetitions, weight etc.) for this. The cache has to
+        be cleaned in case of success.
+        """
+        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "fake_cache_test.txt"), self.request_manager)
+        cache_manager.empty_cache()
+        self.assertEqual(cache_manager.get_cache_size(), 0)
+
     def tearDown(self):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.txt")
+        os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache_cp.txt",
+                  str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.txt")
+
+        os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test.txt")
+        os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test_cp.txt",
+                  str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test.txt")

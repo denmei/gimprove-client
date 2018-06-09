@@ -56,3 +56,46 @@ gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 11
 gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 11:51:44,379 cache_request Cached request.
 gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 11:51:44,381 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
 gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 11:51:44,383 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:00:44,960 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:00:44,961 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:00:44,970 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:00:44,970 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:01:12,264 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:01:12,265 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:01:12,267 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:01:12,270 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:01:24,654 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:01:24,661 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:01:24,671 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:01:24,681 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:01:45,392 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:01:45,404 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:01:45,407 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:01:45,418 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:02:02,479 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:05:22,122 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:05:22,170 send Websocket: Sent message {"exercise_unit": "", "repetitions": 0, "weight": 0, "exercise_name": "Lat Pulldown", "rfid": "0006921147", "date_time": "2018-06-09 15:05:22.169808+02:00", "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf", "active": "True", "durations": "[]", "type": "new", "end": "False"}
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-09 15:05:22,198 new_set Sent creation request. Status: 201
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:05:22,325 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:07:39,834 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:07:39,835 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:07:55,252 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:07:55,253 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:08:17,192 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:08:17,193 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:08:28,406 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:08:28,407 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:17:12,454 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:17:12,507 send Websocket: Sent message {"exercise_unit": "", "repetitions": 0, "weight": 0, "exercise_name": "Lat Pulldown", "rfid": "0006921147", "date_time": "2018-06-09 15:17:12.507066+02:00", "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf", "active": "True", "durations": "[]", "type": "new", "end": "False"}
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-09 15:17:12,547 new_set Sent creation request. Status: 201
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:17:12,761 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:18:13,901 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:18:13,903 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:19:12,978 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:19:12,983 empty_cache Cache empty.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:20:17,038 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:20:49,299 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:21:36,157 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-09 15:21:36,197 send Websocket: Sent message {"exercise_unit": "", "repetitions": 0, "weight": 0, "exercise_name": "Lat Pulldown", "rfid": "0006921147", "date_time": "2018-06-09 15:21:36.196818+02:00", "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf", "active": "True", "durations": "[]", "type": "new", "end": "False"}
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-09 15:21:36,221 new_set Sent creation request. Status: 201
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-09 15:21:36,403 empty_cache Cache empty.
