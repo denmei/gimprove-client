@@ -115,11 +115,11 @@ class Equipment:
     def _init_set_record_(self, rfid):
         """
         Creates a new set with repetitions = 0 and weight = 0. Returns server response including the set id.
-        :return: server response
+        :return: new set id
         """
         # create set
-        response = json.loads(self.request_manager.new_set(rfid, "").content.decode("utf-8"))
-        return response
+        new_id = self.request_manager.new_set(rfid, "")
+        return new_id
 
     def _end_set_(self, rfid_tag, set_id, repetitions, weight, durations):
         """
@@ -159,7 +159,7 @@ class Equipment:
             elif self.request_manager.rfid_is_valid(rfid_tag):
                 try:
                     # init set
-                    set_id = self._init_set_record_(rfid_tag)['id']
+                    set_id = self._init_set_record_(rfid_tag)
                     # start sensor thread
                     self.sensor_manager.start_recording(rfid_tag=rfid_tag, set_id=set_id)
                     # end set

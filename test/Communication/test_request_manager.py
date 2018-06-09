@@ -92,8 +92,11 @@ class TestRequestManager(unittest.TestCase):
         response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
         cache = self.get_cache_file()
         last_cache_message = cache[len(cache) - 1]
-        self.assertEqual(None, response)
-        self.assertEqual("new", last_cache_message['method'])
+        self.assertTrue("_fake" in response)
+        print(last_cache_message)
+        self.assertTrue("new" in last_cache_message['method'])
+        self.assertTrue("_fake" in response)
+        self.assertTrue("_fake" in last_cache_message['status_code'])
         self.assertEqual(last_cache_message['data']['repetitions'], 0)
         self.assertEqual(last_cache_message['data']['rfid'], self.rfid)
         self.assertEqual(last_cache_message['data']['weight'], 0)

@@ -6,6 +6,7 @@ import json
 from Client_Prototype.Communication.WebSocketManager import WebSocketManager
 from Client_Prototype.Communication.CacheManager import CacheManager
 import threading
+import uuid
 
 
 class RequestManager(threading.Thread):
@@ -114,7 +115,7 @@ class RequestManager(threading.Thread):
         Sends a request to create a new set.
         :param rfid: User-RFID
         :param exercise_unit: ID of exercise_unit the set belongs to (if not available: "")
-        :return: Server response
+        :return: New set id. Fake id in case of connection error.
         """
         data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise_name': self.exercise_name,
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
@@ -130,11 +131,12 @@ class RequestManager(threading.Thread):
             if response.status_code != 200 and response.status_code != 201:
                 self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code))
             self.logger.info("Sent creation request. Status: %s" % response.status_code)
-            return response
+            return json.loads(response.content.decode("utf-8"))
         except requests.exceptions.RequestException as request_exception:
+            new_uuid = str(uuid.uuid4()) + "_fake"
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("new", self.list_address, data, "x")
-            return None
+            self.cache_manager.cache_request("new", self.list_address, data, new_uuid)
+            return new_uuid
 
     def delete_set(self, set_id):
         """
