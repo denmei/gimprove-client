@@ -22,7 +22,7 @@ class RequestManager(threading.Thread):
             self.websocket_address, token_address = configurator.get_api_links()
         self.exercise_name = exercise_name
         self.equipment_id = equipment_id
-        self.cache_manager = CacheManager(cache_path, os.path.join(cache_path, "client_cache.txt"), self)
+        self.cache_manager = CacheManager(cache_path, os.path.join(cache_path, "client_cache.json"), self)
         self.message_queue = message_queue
         self.header = self.__init_header__(token_address, configurator.get_token(), configurator.get_username(),
                                            configurator.get_password())
@@ -103,12 +103,13 @@ class RequestManager(threading.Thread):
         try:
             response = requests.put(address, data=data, headers=self.header)
             if response.status_code != 200 and response.status_code != 201:
-                self.cache_manager.cache_request("update", address, data, str(response.status_code))
-            self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code, response.content))
+                self.cache_manager.cache_request("update", address, data, str(response.status_code), set_id)
+            self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code,
+                                                                                       response.content))
             return response
         except requests.exceptions.RequestException as request_exception:
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("update", address, data, '404')
+            self.cache_manager.cache_request("update", address, data, '404', set_id)
             return None
 
     def new_set(self, rfid, exercise_unit=""):
@@ -129,14 +130,15 @@ class RequestManager(threading.Thread):
             self.logger.debug("RequestManager: %s" % e)
         try:
             response = requests.post(self.list_address, data=data, headers=self.header)
+            content = json.loads(response.content.decode("utf-8"))
             if response.status_code != 200 and response.status_code != 201:
-                self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code))
+                self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code), content['id'])
             self.logger.info("Sent creation request. Status: %s" % response.status_code)
-            return json.loads(response.content.decode("utf-8"))
+            return content
         except requests.exceptions.RequestException as request_exception:
             new_uuid = str(uuid.uuid4()) + "_fake"
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("new", self.list_address, data, new_uuid)
+            self.cache_manager.cache_request("new", self.list_address, data, new_uuid, new_uuid)
             return {'id': new_uuid, 'date_time': datetime.now(), 'durations': '', 'exercise_unit': 'none',
                     'repetitions': 0, 'weight': 0}
 
@@ -149,9 +151,9 @@ class RequestManager(threading.Thread):
         # self.websocket_manager.send(set_id)
         try:
             if response.status_code != 200 and response.status_code != 201:
-                self.cache_manager.cache_request("delete", address, "", str(response.status_code))
+                self.cache_manager.cache_request("delete", address, "", str(response.status_code), set_id)
             return response
         except requests.exceptions.RequestException as request_exception:
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("delete", address, "", "x")
+            self.cache_manager.cache_request("delete", address, "", "404", set_id)
             return None

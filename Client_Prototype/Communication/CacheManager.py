@@ -14,37 +14,46 @@ class CacheManager:
         self.path = cache_path
         self.cache_path = cache_file_path
         self.request_manager = request_manager
-        self._check_cache_file_()
+        self.cache = self._init_cache_()
 
-    def _check_cache_file_(self):
+    def _init_cache_(self):
         """
         Checks whether there is a cache_file in the specified directory. If not, a new file will be created.
         """
         if not os.path.isfile(self.cache_path):
             cache_file = open(self.cache_path, 'w')
             cache_file.close()
+            return dict()
+        else:
+            with open(self.cache_path) as cache_file:
+                cache = json.load(cache_file)
+                cache_file.close()
+            return cache
 
     def get_cache_size(self):
-        size = 0
-        with open(self.cache_path, 'r') as cache_file:
-            for i, row in enumerate(cache_file):
-                size += 1
-        return size
+        return len(self.cache)
 
-    def cache_request(self, method, address, data, status_code):
+    def cache_request(self, method, address, data, status_code, set_id):
         """
         Caches a request if there is a connection/server error. Delete all prior cached messages that belong to the same
         set.
         """
         if status_code[0] == "5" or status_code[0] == "4" or ("_fake" in status_code):
-            with open(self.cache_path, "a") as cache_file:
-                cache_file.write(
-                    json.dumps({'method': method, 'address': address, 'data': data, 'status_code': status_code}) + "\n")
-                cache_file.close()
+            self.cache[len(self.cache) + 1] = {'method': method, 'address': address, 'data': data,
+                                               'status_code': status_code, 'set_id': set_id}
             self.logger.info("Cached request.")
             return True
         else:
             return False
+
+    def update_cache_file(self):
+        print(os.listdir(self.path))
+        with open(os.path.join(self.path, "delete.json"), 'w') as cache_file:
+            json.dump(self.cache, cache_file, indent=4)
+            cache_file.close()
+        os.remove(self.cache_path)
+        os.rename(os.path.join(self.path, "delete.json"), self.cache_path)
+        print("OK")
 
     def empty_cache(self):
         """
@@ -52,9 +61,9 @@ class CacheManager:
         Attention: If requests fails, the request is written back to the cache -> not try again in the same session!
         :return: True if no error occured, else false.
         """
-        os.rename(self.cache_path, self.path + "buffer_cache.txt")
-        self._check_cache_file_()
+        return True
         try:
+            print(json_normalize(self.cache))
             cache_df = pd.DataFrame()
             with open(self.path + "buffer_cache.txt", "r+") as cache_file:
                 for line in cache_file:
