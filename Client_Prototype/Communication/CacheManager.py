@@ -39,8 +39,9 @@ class CacheManager:
         set.
         """
         if status_code[0] == "5" or status_code[0] == "4" or ("_fake" in status_code):
-            self.cache[len(self.cache) + 1] = {'method': method, 'address': address, 'data': data,
-                                               'status_code': status_code, 'set_id': set_id}
+            self.cache += [{'no': 2, 'content': {'method': method, 'address': address, 'data': data,
+                                                 'status_code': status_code, 'set_id': set_id}}]
+            self.update_cache_file()
             self.logger.info("Cached request.")
             return True
         else:
@@ -61,6 +62,7 @@ class CacheManager:
         Attention: If requests fails, the request is written back to the cache -> not try again in the same session!
         :return: True if no error occured, else false.
         """
+        print(list(json_normalize(self.cache)))
         return True
         try:
             print(json_normalize(self.cache))

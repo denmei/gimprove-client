@@ -34,7 +34,8 @@ class TestCacheManager(unittest.TestCase):
         copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test.json",
               str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test_cp.json")
 
-    def _get_cachefile_size_(self, path):
+    @staticmethod
+    def _get_cachefile_size_(path):
         """
         Counts lines of a text file.
         :return: 1 if number of lines <= 1, else number of lines.
@@ -53,13 +54,13 @@ class TestCacheManager(unittest.TestCase):
         Tests whether test_cache_set-method writes cached requests into the specified file, only if there was a
         connection error.
         """
-        count_begin = self._count_file_lines(self.cache_file_path)
+        count_begin = self._get_cachefile_size_(self.cache_file_path)
         self.cache_manager.cache_request(method="update", address=self.detail_address + "test",
                                            data={'weight': 10, 'rfid': '0006921147', 'active': 'False',
                                                  'exercise_name': 'Lat Pulldown', 'date_time': '2018-02-15T21:21:23Z',
                                                  'repetitions': 10, 'equipment_id': '1b7d032196154bd5a64c7fcfee388ec5'},
                                            status_code="500", set_id="test")
-        count_after1 = self._count_file_lines(self.cache_file_path)
+        count_after1 = self._get_cachefile_size_(self.cache_file_path)
         if count_after1 <= 1:
             self.assertEqual(count_begin, 1)
         else:
@@ -70,7 +71,7 @@ class TestCacheManager(unittest.TestCase):
                                                  'exercise_name': 'Lat Pulldown', 'date_time': '2018-02-15T21:21:23Z',
                                                  'repetitions': 10, 'equipment_id': '1b7d032196154bd5a64c7fcfee388ec5'},
                                            status_code="200", set_id="test")
-        count_after2 = self._count_file_lines(self.cache_file_path)
+        count_after2 = self._get_cachefile_size_(self.cache_file_path)
         self.assertEqual(count_after1, count_after2)
 
     def test_empty_cache(self):

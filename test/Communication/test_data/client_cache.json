@@ -1,5 +1,6 @@
-{
-    "1": {
+[
+    {"no": 1,
+    "content": {
         "method": "update",
         "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/123_fake",
         "data": {
@@ -13,8 +14,9 @@
             "durations": "[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644]"
         },
         "status_code": "404"
-    },
-    "2": {
+    }},
+    {"no": 2,
+    "content": {
         "method": "update",
         "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/123_fake",
         "data": {
@@ -28,8 +30,9 @@
             "durations": "[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644, 0.426865]"
         },
         "status_code": "404"
-    },
-    "3": {
+    }},
+    {"no": 3,
+    "content": {
         "method": "update",
         "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/123_fake",
         "data": {
@@ -43,5 +46,5 @@
             "durations": "[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644, 0.426865, 0.416302]"
         },
         "status_code": "404"
-    }
-}
+    }}
+]
