@@ -118,7 +118,7 @@ class TestRequestManager(unittest.TestCase):
         self.assertFalse(self.request_manager.rfid_is_valid(fake_rfid))
 
         # check whether returns true for correct rfid
-        response = requests.get(self.userprofile_detail_address + "1", headers=self.header)
+        response = requests.get(self.userprofile_detail_address, headers=self.header)
         real_rfid = json.loads(response.content.decode("utf-8"))['rfid_tag']
         self.assertTrue(self.request_manager.rfid_is_valid(real_rfid))
 

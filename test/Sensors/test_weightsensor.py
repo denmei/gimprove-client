@@ -1,5 +1,5 @@
 import unittest
-from Client_Prototype.HardwareControl.Sensors import WeightSensor
+from Client_Prototype.HardwareControl.Sensors.WeightSensor import WeightSensor
 import logging
 from pathlib import Path
 import os
