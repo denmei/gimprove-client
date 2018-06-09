@@ -68,8 +68,7 @@ class TestRequestManager(unittest.TestCase):
         # get list of available sets
         sets_before = requests.get(self.list_address, headers=self.header).content.decode("utf-8")
         # make request
-        response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
-        content = json.loads(response.content.decode("utf-8"))
+        content = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
         set_id = content['id']
         # confirm that set_id is not in first list
         self.assertFalse(set_id in sets_before)
@@ -92,10 +91,8 @@ class TestRequestManager(unittest.TestCase):
         response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
         cache = self.get_cache_file()
         last_cache_message = cache[len(cache) - 1]
-        self.assertTrue("_fake" in response)
-        print(last_cache_message)
+        self.assertTrue("_fake" in response['id'])
         self.assertTrue("new" in last_cache_message['method'])
-        self.assertTrue("_fake" in response)
         self.assertTrue("_fake" in last_cache_message['status_code'])
         self.assertEqual(last_cache_message['data']['repetitions'], 0)
         self.assertEqual(last_cache_message['data']['rfid'], self.rfid)
@@ -106,8 +103,7 @@ class TestRequestManager(unittest.TestCase):
         """
         All changes to a set must be applied and returned when executing a new server request.
         """
-        response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
-        content = json.loads(response.content.decode("utf-8"))
+        content = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
         repetitions = content['repetitions'] + 5
         self.request_manager.update_set(repetitions=repetitions, weight=content['weight'] + 5,
                                         set_id=content['id'], rfid=self.rfid, active=False,
@@ -127,8 +123,7 @@ class TestRequestManager(unittest.TestCase):
         Update-request must be cached properly.
         """
         cache_len_prev = len(self.get_cache_file())
-        response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
-        content = json.loads(response.content.decode("utf-8"))
+        content = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
         repetitions = content['repetitions'] + 5
         self.request_manager.update_set(repetitions=repetitions, weight=content['weight'] + 5,
                                         set_id=content['id'], rfid=self.rfid, active=False,
@@ -147,8 +142,7 @@ class TestRequestManager(unittest.TestCase):
         Tests whether sets are deleted properly.
         """
         # create a set
-        response = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
-        new_set = json.loads(response.content.decode("utf-8"))
+        new_set = self.request_manager.new_set(rfid=self.rfid, exercise_unit="")
         self.request_manager.delete_set(new_set['id'])
         # confirm that set is not in database anymore
         sets_after = requests.get(self.list_address, headers=self.header).content.decode("utf-8")
@@ -189,7 +183,7 @@ class TestRequestManager(unittest.TestCase):
         """
         self.request_manager.start()
         response = self.request_manager.new_set(self.rfid)
-        set_id = json.loads(response.content.decode("utf-8"))['id']
+        set_id = response['id']
         repetitions_1 = json.loads(requests.get(self.detail_address + set_id, headers=self.header).content.decode()).get('repetitions')
         self.message_queue.put_update(repetitions=1, weight=10, set_id=set_id, rfid=self.rfid, active=False,
                                       durations=[0.1], end=False)

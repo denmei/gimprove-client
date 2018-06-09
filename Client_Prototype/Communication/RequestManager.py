@@ -108,7 +108,7 @@ class RequestManager(threading.Thread):
             return response
         except requests.exceptions.RequestException as request_exception:
             self.logger.info("ConnectionError: %s" % request_exception)
-            self.cache_manager.cache_request("update", address, data, "x")
+            self.cache_manager.cache_request("update", address, data, '404')
             return None
 
     def new_set(self, rfid, exercise_unit=""):
@@ -137,7 +137,8 @@ class RequestManager(threading.Thread):
             new_uuid = str(uuid.uuid4()) + "_fake"
             self.logger.info("ConnectionError: %s" % request_exception)
             self.cache_manager.cache_request("new", self.list_address, data, new_uuid)
-            return new_uuid
+            return {'id': new_uuid, 'date_time': datetime.now(), 'durations': '', 'exercise_unit': 'none',
+                    'repetitions': 0, 'weight': 0}
 
     def delete_set(self, set_id):
         """
