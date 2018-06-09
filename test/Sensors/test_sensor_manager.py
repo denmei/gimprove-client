@@ -95,6 +95,26 @@ class TestSensorManager(unittest.TestCase):
             repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer, total, 1)
         self.assertEqual(repetitions, 1)
 
+    def test_repetition_detection_out_of_range(self):
+        """
+        Tests whether a repetition is not detected if all values are out of range.
+        """
+        distance_buffer = []
+        repetitions = 0
+        total = []
+        with open(str(Path(
+                os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_out_of_range.csv') as numbers:
+            lines = numbers.readlines()
+            length = len(lines)
+        self.sensor_manager.distance_sensor.fake_distances = \
+            pd.read_csv(
+                str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/distances_out_of_range.csv',
+                header=None)
+        for x in range(0, length):
+            repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer,
+                                                                                   total, 1)
+        self.assertEqual(repetitions, 0)
+
     def test_weight_retrieval_with_translation(self):
         """
         Fake data for weight must be retrieved and translated correctly.
