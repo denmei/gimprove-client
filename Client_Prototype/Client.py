@@ -78,6 +78,7 @@ class Equipment:
                                        plot_len=plot_settings['length'],
                                        plot=(plot_settings['plot'] == 'True'),
                                        frequency=distance_settings['frequency'],
+                                       running_mean=distance_settings['running_mean'],
                                        rep_val=distance_settings['rep_val'],
                                        timeout_delta=distance_settings['timeout_delta'],
                                        address=hex(distance_settings['address']),

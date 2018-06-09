@@ -8,6 +8,7 @@
             "min_dist": 470,
             "max_dist": 900,
             "frequency": 0.01,
+            "running_mean":5,
             "timeout_delta": 30,
             "rep_val": 0.8,
             "address": 41,

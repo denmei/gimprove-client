@@ -27,7 +27,7 @@ class SensorManager:
     def __init__(self, queue, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
                  reference_unit=92, timeout_delta=10, use_sensors=False, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
                  address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
-                 print_distance=True, print_weight=True, print_undermax=False, final_plot=False,
+                 print_distance=True, print_weight=True, print_undermax=False, final_plot=False, running_mean=5,
                  weight_translation=False,
                  distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/distances.csv',
                  weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/weights.csv',
@@ -58,6 +58,7 @@ class SensorManager:
         self.plot_len = plot_len
         self.rep_val = rep_val
         self.frequency = frequency
+        self.running_mean = running_mean
         self._stop_ = False
         self._rep_ = 0
         self._min_ = min_dist
@@ -144,8 +145,7 @@ class SensorManager:
         under_max = (distance_buffer[0] < (self._min_ * (2 - self.rep_val)))
         reps = 0
         reps_i = []
-        distance_buffer_smooth = self._running_mean_(distance_buffer, running_mean)
-        print("x")
+        distance_buffer_smooth = self.calculate_running_mean(distance_buffer, running_mean)
         for i in range(0, len(distance_buffer_smooth)-1):
             if under_max:
                 if distance_buffer_smooth[i] > (self._max_ * self.rep_val):
@@ -154,7 +154,6 @@ class SensorManager:
                     under_max = False
             elif distance_buffer_smooth[i] < (self._min_ * (2 - self.rep_val)):
                 under_max = True
-            print("UM: %s, dis: %s" % (under_max, distance_buffer_smooth[i]))
         if self.print_undermax:
             print('Undermax: %s' %under_max)
         return reps
@@ -165,8 +164,9 @@ class SensorManager:
     def get_durations(self):
         return self._durations_
 
-    @staticmethod
-    def _running_mean_(x, n):
+    def calculate_running_mean(self, x, n=None):
+        if n is None:
+            n = self.running_mean
         return np.convolve(x, np.ones((n,)) / n)[(n - 1):]
 
     @staticmethod
