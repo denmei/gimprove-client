@@ -102,7 +102,6 @@ class RequestManager(threading.Thread):
             self.logger.debug("RequestManager: %s" % e)
         try:
             response = requests.put(address, data=data, headers=self.header)
-            print(response.content)
             if response.status_code != 200 and response.status_code != 201 and cache:
                 self.cache_manager.cache_request("update", address, data, str(response.status_code), set_id)
             self.logger.info("Sent update request. Data: %s, Status: %s, Reply: %s" % (str(data), response.status_code,

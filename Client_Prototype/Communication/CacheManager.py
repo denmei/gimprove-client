@@ -59,41 +59,58 @@ class CacheManager:
         relevant_data = cache_df[cache_df['content.set_id'].isin(new_set_message_ids)]
         new_set_messages = cache_df[cache_df["content.method"] == 'new']
         # get latest update message for each new set
-        print(list(relevant_data))
         updates = relevant_data[relevant_data['content.method'] == 'update']
         latest_updates = updates[updates.groupby('content.set_id')['content.data.repetitions']
                                      .transform(max) == updates['content.data.repetitions']]
         # create sets and send the latest update message with the correct set_id. delete from cache if successful.
+        delete_ids = []
+        delete_rfids = []
         for i, row in new_set_messages.iterrows():
+            rfid = row['content.data.rfid']
             set_id = row['content.set_id']
-            new_resp = self.request_manager.new_set(rfid=row['content.data.rfid'], exercise_unit="", cache=False)
-            latest_update = latest_updates[latest_updates['content.set_id'] == row['content.set_id']]
-            durations = list(map(float, latest_update['content.data.durations'].values[0].replace("[", "").replace("]", "").split(",")))
-            update_resp = self.request_manager.update_set(repetitions=latest_update['content.data.repetitions'].values[0],
-                                                          weight=latest_update['content.data.weight'].values[0],
-                                                          set_id=new_resp['id'],
-                                                          rfid=latest_update['content.data.rfid'].values[0],
-                                                          active=latest_update['content.data.active'].values[0],
-                                                          durations=durations,
-                                                          end=True,
-                                                          cache=False)
-            if update_resp.status_code == 200 or update_resp.status_code == 201:
-                cache_df = cache_df[cache_df['content.set_id'] != set_id]
+            if self.request_manager.rfid_is_valid(rfid):
+                new_resp = self.request_manager.new_set(rfid=row['content.data.rfid'], exercise_unit="", cache=False)
+                latest_update = latest_updates[latest_updates['content.set_id'] == row['content.set_id']]
+                durations = list(map(float, latest_update['content.data.durations'].values[0].replace("[", "").replace("]", "").split(",")))
+                update_resp = self.request_manager.update_set(repetitions=latest_update['content.data.repetitions'].values[0],
+                                                              weight=latest_update['content.data.weight'].values[0],
+                                                              set_id=new_resp['id'],
+                                                              rfid=latest_update['content.data.rfid'].values[0],
+                                                              active=latest_update['content.data.active'].values[0],
+                                                              durations=durations,
+                                                              end=True,
+                                                              cache=False)
+                if update_resp.status_code == 200 or update_resp.status_code == 201:
+                    delete_ids += [set_id]
+            else:
+                delete_rfids += [rfid]
+        cache_df_clean_ids = cache_df[~ cache_df['content.set_id'].isin(delete_ids)]
+        cache_df_clean_rfids = cache_df_clean_ids[~ cache_df_clean_ids['content.data.rfid'].isin(delete_rfids)]
+        return cache_df_clean_rfids
+
+    def _handle_delete_sets_(self, cache_df):
+        delete_set_message_ids = list(cache_df[cache_df["content.method"] == 'delete']['content.set_id'])
+        relevant_data = cache_df[cache_df['content.set_id'].isin(delete_set_message_ids)]
+        # delete all sets where a delete and a create message exist
+        # delete all update messages where a delete message exists
+        # execute deletions and remove from cache if successful
         return cache_df
 
     def empty_cache(self):
         # TODO: For every new set, check whether there is already such a set before creating it
+        # TODO: Always check whether the rfid is valid first. if not, remove all related requests!
         """
         Tries to send all cached exercises to the server. And deletes the messages.
         Attention: If requests fails, the request is written back to the cache -> not try again in the same session!
         :return: True if no error occured, else false.
         """
-        print(list(json_normalize(self.cache)))
         cache_df = pd.DataFrame(json_normalize(self.cache))
         # TODO: send delete messages and remove all messages with the same set_id
+        cache_df_deleted = self._handle_delete_sets_(cache_df)
         # add column for fake_id-state (true/false)
-        cache_df['fake_id'] = cache_df['content.set_id'].apply(lambda x: "_fake" in x)
-        cache_df = self._handle_sets_with_fakeids_(cache_df)
+        cache_df_deleted['fake_id'] = cache_df_deleted['content.set_id'].apply(lambda x: "_fake" in x)
+        cache_df_fakeids = self._handle_sets_with_fakeids_(cache_df_deleted)
         # TODO: send remaining update messages (only latest for each set)
+        self.cache = cache_df_fakeids
         # self.update_cache_file()
         return True

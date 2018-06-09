@@ -7,6 +7,7 @@ from pathlib import Path
 import os
 from shutil import copy2
 import json
+import requests
 
 
 class TestCacheManager(unittest.TestCase):
@@ -23,6 +24,9 @@ class TestCacheManager(unittest.TestCase):
         self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data"
         self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json"
         self.rfid = "0006921147"
+        token = json.loads(requests.post(self.token_address, data={'username': "dennis", 'password': "blahblah"}).
+                           content.decode()).get("token")
+        self.header = {'Authorization': 'Token ' + str(token)}
         self.message_queue = MessageQueue()
         self.request_manager = RequestManager(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                               cache_path=self.cache_path,
@@ -84,12 +88,18 @@ class TestCacheManager(unittest.TestCase):
     def test_handle_fake_ids(self):
         """
         If a set could not be initialized properly, a fake id is used. Once there is a connection, the client manager
-        must create a set with a valid id and with the latest data (repetitions, weight etc.) for this. The cache has to
-        be cleaned in case of success.
+        must create a set with a valid id and with the latest data (repetitions, weight etc.) for this. In case of success,
+        the corresponding messages have to be removed from the cache.
         """
+        sets_before = json.loads(requests.get(self.list_address, headers=self.header).content.decode("utf-8"))
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "fake_cache_test.json"), self.request_manager)
         cache_manager.empty_cache()
-        self.assertEqual(cache_manager.get_cache_size(), 0)
+        sets_after = json.loads(requests.get(self.list_address, headers=self.header).content.decode("utf-8"))
+        new_set = sets_after[0]
+        self.assertEqual(cache_manager.get_cache_size(), 1)
+        self.assertTrue(len(sets_before) < len(sets_after))
+        self.assertEqual(new_set['repetitions'], 9)
+        self.assertEqual(new_set['weight'], 14.6)
 
     def tearDown(self):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json")
