@@ -100,6 +100,7 @@ class TestCacheManager(unittest.TestCase):
                                         'exercise_unit': 'b7b9e045-0a25-4454-898d-0dfd2492384a',
                                         'repetitions': 0, 'weight': 0}
         rm_mock.update_set.return_value = {'status_code': 200}
+
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "fake_cache_test.json"), rm_mock)
         cache_manager.empty_cache()
         self.assertEqual(cache_manager.get_cache_size(), 1)
@@ -109,12 +110,20 @@ class TestCacheManager(unittest.TestCase):
                                                    end=True, repetitions=9, rfid='0006921147',
                                                    set_id='8e7eb2e6-b269-44a5-a06a-3a5279975064', weight=14.6)
 
-    def test_handle_delete_messages(self):
+    @patch('Client_Prototype.Communication.RequestManager')
+    def test_handle_delete_messages(self, mock_rm):
         """
+        If there is a new and a delete message, delete all messages for this set and do not send any request. Otherwise
+        if there is a delete message, delete all messages for that set and send the delete request.
+        """
+        rm_mock = mock_rm()
+        rm_mock.delete_set.return_value = {'status_code': 200}
 
-        :return:
-        """
-        pass
+        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "delete_cache_test.json"), rm_mock)
+        cache_manager.empty_cache()
+
+        self.assertEqual(cache_manager.get_cache_size(), 0)
+        rm_mock.delete_set.assert_called_once_with(set_id=12345, cache=False)
 
     def tearDown(self):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json")
