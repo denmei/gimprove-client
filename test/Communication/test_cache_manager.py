@@ -33,11 +33,21 @@ class TestCacheManager(unittest.TestCase):
                                               cache_path=self.cache_path,
                                               message_queue=self.message_queue, configurator=configurator)
         self.cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "client_cache.json"), self.request_manager)
+
         copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json",
               str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache_cp.json")
 
+        copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/update_cache_test.json",
+              str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/update_cache_test_cp.json")
+
         copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test.json",
               str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test_cp.json")
+
+        copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/delete_cache_test.json",
+              str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/delete_cache_test_cp.json")
+
+        copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test.json",
+              str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test_cp.json")
 
     @staticmethod
     def _get_cachefile_size_(path):
@@ -125,6 +135,43 @@ class TestCacheManager(unittest.TestCase):
         self.assertEqual(cache_manager.get_cache_size(), 0)
         rm_mock.delete_set.assert_called_once_with(set_id='12345', cache=False)
 
+    @patch('Client_Prototype.Communication.RequestManager')
+    def test_update_messages(self, mock_rm):
+        """
+        Update messages that do not belong to a new_set-message or a delete message have to be sent properly and deleted
+        in case of success. Only the latest update must be sent.
+        """
+        rm_mock = mock_rm()
+        rm_mock.update_set.return_value = {'status_code': 200}
+
+        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "update_cache_test.json"), rm_mock)
+        cache_manager.empty_cache()
+
+        self.assertEqual(cache_manager.get_cache_size(), 0)
+        rm_mock.update_set.assert_called_once_with(active='True', cache=False,
+                                                   durations=[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644, 0.426865],
+                                                   end=True, repetitions=8, rfid='0006921147',
+                                                   set_id='123_fake', weight=14.6)
+
+    @patch('Client_Prototype.Communication.RequestManager')
+    def test_invalid_rfid(self, mock_rm):
+        """
+
+        """
+        rm_mock = mock_rm()
+        rm_mock.update_set.return_value = {'status_code': 200}
+        rm_mock.rfid_is_valid.return_value = False
+
+        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "invalid_rfid_cache_test.json"), rm_mock)
+        cache_manager.empty_cache()
+
+        self.assertEqual(cache_manager.get_cache_size(), 0)
+        rm_mock.rfid_is_valid.assert_called_once_with('fake-rfid')
+        rm_mock.update_set.assert_called_once_with(active='True', cache=False,
+                                                   durations=[0.564254, 0.422908, 0.426014, 0.450383],
+                                                   end=True, repetitions=4, rfid='0006921147',
+                                                   set_id='12345', weight=14.6)
+
     def tearDown(self):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json")
         os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache_cp.json",
@@ -133,3 +180,15 @@ class TestCacheManager(unittest.TestCase):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test.json")
         os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test_cp.json",
                   str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test.json")
+
+        os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/delete_cache_test.json")
+        os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/delete_cache_test_cp.json",
+                  str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/delete_cache_test.json")
+
+        os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/update_cache_test.json")
+        os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/update_cache_test_cp.json",
+                  str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/update_cache_test.json")
+
+        os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test.json")
+        os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test_cp.json",
+                  str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test.json")
