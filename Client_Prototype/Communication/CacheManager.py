@@ -80,7 +80,7 @@ class CacheManager:
                                                               durations=durations,
                                                               end=True,
                                                               cache=False)
-                if update_resp.status_code == 200 or update_resp.status_code == 201:
+                if update_resp['status_code'] == 200 or update_resp['status_code'] == 201:
                     delete_ids += [set_id]
             else:
                 delete_rfids += [rfid]

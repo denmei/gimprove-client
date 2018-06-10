@@ -8,6 +8,7 @@ import os
 from shutil import copy2
 import json
 import requests
+from mock import patch
 
 
 class TestCacheManager(unittest.TestCase):
@@ -85,21 +86,35 @@ class TestCacheManager(unittest.TestCase):
         """
         self.cache_manager.empty_cache()
 
-    def test_handle_fake_ids(self):
+    @patch('Client_Prototype.Communication.RequestManager')
+    def test_handle_fake_ids(self, mock_rm):
         """
         If a set could not be initialized properly, a fake id is used. Once there is a connection, the client manager
         must create a set with a valid id and with the latest data (repetitions, weight etc.) for this. In case of success,
         the corresponding messages have to be removed from the cache.
         """
-        sets_before = json.loads(requests.get(self.list_address, headers=self.header).content.decode("utf-8"))
-        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "fake_cache_test.json"), self.request_manager)
+        rm_mock = mock_rm()
+        rm_mock.new_set.return_value = {'id': '8e7eb2e6-b269-44a5-a06a-3a5279975064',
+                                        'date_time': '2018-06-10T10:17:59.615908+02:00',
+                                        'durations': '[]',
+                                        'exercise_unit': 'b7b9e045-0a25-4454-898d-0dfd2492384a',
+                                        'repetitions': 0, 'weight': 0}
+        rm_mock.update_set.return_value = {'status_code': 200}
+        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "fake_cache_test.json"), rm_mock)
         cache_manager.empty_cache()
-        sets_after = json.loads(requests.get(self.list_address, headers=self.header).content.decode("utf-8"))
-        new_set = sets_after[0]
         self.assertEqual(cache_manager.get_cache_size(), 1)
-        self.assertTrue(len(sets_before) < len(sets_after))
-        self.assertEqual(new_set['repetitions'], 9)
-        self.assertEqual(new_set['weight'], 14.6)
+        rm_mock.new_set.assert_called_once_with(rfid='0006921147', exercise_unit="", cache=False)
+        rm_mock.update_set.assert_called_once_with(active='True', cache=False,
+                                                   durations=[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644, 0.426865, 0.416302],
+                                                   end=True, repetitions=9, rfid='0006921147',
+                                                   set_id='8e7eb2e6-b269-44a5-a06a-3a5279975064', weight=14.6)
+
+    def test_handle_delete_messages(self):
+        """
+
+        :return:
+        """
+        pass
 
     def tearDown(self):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json")
