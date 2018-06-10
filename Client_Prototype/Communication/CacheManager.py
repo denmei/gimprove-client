@@ -92,9 +92,19 @@ class CacheManager:
         delete_set_message_ids = list(cache_df[cache_df["content.method"] == 'delete']['content.set_id'])
         relevant_data = cache_df[cache_df['content.set_id'].isin(delete_set_message_ids)]
         # delete all sets where a delete and a create message exist
+        new_set_ids_to_delete = list(relevant_data[relevant_data['content.method'] == 'new']['content.set_id'])
+        without_new_sets = relevant_data[~ relevant_data['content.set_id'].isin(new_set_ids_to_delete)]
         # delete all update messages where a delete message exists
+        without_update_sets = without_new_sets[without_new_sets['content.method'] != 'update']
         # execute deletions and remove from cache if successful
-        return cache_df
+        delete_set_ids = []
+        for i, row in without_update_sets.iterrows():
+            set_id = row['content.set_id']
+            resp = self.request_manager.delete_set(set_id=set_id, cache=False)
+            if resp['status_code'] in [200, 201]:
+                delete_set_ids += [set_id]
+        clean_cache = without_update_sets[~ without_update_sets['content.set_id'].isin(delete_set_ids)]
+        return clean_cache
 
     def empty_cache(self):
         # TODO: For every new set, check whether there is already such a set before creating it

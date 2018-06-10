@@ -123,7 +123,7 @@ class TestCacheManager(unittest.TestCase):
         cache_manager.empty_cache()
 
         self.assertEqual(cache_manager.get_cache_size(), 0)
-        rm_mock.delete_set.assert_called_once_with(set_id=12345, cache=False)
+        rm_mock.delete_set.assert_called_once_with(set_id='12345', cache=False)
 
     def tearDown(self):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json")
