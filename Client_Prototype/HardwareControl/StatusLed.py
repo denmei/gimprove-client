@@ -27,6 +27,7 @@ class StatusLed:
 
     def turn_off(self):
         GPIO.output(self.gpio_nr, GPIO.LOW)
+        print("OFF LED")
 
     def turn_on(self):
         i = 0
@@ -36,6 +37,7 @@ class StatusLed:
             GPIO.output(self.gpio_nr, GPIO.LOW)
             i = i + 1
         GPIO.output(self.gpio_nr, GPIO.HIGH)
+        print("ON LED")
 
     def is_on(self):
         return self.__is_on__
