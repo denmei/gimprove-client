@@ -1,6 +1,7 @@
 import json
 from Client_Prototype.Communication.RequestManager import RequestManager
 from Client_Prototype.HardwareControl.Sensors.SensorManager import SensorManager
+from Client_Prototype.Client_State import ClientState
 import traceback
 import logging
 import os
@@ -9,6 +10,7 @@ from datetime import datetime
 from Client_Prototype.Communication.s3Manager import s3Manager
 from Client_Prototype.Communication.MessageQueue import MessageQueue
 from Client_Prototype.Helpers.Configurator import Configurator
+from Client_Prototype.HardwareControl.StatusLed import StatusLed
 
 
 class Equipment:
@@ -39,6 +41,9 @@ class Equipment:
         self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.message_queue)
         self.logger.info("Client instantiated.")
         self._upload_logs_(self.config_path + "/logs", self.equipment_id, self.bucket, self.environment)
+
+        self.__client_state__ = ClientState(recording=False)
+        status_led = StatusLed(self)
 
     def _configure_(self):
         """
@@ -136,6 +141,12 @@ class Equipment:
         """
         return self.request_manager.delete_set(set_id=set_id)
 
+    def listen_to_statechange(self, new_listener):
+        return self.__client_state__.register_listener(new_listener)
+
+    def release_listener_statechange(self, listener):
+        return self.__client_state__.release_listener(listener)
+
     def run(self):
         """
         Runs the whole application.
@@ -158,6 +169,7 @@ class Equipment:
                 break
             elif self.request_manager.rfid_is_valid(rfid_tag):
                 try:
+                    self.__client_state__.set_record_attr(True)
                     # init set
                     set_id = self._init_set_record_(rfid_tag)['id']
                     # start sensor thread
@@ -165,11 +177,12 @@ class Equipment:
                     # end set
                     self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=self.sensor_manager.get_repetitions(),
                                    weight=self.sensor_manager.get_last_weight(), durations=self.sensor_manager.get_durations())
-
+                    self.__client_state__.set_record_attr(False)
                 except Exception as e:
                     print(traceback.print_exc())
                     if set_id is not None:
                         self._delete_set_(set_id)
+                    self.__client_state__.set_record_attr(False)
             else:
                 self.logger.info("RFID-tag not valid: " + rfid_tag)
                 print("Not a valid rfid tag")
