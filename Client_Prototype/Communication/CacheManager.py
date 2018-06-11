@@ -179,10 +179,11 @@ class CacheManager:
             cache_df_fakeids = self._handle_sets_with_fakeids_(cache_df_deleted)
             # send remaining update messages (only latest for each set)
             cache_cleaned = self._handle_update_sets_(cache_df_fakeids)
+            print(cache_cleaned)
             if len(cache_cleaned < 1):
                 self.cache = []
             else:
                 print(cache_cleaned)
                 self.cache = cache_cleaned
-            self.update_cache_file()
+            # self.update_cache_file()
         return True

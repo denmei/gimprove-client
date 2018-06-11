@@ -86,13 +86,35 @@ class TestCacheManager(unittest.TestCase):
         count_after2 = self._get_cachefile_size_(self.cache_file_path)
         self.assertEqual(count_after1, count_after2)
 
-    def test_empty_cache(self):
+    @patch('Client_Prototype.Communication.RequestManager')
+    def test_empty_cache(self, mock_rm):
         """
         Tests whether the test_empty_cache method reads all messages in the cache file and sends them, and removes them
         from the cache in the case of success.
         """
         # TODO: write test with complex cache where all cases are covered and tested.
-        self.cache_manager.empty_cache()
+        rm_mock = mock_rm()
+        rm_mock.delete_set.return_value = {'status_code': 200}
+        rm_mock.update_set.return_value = {'status_code': 200}
+        rm_mock.new_set.return_value = {'id': '8e7eb2e6-b269-44a5-a06a-3a5279975064',
+                                        'date_time': '2018-06-10T10:17:59.615908+02:00',
+                                        'durations': '[]',
+                                        'exercise_unit': 'b7b9e045-0a25-4454-898d-0dfd2492384a',
+                                        'repetitions': 0, 'weight': 0}
+
+        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "fake_cache_test.json"), rm_mock)
+        cache_manager.empty_cache()
+        self.assertEqual(cache_manager.get_cache_size(), 0)
+        rm_mock.delete_set.assert_called_once_with(set_id="1234_delete_fake", cache=False)
+        rm_mock.new_set.assert_called_once_with(rfid='123_fake', exercise_unit="", cache=False)
+        rm_mock.update_set.assert_called_with(active='True', cache=False,
+                                                   durations=[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644, 0.426865, 0.416302],
+                                                   end=True, repetitions=9, rfid='0006921147',
+                                                   set_id='8e7eb2e6-b269-44a5-a06a-3a5279975064', weight=14.6)
+        rm_mock.update_set.assert_called_with(active='True', cache=False,
+                                                   durations=[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644],
+                                                   end=True, repetitions=7, rfid='0006921147',
+                                                   set_id='1234_update', weight=14.6)
 
     @patch('Client_Prototype.Communication.RequestManager')
     def test_handle_fake_ids(self, mock_rm):
