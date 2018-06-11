@@ -19,7 +19,16 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component that c
 ![alt text](readme/client_terminal.JPG)
 
 ## Install
-To install all required packages, run `python3 install.py` from the root directory.
+### Raspberry set up (if necessary)
+1) Set up wifi: follow [this instruction](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
+2) ```sudo apt-get update```
+3) ```sudo apt-get upgrade```
+4) ```sudo apt-get install git```
+5) ```sudo apt-get install python3-pip```
+6) ```sudo apt-get install python-pip```
+7) Clone this repository: ```git clone https://den_mei@bitbucket.org/den_mei/gimprove_client.git```
+
+To install all required packages, run `python3 install.py` from the ```Installation```-directory of the repository.
 
 ### Setup User
 Communication with the Gimprove-server requires the client to authenticate with his credentials. When setting up the 
