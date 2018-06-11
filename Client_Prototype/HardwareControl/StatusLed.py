@@ -33,7 +33,7 @@ class StatusLed:
         i = 0
         while i < 20:
             GPIO.output(self.gpio_nr, GPIO.HIGH)
-            time.sleep(0.1)
+            time.sleep(0.3)
             GPIO.output(self.gpio_nr, GPIO.LOW)
             i = i + 1
         GPIO.output(self.gpio_nr, GPIO.HIGH)
