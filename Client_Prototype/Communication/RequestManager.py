@@ -132,9 +132,15 @@ class RequestManager(threading.Thread):
         try:
             response = requests.post(self.list_address, data=data, headers=self.header)
             content = json.loads(response.content.decode("utf-8"))
-            if response.status_code != 200 and response.status_code != 201 and cache:
-                self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code), content['id'])
             self.logger.info("Sent creation request. Status: %s" % response.status_code)
+            print(response.status_code)
+            if response.status_code == 401 and cache:
+                new_uuid = str(uuid.uuid4()) + "_fake"
+                self.cache_manager.cache_request("new", self.list_address, data, new_uuid, new_uuid)
+                return {'id': new_uuid, 'date_time': datetime.now(), 'durations': '', 'exercise_unit': 'none',
+                        'repetitions': 0, 'weight': 0}
+            elif response.status_code != 200 and response.status_code != 201 and cache:
+                self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code), content['id'])
             return content
         except requests.exceptions.RequestException as request_exception:
             new_uuid = str(uuid.uuid4()) + "_fake"

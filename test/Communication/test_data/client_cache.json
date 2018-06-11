@@ -4,8 +4,8 @@
         "method": "new",
         "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/123_fake",
         "data": {
-            "repetitions": 7,
-            "weight": 14.6,
+            "repetitions": 0,
+            "weight": 0,
             "exercise_name": "Lat Pulldown",
             "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
             "date_time": "2018-06-06 17:48:59.564275+02:00",
@@ -33,7 +33,7 @@
         "status_code": "404",
         "set_id": "123_fake"
     }},
-    {"no": 3,
+    {"no": 4,
     "content": {
         "method": "update",
         "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/123_fake",

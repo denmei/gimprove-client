@@ -76,10 +76,7 @@ class TestCacheManager(unittest.TestCase):
                                                  'repetitions': 10, 'equipment_id': '1b7d032196154bd5a64c7fcfee388ec5'},
                                            status_code="500", set_id="test")
         count_after1 = self._get_cachefile_size_(self.cache_file_path)
-        if count_after1 <= 1:
-            self.assertEqual(count_begin, 1)
-        else:
-            self.assertTrue(count_after1 - 1 == count_begin)
+        self.assertEqual(count_begin, count_after1)
         # successful requests may not be cached
         self.cache_manager.cache_request(method="update", address=self.detail_address + "test",
                                            data={'weight': 10, 'rfid': '0006921147', 'active': 'False',
@@ -94,6 +91,7 @@ class TestCacheManager(unittest.TestCase):
         Tests whether the test_empty_cache method reads all messages in the cache file and sends them, and removes them
         from the cache in the case of success.
         """
+        # TODO: write test with complex cache where all cases are covered and tested.
         self.cache_manager.empty_cache()
 
     @patch('Client_Prototype.Communication.RequestManager')
@@ -113,7 +111,7 @@ class TestCacheManager(unittest.TestCase):
 
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "fake_cache_test.json"), rm_mock)
         cache_manager.empty_cache()
-        self.assertEqual(cache_manager.get_cache_size(), 1)
+        self.assertEqual(cache_manager.get_cache_size(), 0)
         rm_mock.new_set.assert_called_once_with(rfid='0006921147', exercise_unit="", cache=False)
         rm_mock.update_set.assert_called_once_with(active='True', cache=False,
                                                    durations=[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644, 0.426865, 0.416302],

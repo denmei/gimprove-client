@@ -34,7 +34,7 @@ class TestRequestManager(unittest.TestCase):
         self.log_address = ""
         self.cache_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data"
         self.cache_file_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + \
-                               "/test_data/client_cache.txt"
+                               "/test_data/client_cache.json"
         self.rfid = "0006921147"
         self.message_queue = MessageQueue()
         self.request_manager = RequestManager(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
@@ -54,9 +54,7 @@ class TestRequestManager(unittest.TestCase):
     def get_cache_file(self):
         cache_list = []
         with open(self.cache_file_path, "r+") as cache_file:
-            for line in cache_file:
-                message = json.loads(line)
-                cache_list.append(message)
+            cache_list = json.load(cache_file)
             cache_file.close()
         return cache_list
 
@@ -92,11 +90,11 @@ class TestRequestManager(unittest.TestCase):
         cache = self.get_cache_file()
         last_cache_message = cache[len(cache) - 1]
         self.assertTrue("_fake" in response['id'])
-        self.assertTrue("new" in last_cache_message['method'])
-        self.assertTrue("_fake" in last_cache_message['status_code'])
-        self.assertEqual(last_cache_message['data']['repetitions'], 0)
-        self.assertEqual(last_cache_message['data']['rfid'], self.rfid)
-        self.assertEqual(last_cache_message['data']['weight'], 0)
+        self.assertTrue("new" in last_cache_message['content']['method'])
+        self.assertTrue("_fake" in last_cache_message['content']['status_code'])
+        self.assertEqual(last_cache_message['content']['data']['repetitions'], 0)
+        self.assertEqual(last_cache_message['content']['data']['rfid'], self.rfid)
+        self.assertEqual(last_cache_message['content']['data']['weight'], 0)
         self.assertEqual(cache_len_prev + 1, len(cache))
 
     def test_update_set(self):
@@ -131,11 +129,11 @@ class TestRequestManager(unittest.TestCase):
         cache = self.get_cache_file()
         last_cache_message = cache[len(cache) - 1]
         self.assertEqual(cache_len_prev + 1, len(cache))
-        self.assertEqual(last_cache_message['data']['repetitions'], repetitions)
-        self.assertEqual(last_cache_message['data']['rfid'], self.rfid)
-        self.assertTrue(content['id'] in last_cache_message['address'])
-        self.assertEqual(last_cache_message['method'], "update")
-        self.assertEqual(last_cache_message['data']['weight'], content['weight'] + 5)
+        self.assertEqual(last_cache_message['content']['data']['repetitions'], repetitions)
+        self.assertEqual(last_cache_message['content']['data']['rfid'], self.rfid)
+        self.assertTrue(content['id'] in last_cache_message['content']['address'])
+        self.assertEqual(last_cache_message['content']['method'], "update")
+        self.assertEqual(last_cache_message['content']['data']['weight'], content['weight'] + 5)
 
     def test_delete_set(self):
         """
@@ -166,10 +164,16 @@ class TestRequestManager(unittest.TestCase):
         real_rfid = json.loads(response.content.decode("utf-8"))['rfid_tag']
         self.assertTrue(self.request_manager.rfid_is_valid(real_rfid))
 
-    def test_auth_error(self):
+    @mock.patch('requests.post')
+    def test_auth_error(self, mock_post):
         """
         If requestmanager cannot authenticate and thus not send any message, all messages must be cached.
         """
+        error_response_mock = mock.MagicMock()
+        error_response_mock.status_code = 401
+        error_response_mock.content = json.dumps({}).encode()
+        mock_post.return_value = error_response_mock
+
         request_manager = RequestManager(exercise_name=self.exercise_name, equipment_id=self.equipment_id,
                                          cache_path=self.cache_path,
                                          message_queue=self.message_queue, configurator=self.configurator)

@@ -18,10 +18,12 @@ class CacheManager:
         """
         Checks whether there is a cache_file in the specified directory. If not, a new file will be created.
         """
+        print(self.cache_path)
         if not os.path.isfile(self.cache_path):
             cache_file = open(self.cache_path, 'w')
+            cache_file.write("[]")
             cache_file.close()
-            return dict()
+            return []
         else:
             with open(self.cache_path) as cache_file:
                 cache = json.load(cache_file)
@@ -36,7 +38,7 @@ class CacheManager:
         Caches a request if there is a connection/server error. Delete all prior cached messages that belong to the same
         set.
         """
-        if status_code[0] == "5" or status_code[0] == "4" or ("_fake" in status_code):
+        if status_code[0] == "4" or ("_fake" in status_code):
             self.cache += [{'no': 2, 'content': {'method': method, 'address': address, 'data': data,
                                                  'status_code': status_code, 'set_id': set_id}}]
             self.update_cache_file()
@@ -170,13 +172,15 @@ class CacheManager:
         :return: True if no error occured, else false.
         """
         cache_df = pd.DataFrame(json_normalize(self.cache))
-        # send delete messages and remove all messages with the same set_id
-        cache_df_deleted = self._handle_delete_sets_(cache_df)
-        # add column for fake_id-state (true/false)
-        cache_df_deleted['fake_id'] = cache_df_deleted['content.set_id'].apply(lambda x: "_fake" in x)
-        cache_df_fakeids = self._handle_sets_with_fakeids_(cache_df_deleted)
-        # send remaining update messages (only latest for each set)
-        cache_cleaned = self._handle_update_sets_(cache_df_fakeids)
-        self.cache = cache_cleaned
-        # self.update_cache_file()
+        print(cache_df)
+        if len(cache_df) > 0:
+            # send delete messages and remove all messages with the same set_id
+            cache_df_deleted = self._handle_delete_sets_(cache_df)
+            # add column for fake_id-state (true/false)
+            cache_df_deleted['fake_id'] = cache_df_deleted['content.set_id'].apply(lambda x: "_fake" in x)
+            cache_df_fakeids = self._handle_sets_with_fakeids_(cache_df_deleted)
+            # send remaining update messages (only latest for each set)
+            cache_cleaned = self._handle_update_sets_(cache_df_fakeids)
+            self.cache = cache_cleaned
+            # self.update_cache_file()
         return True
