@@ -13,7 +13,6 @@ class CacheManager:
         self.cache_path = cache_file_path
         self.request_manager = request_manager
         self.cache = self._init_cache_()
-        self.empty_cache()
 
     def _init_cache_(self):
         """
@@ -78,6 +77,8 @@ class CacheManager:
                 rfid = row['content.data.rfid']
                 set_id = row['content.set_id']
                 if self.request_manager.rfid_is_valid(rfid):
+                    print("SET ID:")
+                    print(set_id)
                     new_resp = self.request_manager.new_set(rfid=row['content.data.rfid'], exercise_unit="", cache=False)
                     latest_update = latest_updates[latest_updates['content.set_id'] == row['content.set_id']]
                     durations = list(map(float, latest_update['content.data.durations'].values[0].replace("[", "").replace("]", "").split(",")))
@@ -113,6 +114,7 @@ class CacheManager:
         without_new_sets = relevant_data[~ relevant_data['content.set_id'].isin(new_set_ids_to_delete)]
         # delete all update messages where a delete message exists
         without_update_sets = without_new_sets[without_new_sets['content.method'] != 'update']
+        print(without_update_sets)
         # execute deletions and remove from cache if successful
         delete_set_ids = []
         try:
@@ -123,6 +125,7 @@ class CacheManager:
                     delete_set_ids += [set_id]
             clean_cache = cache_df[(~ cache_df['content.set_id'].isin(delete_set_ids)) &
                                    (~ cache_df['content.set_id'].isin(new_set_ids_to_delete))]
+            print("DELETE IDS: " + str(delete_set_ids))
             return clean_cache
         except Exception as e:
             return cache_df[~ cache_df['content.set_id'].isin(new_set_ids_to_delete)]
