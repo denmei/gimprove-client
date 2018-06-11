@@ -4,7 +4,6 @@ import datetime as dt
 import logging
 from pathlib import Path
 import numpy as np
-import matplotlib.pyplot as plt
 import RPi.GPIO as GPIO
 from Client_Prototype.HardwareControl.Sensors.DistanceSensor import DistanceSensor
 from Client_Prototype.HardwareControl.Sensors.WeightSensor import WeightSensor
@@ -202,6 +201,8 @@ class SensorManager:
         While running, the values of the distance sensor are analyzed. If a new repetition is identified, the current
         value of the weight sensor is taken and a new repetition-request is sent to the server.
         """
+        if self.plot or self.final_plot:
+            import matplotlib.pyplot as plt
         self._reset_()
 
         self.logger.info("Start recording.")
