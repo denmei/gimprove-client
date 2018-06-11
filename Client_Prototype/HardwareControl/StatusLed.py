@@ -8,6 +8,8 @@ class StatusLed:
     """
 
     def __init__(self, client, gpio_nr=17):
+        # TODO: in settings! also number
+        GPIO.setmode(GPIO.BOARD)
         client.listen_to_statechange(self)
         GPIO.setup(gpio_nr, GPIO.OUT)
         self.gpio_nr = gpio_nr
