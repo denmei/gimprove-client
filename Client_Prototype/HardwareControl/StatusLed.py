@@ -9,10 +9,10 @@ class StatusLed:
 
     def __init__(self, client, gpio_nr=17):
         client.listen_to_statechange(self)
-        self.turn_off()
         GPIO.setup(gpio_nr, GPIO.OUT)
         self.gpio_nr = gpio_nr
         self.__is_on__ = False
+        self.turn_off()
 
     def update(self, update):
         print("update led: %s" % update)
