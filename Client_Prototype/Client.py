@@ -159,7 +159,7 @@ class Equipment:
             elif self.request_manager.rfid_is_valid(rfid_tag):
                 try:
                     # init set
-                    set_id = self._init_set_record_(rfid_tag)
+                    set_id = self._init_set_record_(rfid_tag)['id']
                     # start sensor thread
                     self.sensor_manager.start_recording(rfid_tag=rfid_tag, set_id=set_id)
                     # end set

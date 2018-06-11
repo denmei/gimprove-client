@@ -84,7 +84,6 @@ class Configurator:
                 self.credentials['tokens'][self.environment] = token
                 self.__update_credentials_file__()
             except requests.exceptions.RequestException as requestException:
-                print("Tokenerror: %s" % requestException)
                 self.logger.info("Configurator: Requesterror - %s" % requestException)
         return token
 

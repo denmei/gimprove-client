@@ -32,12 +32,12 @@
         "final_plot": "False"
     },
     "terminal_settings": {
-        "print_weight": "True",
-        "print_distance": "True",
+        "print_weight": "False",
+        "print_distance": "False",
         "print_undermax": "False"
     },
     "communication": {
-        "environment": "test"
+        "environment": "local"
     },
     "aws": {
         "bucket": "rasppi-logs"

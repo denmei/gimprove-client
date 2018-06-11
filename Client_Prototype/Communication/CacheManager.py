@@ -13,12 +13,12 @@ class CacheManager:
         self.cache_path = cache_file_path
         self.request_manager = request_manager
         self.cache = self._init_cache_()
+        self.empty_cache()
 
     def _init_cache_(self):
         """
         Checks whether there is a cache_file in the specified directory. If not, a new file will be created.
         """
-        print(self.cache_path)
         if not os.path.isfile(self.cache_path):
             cache_file = open(self.cache_path, 'w')
             cache_file.write("[]")
@@ -39,7 +39,7 @@ class CacheManager:
         set.
         """
         if status_code[0] == "4" or ("_fake" in status_code):
-            self.cache += [{'no': 2, 'content': {'method': method, 'address': address, 'data': data,
+            self.cache += [{'no': len(self.cache) +1, 'content': {'method': method, 'address': address, 'data': data,
                                                  'status_code': status_code, 'set_id': set_id}}]
             self.update_cache_file()
             self.logger.info("Cached request.")
@@ -48,13 +48,11 @@ class CacheManager:
             return False
 
     def update_cache_file(self):
-        print(os.listdir(self.path))
         with open(os.path.join(self.path, "delete.json"), 'w') as cache_file:
             json.dump(self.cache, cache_file, indent=4)
             cache_file.close()
         os.remove(self.cache_path)
         os.rename(os.path.join(self.path, "delete.json"), self.cache_path)
-        print("OK")
 
     def _handle_sets_with_fakeids_(self, cache_df):
         """
@@ -181,6 +179,10 @@ class CacheManager:
             cache_df_fakeids = self._handle_sets_with_fakeids_(cache_df_deleted)
             # send remaining update messages (only latest for each set)
             cache_cleaned = self._handle_update_sets_(cache_df_fakeids)
-            self.cache = cache_cleaned
-            # self.update_cache_file()
+            if len(cache_cleaned < 1):
+                self.cache = []
+            else:
+                print(cache_cleaned)
+                self.cache = cache_cleaned
+            self.update_cache_file()
         return True
