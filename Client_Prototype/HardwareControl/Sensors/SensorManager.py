@@ -215,7 +215,8 @@ class SensorManager:
             plt_line_max = [[0, self.plot_len], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
             plt_line_min = [[0, self.plot_len], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
         while not self._stop_:
-            plt.pause(self.frequency)
+            if self.plot:
+                plt.pause(self.frequency)
             # update repetitions
             old_rep = self._rep_
             self._rep_, self._distance_buffer_, self._total_distances_ = self._check_reps_(self._rep_, self._distance_buffer_, self._total_distances_)
