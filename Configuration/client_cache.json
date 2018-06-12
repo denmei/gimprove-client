@@ -1,1 +1,689 @@
-[]
+[
+    {
+        "no": 1,
+        "content": {
+            "method": "new",
+            "address": "http://127.0.0.1:8000/tracker/set_list_rest/",
+            "data": {
+                "exercise_unit": "",
+                "repetitions": 0,
+                "weight": 0,
+                "exercise_name": "Lat Pulldown",
+                "rfid": "0006921147",
+                "date_time": "2018-06-12 07:20:11.965568+02:00",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "active": "True",
+                "durations": "[]"
+            },
+            "status_code": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 2,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 1,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.099042+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 3,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 2,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.116204+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 4,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 3,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.125146+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809, 0.00255]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 5,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 4,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.141737+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809, 0.00255, 0.004213]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 6,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 5,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.156330+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809, 0.00255, 0.004213, 0.00488]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 7,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.158997+02:00",
+                "rfid": "0006921147",
+                "active": "False",
+                "durations": "[0.008505, 0.015809, 0.00255, 0.004213, 0.00488, 0.004473, 0.007618, 0.004702, 0.005336, 0.005593]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 8,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 6,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.164549+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809, 0.00255, 0.004213, 0.00488, 0.004473]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 9,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 7,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.169852+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809, 0.00255, 0.004213, 0.00488, 0.004473, 0.007618]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 10,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 8,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.177605+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809, 0.00255, 0.004213, 0.00488, 0.004473, 0.007618, 0.004702]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 11,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 9,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.185877+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809, 0.00255, 0.004213, 0.00488, 0.004473, 0.007618, 0.004702, 0.005336]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 12,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:20:12.192563+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.008505, 0.015809, 0.00255, 0.004213, 0.00488, 0.004473, 0.007618, 0.004702, 0.005336, 0.005593]"
+            },
+            "status_code": "404",
+            "set_id": "83666c0a-41ee-40d4-8b99-bfe54c13fdfb_fake"
+        }
+    },
+    {
+        "no": 13,
+        "content": {
+            "method": "new",
+            "address": "http://127.0.0.1:8000/tracker/set_list_rest/",
+            "data": {
+                "exercise_unit": "",
+                "repetitions": 0,
+                "weight": 0,
+                "exercise_name": "Lat Pulldown",
+                "rfid": "0006921147",
+                "date_time": "2018-06-12 07:21:44.637812+02:00",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "active": "True",
+                "durations": "[]"
+            },
+            "status_code": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 14,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 1,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.770388+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 15,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 2,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.785812+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 16,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 3,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.802543+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849, 0.002886]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 17,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 4,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.810027+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849, 0.002886, 0.002913]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 18,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 5,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.826039+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849, 0.002886, 0.002913, 0.004652]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 19,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.825671+02:00",
+                "rfid": "0006921147",
+                "active": "False",
+                "durations": "[0.013022, 0.005849, 0.002886, 0.002913, 0.004652, 0.006138, 0.008453, 0.005956, 0.007026, 0.005813]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 20,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 6,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.834993+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849, 0.002886, 0.002913, 0.004652, 0.006138]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 21,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 7,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.843912+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849, 0.002886, 0.002913, 0.004652, 0.006138, 0.008453]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 22,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 8,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.853615+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849, 0.002886, 0.002913, 0.004652, 0.006138, 0.008453, 0.005956]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 23,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 9,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.861339+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849, 0.002886, 0.002913, 0.004652, 0.006138, 0.008453, 0.005956, 0.007026]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 24,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/f617eeab-1f0e-4122-aa18-61d9bb900489_fake",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:21:44.867290+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.013022, 0.005849, 0.002886, 0.002913, 0.004652, 0.006138, 0.008453, 0.005956, 0.007026, 0.005813]"
+            },
+            "status_code": "404",
+            "set_id": "f617eeab-1f0e-4122-aa18-61d9bb900489_fake"
+        }
+    },
+    {
+        "no": 25,
+        "content": {
+            "method": "new",
+            "address": "http://127.0.0.1:8000/tracker/set_list_rest/",
+            "data": {
+                "exercise_unit": "",
+                "repetitions": 0,
+                "weight": 0,
+                "exercise_name": "Lat Pulldown",
+                "rfid": "0006921147",
+                "date_time": "2018-06-12 07:22:24.024851+02:00",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "active": "True",
+                "durations": "[]"
+            },
+            "status_code": "53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 26,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 1,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.177446+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 27,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 2,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.213954+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 28,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 3,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.246178+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941, 0.007215]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 29,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 4,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.266940+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941, 0.007215, 0.023991]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 30,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.267192+02:00",
+                "rfid": "0006921147",
+                "active": "False",
+                "durations": "[0.015081, 0.004941, 0.007215, 0.023991, 0.006183, 0.005185, 0.00509, 0.016843, 0.003839, 0.005567]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 31,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 5,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.305321+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941, 0.007215, 0.023991, 0.006183]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 32,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 6,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.324578+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941, 0.007215, 0.023991, 0.006183, 0.005185]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 33,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 7,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.357020+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941, 0.007215, 0.023991, 0.006183, 0.005185, 0.00509]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 34,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 8,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.386818+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941, 0.007215, 0.023991, 0.006183, 0.005185, 0.00509, 0.016843]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 35,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 9,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.414775+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941, 0.007215, 0.023991, 0.006183, 0.005185, 0.00509, 0.016843, 0.003839]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    },
+    {
+        "no": 36,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/53737ea6-89c6-4230-860a-0335be2886cc_fake",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-06-12 07:22:24.430893+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.015081, 0.004941, 0.007215, 0.023991, 0.006183, 0.005185, 0.00509, 0.016843, 0.003839, 0.005567]"
+            },
+            "status_code": "404",
+            "set_id": "53737ea6-89c6-4230-860a-0335be2886cc_fake"
+        }
+    }
+]

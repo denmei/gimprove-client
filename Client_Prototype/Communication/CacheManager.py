@@ -19,9 +19,10 @@ class CacheManager:
         Checks whether there is a cache_file in the specified directory. If not, a new file will be created.
         """
         if not os.path.isfile(self.cache_path):
-            cache_file = open(self.cache_path, 'w')
-            cache_file.write("[]")
-            cache_file.close()
+            with open(self.cache_path, 'w') as cache_file:
+                cache_file.write("[]")
+                cache_file.close()
+            print("Create cache at: %s" % self.cache_path)
             return []
         else:
             with open(self.cache_path) as cache_file:
@@ -51,7 +52,10 @@ class CacheManager:
             json.dump(self.cache, cache_file, indent=4)
             cache_file.close()
         os.remove(self.cache_path)
+        print("deleted")
         os.rename(os.path.join(self.path, "delete.json"), self.cache_path)
+        print("renamed")
+        print(self.cache)
 
     def _handle_sets_with_fakeids_(self, cache_df):
         """
@@ -173,7 +177,7 @@ class CacheManager:
         :return: True if no error occured, else false.
         """
         cache_df = pd.DataFrame(json_normalize(self.cache))
-        print(cache_df)
+        print("Empty cache...")
         if len(cache_df) > 0:
             # send delete messages and remove all messages with the same set_id
             cache_df_deleted = self._handle_delete_sets_(cache_df)
