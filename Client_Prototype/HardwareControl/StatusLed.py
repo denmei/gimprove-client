@@ -17,7 +17,6 @@ class StatusLed:
         self.turn_off()
 
     def update(self, update):
-        print("update led: %s" % update)
         if update['Object'] == "ClientState":
             if update['Attribute'] == 'recording':
                 if update['Value']:

@@ -3,11 +3,13 @@ import logging
 import json
 from pandas.io.json import json_normalize, to_json
 import pandas as pd
+import threading
 
 
 class CacheManager:
 
     def __init__(self, cache_path, cache_file_path, request_manager):
+        self.lock = threading.Lock()
         self.logger = logging.getLogger('gimprove' + __name__)
         self.path = cache_path
         self.cache_path = cache_file_path
@@ -38,24 +40,36 @@ class CacheManager:
         Caches a request if there is a connection/server error. Delete all prior cached messages that belong to the same
         set.
         """
-        if status_code[0] == "4" or ("_fake" in status_code):
-            self.cache += [{'no': len(self.cache) +1, 'content': {'method': method, 'address': address, 'data': data,
-                                                 'status_code': status_code, 'set_id': set_id}}]
-            self.update_cache_file()
-            self.logger.info("Cached request.")
-            return True
-        else:
+        self.lock.acquire(True)
+        try:
+            if status_code[0] == "4" or ("_fake" in status_code):
+                self.cache += [{'no': len(self.cache) +1, 'content': {'method': method, 'address': address, 'data': data,
+                                                     'status_code': status_code, 'set_id': set_id}}]
+                self.update_cache_file()
+                self.logger.info("Cached request.")
+                self.lock.release()
+                return True
+            else:
+                self.lock.release()
+                return False
+        except Exception as e:
+            self.lock.release()
             return False
 
     def update_cache_file(self):
         with open(os.path.join(self.path, "delete.json"), 'w') as cache_file:
-            json.dump(self.cache, cache_file, indent=4)
+            if len(self.cache) > 0:
+                json.dump(self.cache, cache_file, indent=4)
+            else:
+                cache_file.write("[]")
             cache_file.close()
-        os.remove(self.cache_path)
+        try:
+            os.remove(self.cache_path)
+        except:
+            pass
         print("deleted")
         os.rename(os.path.join(self.path, "delete.json"), self.cache_path)
         print("renamed")
-        print(self.cache)
 
     def _handle_sets_with_fakeids_(self, cache_df):
         """
