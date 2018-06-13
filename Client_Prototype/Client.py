@@ -28,6 +28,7 @@ class Equipment:
         self._configure_()
         self.logger = logging.getLogger('gimprove' + __name__)
         logging.getLogger("requests").setLevel(logging.WARNING)
+        self.__client_state__ = ClientState(recording=False)
         self.configurator = Configurator(self.config_path, "config.json", api_links_name='api-links.json',
                                          environment=environment)
         self.off_rfid = self.configurator.get_off_rfid()
@@ -38,12 +39,10 @@ class Equipment:
                                               cache_path=self.config_path, message_queue=self.message_queue,
                                               configurator=self.configurator)
         self.request_manager.start()
-        self.sensor_manager = self._initialize_sensormanager_(self.config_path + "/config.json", self.message_queue)
+        self.sensor_manager, self.status_led = \
+            self._initialize_hardware_(self.config_path + "/config.json", self.message_queue)
         self.logger.info("Client instantiated.")
         self._upload_logs_(self.config_path + "/logs", self.equipment_id, self.bucket, self.environment)
-
-        self.__client_state__ = ClientState(recording=False)
-        status_led = StatusLed(self)
 
     def _configure_(self):
         """
@@ -56,8 +55,7 @@ class Equipment:
         self.environment = configuration['communication']['environment']
         self.bucket = configuration['aws']['bucket']
 
-    @staticmethod
-    def _initialize_sensormanager_(config_file_path, message_queue):
+    def _initialize_hardware_(self, config_file_path, message_queue):
         """
         Creates a sensor manager-instance with the settings specified in the config_file.
         :return SensorManager-Instance
@@ -70,6 +68,7 @@ class Equipment:
         distance_settings = settings['sensor_settings']['distance_sensor']
         weight_settings = settings['sensor_settings']['weight_sensor']
         terminal_settings = settings['terminal_settings']
+        status_led = StatusLed(self, settings['led-gpio'])
         sensor_manager = SensorManager(queue=message_queue,
                                        min_dist=distance_settings['min_dist'],
                                        max_dist=distance_settings['max_dist'],
@@ -97,7 +96,7 @@ class Equipment:
                                        weight_translation=weight_settings['weight_translation'] == 'True',
                                        distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv',
                                        weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv')
-        return sensor_manager
+        return sensor_manager, status_led
 
     def _upload_logs_(self, logging_path, device_id, bucket_name, environment):
         """

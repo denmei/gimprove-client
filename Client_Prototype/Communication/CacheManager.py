@@ -7,6 +7,9 @@ import threading
 
 
 class CacheManager:
+    """
+    Manages the cache that is used for http-requests that could not be sent successfully. 
+    """
 
     def __init__(self, cache_path, cache_file_path, request_manager):
         self.lock = threading.Lock()
@@ -38,7 +41,7 @@ class CacheManager:
     def cache_request(self, method, address, data, status_code, set_id):
         """
         Caches a request if there is a connection/server error. Delete all prior cached messages that belong to the same
-        set.
+        set. Used locking to keep the method thread safe.
         """
         self.lock.acquire(True)
         try:
