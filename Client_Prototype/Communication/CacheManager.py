@@ -100,7 +100,8 @@ class CacheManager:
                 if self.request_manager.rfid_is_valid(rfid):
                     print("SET ID:")
                     print(set_id)
-                    new_resp = self.request_manager.new_set(rfid=row['content.data.rfid'], exercise_unit="", cache=False)
+                    new_resp = self.request_manager.new_set(rfid=row['content.data.rfid'], exercise_unit="",
+                                                            cache=False, websocket_send=False)
                     latest_update = latest_updates[latest_updates['content.set_id'] == row['content.set_id']]
                     durations = list(map(float, latest_update['content.data.durations'].values[0].replace("[", "").replace("]", "").split(",")))
                     update_resp = self.request_manager.update_set(repetitions=latest_update['content.data.repetitions'].values[0],
@@ -110,7 +111,8 @@ class CacheManager:
                                                                   active=latest_update['content.data.active'].values[0],
                                                                   durations=durations,
                                                                   end=True,
-                                                                  cache=False)
+                                                                  cache=False,
+                                                                  websocket_send=False)
                     if update_resp['status_code'] == 200 or update_resp['status_code'] == 201:
                         delete_ids += [set_id]
                 else:
@@ -177,7 +179,8 @@ class CacheManager:
                     active=row['content.data.active'],
                     durations=durations,
                     end=True,
-                    cache=False)
+                    cache=False,
+                    websocket_send=False)
                 if update_resp['status_code'] in [200, 201]:
                     delete_ids += [set_id]
             cleaned_cache = latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)]

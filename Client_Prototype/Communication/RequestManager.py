@@ -79,7 +79,7 @@ class RequestManager(threading.Thread):
             self.logger.info("ConnectionError: %s" % request_exception)
             return True
 
-    def update_set(self, repetitions, weight, set_id, rfid, active, durations, end, cache=True):
+    def update_set(self, repetitions, weight, set_id, rfid, active, durations, end, cache=True, websocket_send=True):
         """
         Update an existing set.
         :param repetitions: Repetitions count.
@@ -94,12 +94,16 @@ class RequestManager(threading.Thread):
         data = {'repetitions': repetitions, 'weight': weight, "exercise_name": self.exercise_name,
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
-        websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': end}.items()))
-        self.check_ws_connection()
-        try:
-            self.websocket_manager.send(json.dumps(websocket_data))
-        except Exception as e:
-            self.logger.debug("RequestManager: %s" % e)
+
+        # send via websocket if requested
+        if websocket_send:
+            websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': end}.items()))
+            self.check_ws_connection()
+            try:
+                self.websocket_manager.send(json.dumps(websocket_data))
+            except Exception as e:
+                self.logger.debug("RequestManager: %s" % e)
+
         try:
             response = requests.put(address, data=data, headers=self.header)
             if response.status_code != 200 and response.status_code != 201 and cache:
@@ -113,7 +117,7 @@ class RequestManager(threading.Thread):
                 self.cache_manager.cache_request("update", address, data, '404', set_id)
             return None
 
-    def new_set(self, rfid, exercise_unit="", cache=True):
+    def new_set(self, rfid, exercise_unit="", cache=True, websocket_send=True):
         """
         Sends a request to create a new set.
         :param rfid: User-RFID
@@ -123,12 +127,16 @@ class RequestManager(threading.Thread):
         data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise_name': self.exercise_name,
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
-        websocket_data = dict(list(data.items()) + list({'type': 'new', 'end': str(False)}.items()))
-        self.check_ws_connection()
-        try:
-            self.websocket_manager.send(json.dumps(websocket_data))
-        except Exception as e:
-            self.logger.debug("RequestManager: %s" % e)
+
+        # send via websocket if requested
+        if websocket_send:
+            websocket_data = dict(list(data.items()) + list({'type': 'new', 'end': str(False)}.items()))
+            self.check_ws_connection()
+            try:
+                self.websocket_manager.send(json.dumps(websocket_data))
+            except Exception as e:
+                self.logger.debug("RequestManager: %s" % e)
+
         try:
             response = requests.post(self.list_address, data=data, headers=self.header)
             content = json.loads(response.content.decode("utf-8"))
