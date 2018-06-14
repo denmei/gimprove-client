@@ -7,6 +7,7 @@ import numpy as np
 import RPi.GPIO as GPIO
 from Client_Prototype.HardwareControl.Sensors.DistanceSensor import DistanceSensor
 from Client_Prototype.HardwareControl.Sensors.WeightSensor import WeightSensor
+import time
 
 
 class SensorManager:
@@ -217,6 +218,8 @@ class SensorManager:
         while not self._stop_:
             if self.plot:
                 plt.pause(self.frequency)
+            else:
+                time.sleep(self.frequency)
             # update repetitions
             old_rep = self._rep_
             self._rep_, self._distance_buffer_, self._total_distances_ = self._check_reps_(self._rep_, self._distance_buffer_, self._total_distances_)

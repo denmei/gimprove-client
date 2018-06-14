@@ -92,7 +92,6 @@ class TestCacheManager(unittest.TestCase):
         Tests whether the test_empty_cache method reads all messages in the cache file and sends them, and removes them
         from the cache in the case of success.
         """
-        # TODO: write test with complex cache where all cases are covered and tested.
         def rfid_is_is_valid_fake(rfid):
             if 'invalid' in rfid:
                 return False
@@ -107,6 +106,7 @@ class TestCacheManager(unittest.TestCase):
                                         'exercise_unit': 'b7b9e045-0a25-4454-898d-0dfd2492384a',
                                         'repetitions': 0, 'weight': 0}
         rm_mock.rfid_is_valid = rfid_is_is_valid_fake
+        print(os.path.join(self.cache_path, "client_cache.json"))
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "client_cache.json"), rm_mock)
         cache_manager.empty_cache()
         self.assertEqual(cache_manager.get_cache_size(), 0)
