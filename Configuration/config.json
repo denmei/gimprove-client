@@ -41,6 +41,6 @@
         "environment": "local"
     },
     "aws": {
-        "bucket": "rasppi-logs"
+        "bucket": "test"
     }
 }

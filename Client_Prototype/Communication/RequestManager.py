@@ -16,7 +16,7 @@ class RequestManager(threading.Thread):
     """
     def __init__(self, configurator, exercise_name, equipment_id, cache_path, message_queue):
         super(RequestManager, self).__init__()
-        self.daemon = True
+        self.daemon = False
         self.logger = logging.getLogger('gimprove' + __name__)
         self.list_address, self.detail_address, self.userprofile_detail_address, self.userprofile_detail_address2, \
             self.websocket_address, token_address = configurator.get_api_links()
@@ -29,14 +29,17 @@ class RequestManager(threading.Thread):
         self.local_tz = pytz.timezone('Europe/Berlin')
         self.configurator = configurator
         self.websocket_manager = WebSocketManager(self.websocket_address, self.configurator.get_token())
+        self.stop = False
         self.websocket_manager.setDaemon(True)
         self.websocket_manager.start()
 
     def run(self):
-        while True:
+        while not self.stop:
             element = self.message_queue.get()
             if element is not None:
                 self.__handle_message__(element)
+        if self.stop:
+            self.cache_manager.empty_cache()
 
     def __init_header__(self, token_address, token, user, password):
         """
@@ -174,3 +177,9 @@ class RequestManager(threading.Thread):
             if cache:
                 self.cache_manager.cache_request("delete", address, "", "404", set_id)
             return None
+
+    def quit(self):
+        """
+        :return:
+        """
+        self.stop = True
