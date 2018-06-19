@@ -4,6 +4,6 @@ RPi/
 Configuration/logs/
 smbus/
 venv/
-Configuration/client_cache.json
+Client_Prototype/Configuration/client_cache.json
 credentials.json
 .credentials.json
