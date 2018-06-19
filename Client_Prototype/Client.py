@@ -165,6 +165,7 @@ class Equipment:
             set_id = None
             if rfid_tag == 'quit' or (rfid_tag == self.off_rfid and len(rfid_tag) > 1):
                 self.sensor_manager.quit()
+                self.request_manager.quit()
                 break
             elif self.request_manager.rfid_is_valid(rfid_tag):
                 try:

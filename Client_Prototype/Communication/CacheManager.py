@@ -49,7 +49,6 @@ class CacheManager:
                 self.cache += [{'no': len(self.cache) +1, 'content': {'method': method, 'address': address, 'data': data,
                                                      'status_code': status_code, 'set_id': set_id}}]
                 self.update_cache_file()
-                self.logger.info("Cached request.")
                 self.lock.release()
                 return True
             else:
@@ -62,6 +61,7 @@ class CacheManager:
     def update_cache_file(self):
         with open(os.path.join(self.path, "delete.json"), 'w') as cache_file:
             if len(self.cache) > 0:
+                # cache_file = self.cache.to_json()
                 json.dump(self.cache, cache_file, indent=4)
             else:
                 cache_file.write("[]")
@@ -70,9 +70,7 @@ class CacheManager:
             os.remove(self.cache_path)
         except:
             pass
-        print("deleted")
         os.rename(os.path.join(self.path, "delete.json"), self.cache_path)
-        print("renamed")
 
     def _handle_sets_with_fakeids_(self, cache_df):
         """
@@ -98,8 +96,6 @@ class CacheManager:
                 rfid = row['content.data.rfid']
                 set_id = row['content.set_id']
                 if self.request_manager.rfid_is_valid(rfid):
-                    print("SET ID:")
-                    print(set_id)
                     new_resp = self.request_manager.new_set(rfid=row['content.data.rfid'], exercise_unit="",
                                                             cache=False, websocket_send=False)
                     latest_update = latest_updates[latest_updates['content.set_id'] == row['content.set_id']]
@@ -115,13 +111,16 @@ class CacheManager:
                                                                   websocket_send=False)
                     if update_resp['status_code'] == 200 or update_resp['status_code'] == 201:
                         delete_ids += [set_id]
+                        print("SENT cache")
                 else:
                     delete_rfids += [rfid]
             cache_df_clean_ids = cache_df[~ cache_df['content.set_id'].isin(delete_ids)]
             cache_df_clean_rfids = cache_df_clean_ids[~ cache_df_clean_ids['content.data.rfid'].isin(delete_rfids)]
             return cache_df_clean_rfids
         except Exception as e:
-            return cache_df
+            cache_df_clean_ids = cache_df[~ cache_df['content.set_id'].isin(delete_ids)]
+            cache_df_clean_rfids = cache_df_clean_ids[~ cache_df_clean_ids['content.data.rfid'].isin(delete_rfids)]
+            return cache_df_clean_rfids
 
     def _handle_delete_sets_(self, cache_df):
         """
@@ -148,7 +147,6 @@ class CacheManager:
                     delete_set_ids += [set_id]
             clean_cache = cache_df[(~ cache_df['content.set_id'].isin(delete_set_ids)) &
                                    (~ cache_df['content.set_id'].isin(new_set_ids_to_delete))]
-            print("DELETE IDS: " + str(delete_set_ids))
             return clean_cache
         except Exception as e:
             return cache_df[~ cache_df['content.set_id'].isin(new_set_ids_to_delete)]
@@ -186,7 +184,7 @@ class CacheManager:
             cleaned_cache = latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)]
             return cleaned_cache
         except Exception as e:
-            return latest_updates
+            return latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)]
 
     def empty_cache(self):
         # TODO: For every new set, check whether there is already such a set before creating it
@@ -197,7 +195,7 @@ class CacheManager:
         :return: True if no error occured, else false.
         """
         cache_df = pd.DataFrame(json_normalize(self.cache))
-        print("Empty cache...")
+        self.logger.info("Cache: try empty cache.")
         if len(cache_df) > 0:
             # send delete messages and remove all messages with the same set_id
             cache_df_deleted = self._handle_delete_sets_(cache_df)
@@ -206,11 +204,9 @@ class CacheManager:
             cache_df_fakeids = self._handle_sets_with_fakeids_(cache_df_deleted)
             # send remaining update messages (only latest for each set)
             cache_cleaned = self._handle_update_sets_(cache_df_fakeids)
-            print(cache_cleaned)
-            if len(cache_cleaned < 1):
+            if len(cache_cleaned) < 1:
                 self.cache = []
             else:
-                print(cache_cleaned)
-                self.cache = cache_cleaned
-            # self.update_cache_file()
+                self.cache = cache_cleaned.to_json()
+            self.update_cache_file()
         return True
