@@ -48,3 +48,27 @@ gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15
 gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:55:52,096 empty_cache Cache: try empty cache.
 gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:57:38,839 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
 gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:57:38,846 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:11,681 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:11,760 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:11,856 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:11,860 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:12,002 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:12,007 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:12,141 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:12,147 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:12,239 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:12,244 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:12,358 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:12,367 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:46,787 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:46,883 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:46,962 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:46,969 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:47,116 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:47,120 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:47,235 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:47,239 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:47,337 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:47,340 empty_cache Cache: try empty cache.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-24 15:58:47,441 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-24 15:58:47,445 empty_cache Cache: try empty cache.
