@@ -37,6 +37,9 @@ class TestCacheManager(unittest.TestCase):
         copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json",
               str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache_cp.json")
 
+        copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/big_client_cache.json",
+              str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/big_client_cache_cp.json")
+
         copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/update_cache_test.json",
               str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/update_cache_test_cp.json")
 
@@ -106,12 +109,11 @@ class TestCacheManager(unittest.TestCase):
                                         'exercise_unit': 'b7b9e045-0a25-4454-898d-0dfd2492384a',
                                         'repetitions': 0, 'weight': 0}
         rm_mock.rfid_is_valid = rfid_is_is_valid_fake
-        print(os.path.join(self.cache_path, "client_cache.json"))
-        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "client_cache.json"), rm_mock)
+        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "big_client_cache.json"), rm_mock)
         cache_manager.empty_cache()
         self.assertEqual(cache_manager.get_cache_size(), 0)
         rm_mock.delete_set.assert_called_once_with(set_id="1234_delete", cache=False)
-        rm_mock.new_set.assert_called_once_with(rfid='0006921147', exercise_unit="", cache=False)
+        rm_mock.new_set.assert_called_once_with(rfid='0006921147', exercise_unit="", cache=False, websocket_send=False)
         update_call_1 = call(active='True', cache=False,
                                                    durations=[0.564254, 0.422908, 0.426014, 0.450383, 0.48199, 0.42371, 0.446644, 0.426865, 0.416302],
                                                    end=True, repetitions=9, rfid='0006921147',
@@ -202,6 +204,10 @@ class TestCacheManager(unittest.TestCase):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json")
         os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache_cp.json",
                   str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/client_cache.json")
+
+        os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/big_client_cache.json")
+        os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/big_client_cache_cp.json",
+                  str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/big_client_cache.json")
 
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test.json")
         os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/fake_cache_test_cp.json",
