@@ -39,6 +39,7 @@ class RequestManager(threading.Thread):
             if element is not None:
                 self.__handle_message__(element)
         if self.stop:
+            print("Shutdown: Emptying cache...")
             self.cache_manager.empty_cache()
 
     def __init_header__(self, token_address, token, user, password):

@@ -157,35 +157,39 @@ class Equipment:
 
         If there occurs an error, the new set is deleted by sending a request to the server.
         """
-        while True:
-            # start waiting for rfid tag
-            rfid_tag = input('RFID (0006921147) or quit:')
-            self.logger.info("RFID-read: " + rfid_tag)
-            # check validity of rfid tag.
-            set_id = None
-            if rfid_tag == 'quit' or (rfid_tag == self.off_rfid and len(rfid_tag) > 1):
-                self.sensor_manager.quit()
-                self.request_manager.quit()
-                break
-            elif self.request_manager.rfid_is_valid(rfid_tag):
-                try:
-                    self.__client_state__.set_record_attr(True)
-                    # init set
-                    set_id = self._init_set_record_(rfid_tag)['id']
-                    # start sensor thread
-                    self.sensor_manager.start_recording(rfid_tag=rfid_tag, set_id=set_id)
-                    # end set
-                    self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=self.sensor_manager.get_repetitions(),
-                                   weight=self.sensor_manager.get_last_weight(), durations=self.sensor_manager.get_durations())
-                    self.__client_state__.set_record_attr(False)
-                except Exception as e:
-                    print(traceback.print_exc())
-                    if set_id is not None:
-                        self._delete_set_(set_id)
-                    self.__client_state__.set_record_attr(False)
-            else:
-                self.logger.info("RFID-tag not valid: " + rfid_tag)
-                print("Not a valid rfid tag")
+        try:
+            while True:
+                # start waiting for rfid tag
+                rfid_tag = input('RFID (0006921147) or quit:')
+                self.logger.info("RFID-read: " + rfid_tag)
+                # check validity of rfid tag.
+                set_id = None
+                if rfid_tag == 'quit' or (rfid_tag == self.off_rfid and len(rfid_tag) > 1):
+                    self.sensor_manager.quit()
+                    self.request_manager.quit()
+                    break
+                elif self.request_manager.rfid_is_valid(rfid_tag):
+                    try:
+                        self.__client_state__.set_record_attr(True)
+                        # init set
+                        set_id = self._init_set_record_(rfid_tag)['id']
+                        # start sensor thread
+                        self.sensor_manager.start_recording(rfid_tag=rfid_tag, set_id=set_id)
+                        # end set
+                        self._end_set_(rfid_tag=rfid_tag, set_id=set_id, repetitions=self.sensor_manager.get_repetitions(),
+                                       weight=self.sensor_manager.get_last_weight(), durations=self.sensor_manager.get_durations())
+                        self.__client_state__.set_record_attr(False)
+                    except Exception as e:
+                        print(traceback.print_exc())
+                        if set_id is not None:
+                            self._delete_set_(set_id)
+                        self.__client_state__.set_record_attr(False)
+                else:
+                    self.logger.info("RFID-tag not valid: " + rfid_tag)
+                    print("Not a valid rfid tag")
+        except Exception as e:
+            self.sensor_manager.quit()
+            self.request_manager.quit()
 
 
 if __name__ == '__main__':
