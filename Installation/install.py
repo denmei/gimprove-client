@@ -1,4 +1,5 @@
 import os
+from shutil import copy2
 
 # load required packages and install
 os.system("sudo pip3 install numpy")
@@ -22,6 +23,10 @@ os.system("sudo reboot now")
 #TODO: .aws/credentials + .aws/config
 # os.system("pip install awscli --upgrade --user")
 # os.system("complete -C aws_completer aws")
+aws_path = os.path.join(os.path.expanduser("~"), ".aws")
+os.mkdir(aws_path)
+copy2("credentials", os.path.join(aws_path, "credentials"))
+copy2("config", os.path.join(aws_path, "config"))
 
 #TODO: If installation successfull, add file. If file not there, every time execeute.py is used the installation will be done first
 # TODO: ABFRAGE FÜR EQUIPMENT ID
