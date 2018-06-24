@@ -25,9 +25,9 @@ class SensorManager:
     """
 
     def __init__(self, queue, min_dist, max_dist, dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
-                 reference_unit=92, timeout_delta=10, use_sensors=False, plot_len=60, rep_val=0.8, frequency=0.01, offset=1,
+                 reference_unit=92, timeout_delta=10, use_sensors=False, plot_len=60, rep_val=0.33, frequency=0.01, offset=1,
                  address=0x29, TCA9548A_Num=255, TCA9548A_Addr=0, ranging_mode="VL53L0X_BETTER_ACCURACY_MODE", plot=False,
-                 print_distance=True, print_weight=True, print_undermax=False, final_plot=False, running_mean=5,
+                 print_distance=True, print_weight=True, print_undermax=False, final_plot=False, running_mean=2,
                  weight_translation=False,
                  distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/distances.csv',
                  weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/weights.csv',
@@ -142,20 +142,23 @@ class SensorManager:
          reached again.
         :return: Number of repetitions in the buffer.
         """
-        under_max = (distance_buffer[0] < (self._min_ * (2 - self.rep_val)))
+        ratio = (self._max_ - self._min_) * self.rep_val
+        rep_border = self._min_ + ratio
+        release_border = self._max_ - ratio
+        released = False
         reps = 0
-        reps_i = []
-        distance_buffer_smooth = self.calculate_running_mean(distance_buffer, running_mean)
-        for i in range(0, len(distance_buffer_smooth)-1):
-            if under_max:
-                if distance_buffer_smooth[i] > (self._max_ * self.rep_val):
-                    reps += 1
-                    reps_i += [i]
-                    under_max = False
-            elif distance_buffer_smooth[i] < (self._min_ * (2 - self.rep_val)):
-                under_max = True
-        if self.print_undermax:
-            print('Undermax: %s' % under_max)
+        if len(distance_buffer) > running_mean:
+            distance_buffer_smooth = np.convolve(distance_buffer, np.ones((running_mean,)) / running_mean, mode='valid')
+        else:
+            distance_buffer_smooth = distance_buffer
+        for i in range(0, len(distance_buffer_smooth) - 1):
+            over_rep_border = (distance_buffer[i] < rep_border)
+            under_release_border = (distance_buffer[i] > release_border)
+            if over_rep_border and released:
+                reps += 1
+                released = False
+            elif under_release_border:
+                released = True
         return reps
 
     def _reset_timer_(self):

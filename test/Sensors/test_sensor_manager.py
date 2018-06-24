@@ -65,7 +65,7 @@ class TestSensorManager(unittest.TestCase):
 
     def test_repetition_detection_no_middle_value(self):
         """
-        Tests whether a repetition is detected also if there was no value between under_border and over_border.
+        Tests whether a repetition is detected also if there was no value between over_rep_border and under_release_border.
         """
         distance_buffer = []
         repetitions = 0
@@ -79,7 +79,7 @@ class TestSensorManager(unittest.TestCase):
             repetitions, distance_buffer, total = self.sensor_manager._check_reps_(repetitions, distance_buffer, total, 1)
         self.assertEqual(repetitions, 1)
 
-    def test_repetition_detection_start_at_overborder(self):
+    def test_repetition_detection_start_at_overrepborder(self):
         """
         Tests whether a repetition is detected also if the set was started when machine was not in start-position.
         """

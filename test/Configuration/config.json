@@ -11,7 +11,7 @@
             "frequency": 0.01,
             "running_mean": 5,
             "timeout_delta": 30,
-            "rep_val": 0.8,
+            "rep_val": 0.35,
             "address": 41,
             "TCA9548A_Num": 255,
             "TCA9548A_Addr": 0,
