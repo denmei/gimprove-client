@@ -15,3 +15,4 @@ class ClientState(Observable):
     def set_record_attr(self, new_record):
         self.__recording__ = new_record
         self.update_listeners(attribute='recording', value=self.__recording__)
+        print("UPDATED")
