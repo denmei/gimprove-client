@@ -91,6 +91,7 @@ class Configurator:
     def set_config_value(self, key, new_value):
         """
         Sets the value of a single key in the config file. If multiple keys are affected, no changes will be made.
+        If the type of the new value is different from the type of the current value, no changes are made.
         :param name: Key to be changed.
         :param new_value: New value for the key.
         :return: True, if change was successful. Otherwise False.
@@ -99,7 +100,7 @@ class Configurator:
         def change_key_value(d, name_in, new_value_in, count):
             if isinstance(d, dict):
                 for key in d:
-                    if key == name_in:
+                    if key == name_in and type(d[key]) == type(new_value_in):
                         d[key] = new_value_in
                         count = count + 1
                     count = change_key_value(d[key], name_in, new_value_in, count)
@@ -110,6 +111,8 @@ class Configurator:
         # undo all changes if more than one value changed
         if ret_count > 1:
             self.configuration = config_backup
+        else:
+            self.__update_config_file__()
         return ret_count == 1
 
     def get_value_for_key(self, key):
