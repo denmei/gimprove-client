@@ -1,7 +1,6 @@
 import time
 from Client_Prototype.HardwareControl.Sensors.WeightSensor import WeightSensor
 
-weightSensor = WeightSensor()
 
 # define reference unit
 # read value of last two plates

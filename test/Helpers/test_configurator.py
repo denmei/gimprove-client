@@ -27,6 +27,9 @@ class TestConfigurator(unittest.TestCase):
         self.assertEqual(len(links), len(links_benchmark))
 
     def test_set_value_for_key(self):
+        """
+        Tests whether a value can be set properly in the configuration-file.
+        """
         test_config = self.__read_json_testfile__()
         min_dist_val = test_config['sensor_settings']['distance_sensor']['min_dist']
 
@@ -39,6 +42,9 @@ class TestConfigurator(unittest.TestCase):
         self.assertEqual(test_config['sensor_settings']['distance_sensor']['min_dist'], 4)
 
     def test_get_value_for_key(self):
+        """
+        Tests whether values can be returned properly from the config-file.
+        """
         # Test for highest level of nested dict
         self.configurator.configuration['exercise_name'] = "test_name"
         self.assertEqual(self.configurator.get_value_for_key("exercise_name"), "test_name")

@@ -92,7 +92,7 @@ class Configurator:
         """
         Sets the value of a single key in the config file. If multiple keys are affected, no changes will be made.
         If the type of the new value is different from the type of the current value, no changes are made.
-        :param name: Key to be changed.
+        :param key: Key to be changed.
         :param new_value: New value for the key.
         :return: True, if change was successful. Otherwise False.
         """
