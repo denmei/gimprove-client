@@ -1,1 +1,78 @@
-"{\"content.address\":{\"10\":\"http:\\/\\/127.0.0.1:8000\\/tracker\\/set_detail_rest\\/1b8bea49-e619-4e59-9888-8a060669691c_fake\",\"11\":\"http:\\/\\/127.0.0.1:8000\\/tracker\\/set_detail_rest\\/1b8bea49-e619-4e59-9888-8a060669691c_fake\"},\"content.data.active\":{\"10\":\"True\",\"11\":\"False\"},\"content.data.date_time\":{\"10\":\"2018-06-15 07:49:37.900463+02:00\",\"11\":\"2018-06-15 07:49:39.354346+02:00\"},\"content.data.durations\":{\"10\":\"[0.502475, 0.634931, 0.662646, 0.681647, 0.70544, 0.617053, 0.654672, 0.640734, 0.63648, 0.694542]\",\"11\":\"[0.502475, 0.634931, 0.662646, 0.681647, 0.70544, 0.617053, 0.654672, 0.640734, 0.63648, 0.694542]\"},\"content.data.equipment_id\":{\"10\":\"653c9ed38b004f52bbc83fba95dc81cf\",\"11\":\"653c9ed38b004f52bbc83fba95dc81cf\"},\"content.data.exercise_name\":{\"10\":\"Lat Pulldown\",\"11\":\"Lat Pulldown\"},\"content.data.exercise_unit\":{\"10\":null,\"11\":null},\"content.data.repetitions\":{\"10\":10,\"11\":10},\"content.data.rfid\":{\"10\":\"0006921147\",\"11\":\"0006921147\"},\"content.data.weight\":{\"10\":14.6,\"11\":14.6},\"content.method\":{\"10\":\"update\",\"11\":\"update\"},\"content.set_id\":{\"10\":\"1b8bea49-e619-4e59-9888-8a060669691c_fake\",\"11\":\"1b8bea49-e619-4e59-9888-8a060669691c_fake\"},\"content.status_code\":{\"10\":\"404\",\"11\":\"404\"},\"no\":{\"10\":11,\"11\":12},\"fake_id\":{\"10\":true,\"11\":true}}"
+[
+    {
+        "content": {
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/7a1a3d05-cae1-4553-8d85-fad6f99ea119_fake",
+            "data": {
+                "active": "True",
+                "date_time": "2018-07-04 18:34:17.863220+02:00",
+                "durations": "[0.352893, 0.289535, 0.301765, 0.28686, 0.287032, 0.274382, 0.271799, 0.256153, 0.304724, 0.304286]",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "exercise_name": "Lat Pulldown",
+                "repetitions": 10,
+                "rfid": "0006921147",
+                "weight": 14.6
+            },
+            "method": "update",
+            "set_id": "7a1a3d05-cae1-4553-8d85-fad6f99ea119_fake",
+            "status_code": "404"
+        },
+        "no": 0
+    },
+    {
+        "content": {
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/7a1a3d05-cae1-4553-8d85-fad6f99ea119_fake",
+            "data": {
+                "active": "False",
+                "date_time": "2018-07-04 18:34:18.357842+02:00",
+                "durations": "[0.352893, 0.289535, 0.301765, 0.28686, 0.287032, 0.274382, 0.271799, 0.256153, 0.304724, 0.304286]",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "exercise_name": "Lat Pulldown",
+                "repetitions": 10,
+                "rfid": "0006921147",
+                "weight": 14.6
+            },
+            "method": "update",
+            "set_id": "7a1a3d05-cae1-4553-8d85-fad6f99ea119_fake",
+            "status_code": "404"
+        },
+        "no": 1
+    },
+    {
+        "content": {
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/42bb5f88-4fe5-4c57-a454-b4bcc724c560_fake",
+            "data": {
+                "active": "True",
+                "date_time": "2018-07-04 18:35:18.230107+02:00",
+                "durations": "[0.416023, 0.309773, 0.335896, 0.299132, 0.294788, 0.331649, 0.305432, 0.299212, 0.305146, 0.300464]",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "exercise_name": "Lat Pulldown",
+                "repetitions": 10,
+                "rfid": "0006921147",
+                "weight": 14.6
+            },
+            "method": "update",
+            "set_id": "42bb5f88-4fe5-4c57-a454-b4bcc724c560_fake",
+            "status_code": "404"
+        },
+        "no": 2
+    },
+    {
+        "content": {
+            "address": "http://127.0.0.1:8000/tracker/set_detail_rest/42bb5f88-4fe5-4c57-a454-b4bcc724c560_fake",
+            "data": {
+                "active": "False",
+                "date_time": "2018-07-04 18:35:18.756671+02:00",
+                "durations": "[0.416023, 0.309773, 0.335896, 0.299132, 0.294788, 0.331649, 0.305432, 0.299212, 0.305146, 0.300464]",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "exercise_name": "Lat Pulldown",
+                "repetitions": 10,
+                "rfid": "0006921147",
+                "weight": 14.6
+            },
+            "method": "update",
+            "set_id": "42bb5f88-4fe5-4c57-a454-b4bcc724c560_fake",
+            "status_code": "404"
+        },
+        "no": 3
+    }
+]

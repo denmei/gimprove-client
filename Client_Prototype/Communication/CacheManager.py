@@ -195,6 +195,7 @@ class CacheManager:
         :return: True if no error occured, else false.
         """
         cache_df = pd.DataFrame(json_normalize(self.cache))
+        print(self.cache)
         self.logger.info("Cache: try empty cache.")
         if len(cache_df) > 0:
             # send delete messages and remove all messages with the same set_id
@@ -205,8 +206,34 @@ class CacheManager:
             # send remaining update messages (only latest for each set)
             cache_cleaned = self._handle_update_sets_(cache_df_fakeids)
             if len(cache_cleaned) < 1:
+                print("emtpy")
                 self.cache = []
             else:
-                self.cache = cache_cleaned.to_json()
+                self.cache = self.__df_to_dict__(cache_cleaned)
+                print(self.cache)
             self.update_cache_file()
         return True
+
+    def __df_to_dict__(self, df):
+        ret_dict = []
+        k = 0
+        for i, row in df.iterrows():
+            new_entry = {}
+            new_entry['content'] = {}
+            new_entry['content']['address'] = row['content.address']
+            new_entry['content']['data'] = {}
+            new_entry['content']['data']['active'] = row['content.data.active']
+            new_entry['content']['data']['date_time'] = row['content.data.date_time']
+            new_entry['content']['data']['durations'] = row['content.data.durations']
+            new_entry['content']['data']['equipment_id'] = row['content.data.equipment_id']
+            new_entry['content']['data']['exercise_name'] = row['content.data.exercise_name']
+            new_entry['content']['data']['repetitions'] = row['content.data.repetitions']
+            new_entry['content']['data']['rfid'] = row['content.data.rfid']
+            new_entry['content']['data']['weight'] = row['content.data.weight']
+            new_entry['content']['method'] = row['content.method']
+            new_entry['content']['set_id'] = row['content.set_id']
+            new_entry['content']['status_code'] = row['content.status_code']
+            new_entry['no'] = k
+            ret_dict += [new_entry]
+            k += 1
+        return ret_dict

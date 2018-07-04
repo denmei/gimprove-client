@@ -72,6 +72,7 @@ class WeightSensor:
                 i = i + 1
                 valid_measures = valid_measures + [self.hx_weight.get_weight(1)]
             else:
+                print("Invalid weight value: %s" % new_weight)
                 error_counts = error_counts + 1
             if error_counts > error_limit:
                 raise Exception("Too many invalid measures. Check weight-sensor configuration. Measures: %s" % measures)
