@@ -95,7 +95,10 @@ class Equipment:
                                        final_plot=(plot_settings['final_plot'] == 'True'),
                                        weight_translation=weight_settings['weight_translation'] == 'True',
                                        distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/distances.csv',
-                                       weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv')
+                                       weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + '/weights.csv',
+                                       times=weight_settings['times'],
+                                       weight_upper_limit=weight_settings['upper_border'],
+                                       weight_under_limit=weight_settings['under_border'])
         return sensor_manager, status_led
 
     def _upload_logs_(self, logging_path, device_id, bucket_name, environment):

@@ -24,7 +24,10 @@
             "byte_format": "LSB",
             "bit_format": "MSB",
             "reference_unit": 92,
-            "weight_translation": "True"
+            "weight_translation": "True",
+            "times": 5,
+            "under_border": 10000,
+            "upper_border": 30000
         }
     },
     "plot_settings": {

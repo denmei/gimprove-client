@@ -32,7 +32,8 @@ class SensorManager:
                  distances_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/distances.csv',
                  weights_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent) + '/weights.csv',
                  translation_file=str(Path(os.path.dirname(os.path.realpath(__file__))).parent.parent.parent) +
-                                  '/Configuration/weight_translation.csv'):
+                                  '/Configuration/weight_translation.csv', times=5, weight_under_limit=0,
+                 weight_upper_limit=500):
         """
         Responsible for tracking the repetitions and weight using the sensor data.
         :param queue: Reference on the message queue where messages can be sent from.
@@ -52,7 +53,8 @@ class SensorManager:
                                           bit_format=bit_format, reference_unit=reference_unit, offset=offset,
                                           use_sensors=use_sensors, weight_path=weights_file,
                                           translation_path=translation_file, print_weight=print_weight,
-                                          translate_weights=weight_translation)
+                                          translate_weights=weight_translation,
+                                          times=times, under_border=weight_under_limit, upper_border=weight_upper_limit)
         self.timeout_delta = timeout_delta
         self.time_out_time = datetime.now() + dt.timedelta(seconds=timeout_delta)
         self.plot_len = plot_len
