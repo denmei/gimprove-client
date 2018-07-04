@@ -26,6 +26,21 @@ class TestConfigurator(unittest.TestCase):
         links = self.configurator.get_api_links()
         self.assertEqual(len(links), len(links_benchmark))
 
+    def test_set_value_for_key(self):
+        self.assertEqual(True, self.configurator.set_config_value("min_dist", "4"))
+
+    def test_get_value_for_key(self):
+        # Test for highest level of nested dict
+        self.configurator.configuration['exercise_name'] = "test_name"
+        self.assertEqual(self.configurator.get_value_for_key("exercise_name"), "test_name")
+
+        # Test for lowest level of nested dict
+        self.configurator.configuration['sensor_settings']['weight_sensor']['upper_border'] = 500
+        self.assertEqual(self.configurator.get_value_for_key("upper_border"), 500)
+
+        # Must return None if key not available
+        self.assertEqual(self.configurator.get_value_for_key("not_there"), None)
+
     def __config_file_correct__(self, keys):
         """
         Checks whether the config-file is correct.

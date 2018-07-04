@@ -4,6 +4,7 @@ import logging
 from datetime import datetime
 import requests
 from pathlib import Path
+import copy
 
 CREDENTIALS = {"username": "", "password": "", "tokens": {"local": "", "test": "", "production": ""}}
 
@@ -86,6 +87,47 @@ class Configurator:
             except requests.exceptions.RequestException as requestException:
                 self.logger.info("Configurator: Requesterror - %s" % requestException)
         return token
+
+    def set_config_value(self, key, new_value):
+        """
+        Sets the value of a single key in the config file. If multiple keys are affected, no changes will be made.
+        :param name: Key to be changed.
+        :param new_value: New value for the key.
+        :return: True, if change was successful. Otherwise False.
+        """
+
+        def change_key_value(d, name_in, new_value_in, count):
+            if isinstance(d, dict):
+                for key in d:
+                    if key == name_in:
+                        d[key] = new_value_in
+                        count = count + 1
+                    count = change_key_value(d[key], name_in, new_value_in, count)
+            return count
+
+        config_backup = copy.deepcopy(self.configuration)
+        ret_count = change_key_value(self.configuration, key, new_value, 0)
+        # undo all changes if more than one value changed
+        if ret_count > 1:
+            self.configuration = config_backup
+        return ret_count == 1
+
+    def get_value_for_key(self, key):
+        """
+        Returns the value for a specified key. Return None if the key is not available.
+        :param key: Relevant key.
+        :return: Value for the key. None if key not available.
+        """
+        def _finditem(obj, key):
+            if key in obj: return obj[key]
+            for k, v in obj.items():
+                if isinstance(v, dict):
+                    item = _finditem(v, key)
+                    if item is not None:
+                        return item
+
+        value = _finditem(self.configuration, key)
+        return value
 
     def get_environment(self):
         """
