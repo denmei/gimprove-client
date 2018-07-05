@@ -1,0 +1,231 @@
+[
+    {
+        "no": 1,
+        "content": {
+            "method": "new",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_list_rest/",
+            "data": {
+                "exercise_unit": "",
+                "repetitions": 0,
+                "weight": 0,
+                "exercise_name": "Lat Pulldown",
+                "rfid": "0006921147",
+                "date_time": "2018-07-05 12:40:08.123789+02:00",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "active": "True",
+                "durations": "[]"
+            },
+            "status_code": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 2,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 1,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:08.525837+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 3,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 2,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:08.811898+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 4,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 3,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:09.115301+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831, 0.303454]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 5,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 4,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:09.390366+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831, 0.303454, 0.275088]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 6,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 5,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:09.687198+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831, 0.303454, 0.275088, 0.29686]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 7,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 6,
+                "weight": 9.4,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:10.001038+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831, 0.303454, 0.275088, 0.29686, 0.31383]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 8,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 7,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:10.289235+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831, 0.303454, 0.275088, 0.29686, 0.31383, 0.288189]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 9,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 8,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:10.598713+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831, 0.303454, 0.275088, 0.29686, 0.31383, 0.288189, 0.309548]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 10,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 9,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:10.893875+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831, 0.303454, 0.275088, 0.29686, 0.31383, 0.288189, 0.309548, 0.288251]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 11,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:11.143093+02:00",
+                "rfid": "0006921147",
+                "active": "True",
+                "durations": "[0.350121, 0.286831, 0.303454, 0.275088, 0.29686, 0.31383, 0.288189, 0.309548, 0.288251, 0.256165]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    },
+    {
+        "no": 12,
+        "content": {
+            "method": "update",
+            "address": "https://gimprove-test.herokuapp.com/tracker/set_detail_rest/2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise_name": "Lat Pulldown",
+                "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+                "date_time": "2018-07-05 12:40:11.616601+02:00",
+                "rfid": "0006921147",
+                "active": "False",
+                "durations": "[0.350121, 0.286831, 0.303454, 0.275088, 0.29686, 0.31383, 0.288189, 0.309548, 0.288251, 0.256165]"
+            },
+            "status_code": "404",
+            "set_id": "2e16dc80-49ff-4f23-a203-6e1a6f3c8fa9_fake"
+        }
+    }
+]

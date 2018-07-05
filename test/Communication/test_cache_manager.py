@@ -52,6 +52,9 @@ class TestCacheManager(unittest.TestCase):
         copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test.json",
               str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test_cp.json")
 
+        copy2(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/regular_cache.json",
+              str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/regular_cache_cp.json")
+
     @staticmethod
     def _get_cachefile_size_(path):
         """
@@ -153,6 +156,30 @@ class TestCacheManager(unittest.TestCase):
                                                    set_id='8e7eb2e6-b269-44a5-a06a-3a5279975064', weight=14.6, websocket_send=False)
 
     @patch('Client_Prototype.Communication.RequestManager')
+    def test_empty_cache_no_connection(self, mock_rm):
+        """
+        Test for fully cached set when there is no connection. Only the new-set message and the last update-message must
+        remain in the cache. All others must be deleted since they are not relevant.
+        """
+        rm_mock = mock_rm()
+        response = requests.Response()
+        response.status_code = None
+        rm_mock.new_set.return_value = {'id': '8e7eb2e6-b269-44a5-a06a-3a5279975064_fake',
+                                        'date_time': '2018-06-10T10:17:59.615908+02:00',
+                                        'durations': '[]',
+                                        'exercise_unit': 'b7b9e045-0a25-4454-898d-0dfd2492384a',
+                                        'repetitions': 0, 'weight': 0}
+        rm_mock.update_set.return_value = response
+
+        cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "regular_cache.json"), rm_mock)
+        cache_manager.empty_cache()
+
+        self.assertEqual(cache_manager.get_cache_size(), 2)
+        cache = cache_manager.cache
+        self.assertTrue(cache[0]['content']['method'] == "new" or cache[1]['content']['method'] == "new")
+        self.assertTrue(cache[0]['content']['method'] == "update" or cache[1]['content']['method'] == "update")
+
+    @patch('Client_Prototype.Communication.RequestManager')
     def test_handle_delete_messages(self, mock_rm):
         """
         If there is a new and a delete message, delete all messages for this set and do not send any request. Otherwise
@@ -234,3 +261,7 @@ class TestCacheManager(unittest.TestCase):
         os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test.json")
         os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test_cp.json",
                   str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/invalid_rfid_cache_test.json")
+
+        os.remove(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/regular_cache.json")
+        os.rename(str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/regular_cache_cp.json",
+                  str(Path(os.path.dirname(os.path.realpath(__file__)))) + "/test_data/regular_cache.json")
