@@ -13,7 +13,8 @@ class TestSensorManager(unittest.TestCase):
         translation_path = str(Path(os.path.dirname(os.path.realpath(__file__)))) + '/test_data/weight_translation.csv'
         self.weight_sensor = WeightSensor( dout=5, pd_sck=6, gain=128, byte_format="LSB", bit_format="MSB",
                                            reference_unit=92, offset="", use_sensors=False, weight_path=weight_path,
-                                           print_weight=True, translation_path=translation_path, translate_weights=True)
+                                           print_weight=True, translation_path=translation_path, translate_weights=True,
+                                           upper_border=-100000, under_border=100000, times=5)
 
     def test_weight_retrieval_reps_translate(self):
         """

@@ -27,7 +27,7 @@ class Equipment:
             self.config_path = config_path
         self._configure_()
         self.logger = logging.getLogger('gimprove' + __name__)
-        logging.getLogger("requests").setLevel(logging.WARNING)
+        logging.getLogger("requests").setLevel(logging.DEBUG)
         self.__client_state__ = ClientState(recording=False)
         self.configurator = Configurator(self.config_path, "config.json", api_links_name='api-links.json',
                                          environment=environment)

@@ -4,6 +4,7 @@ import json
 from pandas.io.json import json_normalize, to_json
 import pandas as pd
 import threading
+import traceback
 
 
 class CacheManager:
@@ -109,15 +110,16 @@ class CacheManager:
                                                                   end=True,
                                                                   cache=False,
                                                                   websocket_send=False)
-                    if update_resp['status_code'] == 200 or update_resp['status_code'] == 201:
-                        delete_ids += [set_id]
-                        print("SENT cache")
+                    if update_resp is not None:
+                        if update_resp.status_code in [200, 201]:
+                            delete_ids += [set_id]
                 else:
                     delete_rfids += [rfid]
             cache_df_clean_ids = cache_df[~ cache_df['content.set_id'].isin(delete_ids)]
             cache_df_clean_rfids = cache_df_clean_ids[~ cache_df_clean_ids['content.data.rfid'].isin(delete_rfids)]
             return cache_df_clean_rfids
         except Exception as e:
+            self.logger.debug("Exception in _handle_sets_with_fakeids_: %s" % traceback.print_exc())
             cache_df_clean_ids = cache_df[~ cache_df['content.set_id'].isin(delete_ids)]
             cache_df_clean_rfids = cache_df_clean_ids[~ cache_df_clean_ids['content.data.rfid'].isin(delete_rfids)]
             return cache_df_clean_rfids
@@ -136,19 +138,19 @@ class CacheManager:
         without_new_sets = relevant_data[~ relevant_data['content.set_id'].isin(new_set_ids_to_delete)]
         # delete all update messages where a delete message exists
         without_update_sets = without_new_sets[without_new_sets['content.method'] != 'update']
-        print(without_update_sets)
         # execute deletions and remove from cache if successful
         delete_set_ids = []
         try:
             for i, row in without_update_sets.iterrows():
                 set_id = row['content.set_id']
                 resp = self.request_manager.delete_set(set_id=set_id, cache=False)
-                if resp['status_code'] in [200, 201]:
+                if resp.status_code in [200, 201]:
                     delete_set_ids += [set_id]
             clean_cache = cache_df[(~ cache_df['content.set_id'].isin(delete_set_ids)) &
                                    (~ cache_df['content.set_id'].isin(new_set_ids_to_delete))]
             return clean_cache
         except Exception as e:
+            self.logger.debug("Error in _handle_delete_sets_: %s" % traceback.print_exc())
             return cache_df[~ cache_df['content.set_id'].isin(new_set_ids_to_delete)]
 
     def _handle_update_sets_(self, cache_df):
@@ -179,11 +181,13 @@ class CacheManager:
                     end=True,
                     cache=False,
                     websocket_send=False)
-                if update_resp['status_code'] in [200, 201]:
-                    delete_ids += [set_id]
+                if update_resp is not None:
+                    if update_resp.status_code in [200, 201]:
+                        delete_ids += [set_id]
             cleaned_cache = latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)]
             return cleaned_cache
         except Exception as e:
+            self.logger.debug("Exception in _handle_update_sets_: %s" % traceback.print_exc())
             return latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)]
 
     def empty_cache(self):
@@ -195,7 +199,6 @@ class CacheManager:
         :return: True if no error occured, else false.
         """
         cache_df = pd.DataFrame(json_normalize(self.cache))
-        print(self.cache)
         self.logger.info("Cache: try empty cache.")
         if len(cache_df) > 0:
             # send delete messages and remove all messages with the same set_id
@@ -206,11 +209,9 @@ class CacheManager:
             # send remaining update messages (only latest for each set)
             cache_cleaned = self._handle_update_sets_(cache_df_fakeids)
             if len(cache_cleaned) < 1:
-                print("emtpy")
                 self.cache = []
             else:
                 self.cache = self.__df_to_dict__(cache_cleaned)
-                print(self.cache)
             self.update_cache_file()
         return True
 

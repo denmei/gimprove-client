@@ -101,8 +101,10 @@ class TestCacheManager(unittest.TestCase):
             return True
 
         rm_mock = mock_rm()
-        rm_mock.delete_set.return_value = {'status_code': 200}
-        rm_mock.update_set.return_value = {'status_code': 200}
+        response = requests.Response()
+        response.status_code = 200
+        rm_mock.delete_set.return_value = response
+        rm_mock.update_set.return_value = response
         rm_mock.new_set.return_value = {'id': '8e7eb2e6-b269-44a5-a06a-3a5279975064',
                                         'date_time': '2018-06-10T10:17:59.615908+02:00',
                                         'durations': '[]',
@@ -155,7 +157,9 @@ class TestCacheManager(unittest.TestCase):
         if there is a delete message, delete all messages for that set and send the delete request.
         """
         rm_mock = mock_rm()
-        rm_mock.delete_set.return_value = {'status_code': 200}
+        response = requests.Response()
+        response.status_code = 200
+        rm_mock.delete_set.return_value = response
 
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "delete_cache_test.json"), rm_mock)
         cache_manager.empty_cache()
@@ -170,7 +174,9 @@ class TestCacheManager(unittest.TestCase):
         in case of success. Only the latest update must be sent.
         """
         rm_mock = mock_rm()
-        rm_mock.update_set.return_value = {'status_code': 200}
+        response = requests.Response()
+        response.status_code = 200
+        rm_mock.update_set.return_value = response
 
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "update_cache_test.json"), rm_mock)
         cache_manager.empty_cache()
@@ -187,7 +193,9 @@ class TestCacheManager(unittest.TestCase):
 
         """
         rm_mock = mock_rm()
-        rm_mock.update_set.return_value = {'status_code': 200}
+        response = requests.Response()
+        response.status_code = 200
+        rm_mock.update_set.return_value = response
         rm_mock.rfid_is_valid.return_value = False
 
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "invalid_rfid_cache_test.json"), rm_mock)

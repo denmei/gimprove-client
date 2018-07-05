@@ -41,7 +41,7 @@
         "print_undermax": "False"
     },
     "communication": {
-        "environment": "local"
+        "environment": "test"
     },
     "aws": {
         "bucket": "test"
