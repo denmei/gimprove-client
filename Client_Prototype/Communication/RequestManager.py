@@ -34,12 +34,12 @@ class RequestManager(threading.Thread):
         self.websocket_manager.start()
 
     def run(self):
+        self.cache_manager.empty_cache()
         while not self.stop:
             element = self.message_queue.get()
             if element is not None:
                 self.__handle_message__(element)
         if self.stop:
-            print("Shutdown: Emptying cache...")
             self.cache_manager.empty_cache()
 
     def __init_header__(self, token_address, token, user, password):
@@ -145,7 +145,6 @@ class RequestManager(threading.Thread):
             response = requests.post(self.list_address, data=data, headers=self.header)
             content = json.loads(response.content.decode("utf-8"))
             self.logger.info("Sent creation request. Status: %s" % response.status_code)
-            print(response.status_code)
             if response.status_code == 401 and cache:
                 new_uuid = str(uuid.uuid4()) + "_fake"
                 self.cache_manager.cache_request("new", self.list_address, data, new_uuid, new_uuid)
