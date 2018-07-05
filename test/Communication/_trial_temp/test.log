@@ -1,1 +1,6 @@
-2018-07-05 12:55:45+0200 [-] Log opened.
+2018-07-05 13:43:23+0200 [-] Log opened.
+2018-07-05 13:43:23+0200 [-] /home/dennis/Gimprove/gimprove_client/Client_Prototype/Communication/CacheManager.py:221: pandas.core.common.SettingWithCopyWarning: 
+	A value is trying to be set on a copy of a slice from a DataFrame.
+	Try using .loc[row_indexer,col_indexer] = value instead
+	
+	See the caveats in the documentation: http://pandas.pydata.org/pandas-docs/stable/indexing.html#indexing-view-versus-copy

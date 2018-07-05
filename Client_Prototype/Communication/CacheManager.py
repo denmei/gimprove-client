@@ -99,20 +99,22 @@ class CacheManager:
                 if self.request_manager.rfid_is_valid(rfid):
                     new_resp = self.request_manager.new_set(rfid=row['content.data.rfid'], exercise_unit="",
                                                             cache=False, websocket_send=False)
-                    latest_update = latest_updates[latest_updates['content.set_id'] == row['content.set_id']]
-                    durations = list(map(float, latest_update['content.data.durations'].values[0].replace("[", "").replace("]", "").split(",")))
-                    update_resp = self.request_manager.update_set(repetitions=latest_update['content.data.repetitions'].values[0],
-                                                                  weight=latest_update['content.data.weight'].values[0],
-                                                                  set_id=new_resp['id'],
-                                                                  rfid=latest_update['content.data.rfid'].values[0],
-                                                                  active=latest_update['content.data.active'].values[0],
-                                                                  durations=durations,
-                                                                  end=True,
-                                                                  cache=False,
-                                                                  websocket_send=False)
-                    if update_resp is not None:
-                        if update_resp.status_code in [200, 201]:
-                            delete_ids += [set_id]
+                    new_set_id = new_resp['id']
+                    if '_fake' not in new_set_id:
+                        latest_update = latest_updates[latest_updates['content.set_id'] == row['content.set_id']]
+                        durations = list(map(float, latest_update['content.data.durations'].values[0].replace("[", "").replace("]", "").split(",")))
+                        update_resp = self.request_manager.update_set(repetitions=latest_update['content.data.repetitions'].values[0],
+                                                                      weight=latest_update['content.data.weight'].values[0],
+                                                                      set_id=new_set_id,
+                                                                      rfid=latest_update['content.data.rfid'].values[0],
+                                                                      active=latest_update['content.data.active'].values[0],
+                                                                      durations=durations,
+                                                                      end=True,
+                                                                      cache=False,
+                                                                      websocket_send=False)
+                        if update_resp is not None:
+                            if update_resp.status_code in [200, 201]:
+                                delete_ids += [set_id]
                 else:
                     delete_rfids += [rfid]
             cache_df_clean_ids = cache_df[~ cache_df['content.set_id'].isin(delete_ids)]
@@ -163,8 +165,15 @@ class CacheManager:
         """
         # get latest update message for each set
         updates = cache_df[cache_df['content.method'] == 'update']
-        latest_updates = updates[updates.groupby('content.set_id')['content.data.repetitions']
+        others = cache_df[cache_df['content.method'] != 'update']
+
+        # Filter for the latest update message of each set. First, take the one with the highest number of repetitions
+        # (filtering for time might be critical due to http-latency). If there are multiple results, take the most
+        # recent message.
+        latest_updates_reps = updates[updates.groupby('content.set_id')['content.data.repetitions']
                                      .transform(max) == updates['content.data.repetitions']]
+        latest_updates = latest_updates_reps[latest_updates_reps.groupby('content.set_id')['content.data.date_time']
+                                     .transform(max) == latest_updates_reps['content.data.date_time']]
         delete_ids = []
         try:
             for i, row in latest_updates.iterrows():
@@ -184,11 +193,11 @@ class CacheManager:
                 if update_resp is not None:
                     if update_resp.status_code in [200, 201]:
                         delete_ids += [set_id]
-            cleaned_cache = latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)]
+            cleaned_cache = latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)].append(others)
             return cleaned_cache
         except Exception as e:
             self.logger.debug("Exception in _handle_update_sets_: %s" % traceback.print_exc())
-            return latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)]
+            return latest_updates[~ latest_updates['content.set_id'].isin(delete_ids)].append(others)
 
     def empty_cache(self):
         # TODO: For every new set, check whether there is already such a set before creating it

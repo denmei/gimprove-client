@@ -116,6 +116,7 @@ class TestCacheManager(unittest.TestCase):
         rm_mock.rfid_is_valid = rfid_is_is_valid_fake
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "big_client_cache.json"), rm_mock)
         cache_manager.empty_cache()
+        print(cache_manager.cache)
         self.assertEqual(cache_manager.get_cache_size(), 0)
         rm_mock.delete_set.assert_called_once_with(set_id="1234_delete", cache=False)
         rm_mock.new_set.assert_called_once_with(rfid='0006921147', exercise_unit="", cache=False, websocket_send=False)
