@@ -139,7 +139,9 @@ class TestCacheManager(unittest.TestCase):
                                         'durations': '[]',
                                         'exercise_unit': 'b7b9e045-0a25-4454-898d-0dfd2492384a',
                                         'repetitions': 0, 'weight': 0}
-        rm_mock.update_set.return_value = {'status_code': 200}
+        response = requests.Response()
+        response.status_code = 200
+        rm_mock.update_set.return_value = response
 
         cache_manager = CacheManager(self.cache_path, os.path.join(self.cache_path, "fake_cache_test.json"), rm_mock)
         cache_manager.empty_cache()
