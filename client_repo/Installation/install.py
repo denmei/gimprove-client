@@ -38,6 +38,7 @@ def setup_aws(in_aws_path):
         aws_config.close()
     return aws_username
 
+
 # load required packages and install
 os.system("sudo pip3 install numpy")
 os.system("sudo pip3 install twisted")
@@ -57,13 +58,11 @@ os.system("sudo apt-get -y install python-dev python3-dev")
 os.system("sudo apt-get -y install python-rpi.gpio python3-rpi.gpio")
 os.system("git config --global user.email 'none'")
 os.system("git config --global user.name 'pi'")
-
 # maybe necessary for tkinter-problems: sudo apt-get install python3-tk
-# configure aws
-# TODO: .aws/credentials + .aws/config
-os.system("sudo pip install awscli --upgrade --user")
-# os.system("complete -C aws_completer aws")
 
+
+# configure aws
+os.system("sudo pip install awscli --upgrade --user")
 aws_path = os.path.join(os.path.expanduser("~"), ".aws")
 if ".aws" not in os.listdir(os.path.expanduser("~")):
     os.mkdir(aws_path)
@@ -86,14 +85,16 @@ while not aws_setup:
         # if json could not be parsed correctly, there occured an error with the credentials
         print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
 
+
+# Add installation file that indicates a successful installation process
 with open("client_repo/Installation/installed", 'a') as installed:
     installed.write("Installation completed. Date: %s" % datetime.datetime.now())
 
+
+# Update bashrc
 print("Installation completed so far. Next and last step would be updating the .bashrc-file. "
       "ONLY EXECUTE THIS STEP ON A RASPBERRY!")
-
 answer = ""
-
 while answer not in ["y", "N"]:
     answer = input("Do you want to update the .bashrc? [y/N]")
 
@@ -104,7 +105,6 @@ if answer == "y":
     print(copy_command)
     os.system(copy_command)
 
-os.system("sudo reboot now")
 
-#TODO: If installation successfull, add file. If file not there, every time execeute.py is used the installation will be done first
-# TODO: ABFRAGE FÜR EQUIPMENT ID
+# reboot the system after successful setup
+os.system("sudo reboot now")

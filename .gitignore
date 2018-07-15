@@ -8,3 +8,4 @@ Client_Prototype/Configuration/client_cache.json
 credentials.json
 .credentials.json
 installed
+sync_to_s3.py
