@@ -36,7 +36,7 @@ def setup_aws(in_aws_path):
         aws_config.close()
     return aws_username
 
-
+"""
 # load required packages and install
 os.system("sudo pip3 install numpy")
 os.system("sudo pip3 install twisted")
@@ -60,8 +60,10 @@ os.system("git config --global user.name 'pi'")
 # maybe necessary for tkinter-problems: sudo apt-get install python3-tk
 # configure aws
 # TODO: .aws/credentials + .aws/config
-# os.system("pip install awscli --upgrade --user")
+os.system("sudo pip install awscli --upgrade --user")
 # os.system("complete -C aws_completer aws")
+
+"""
 aws_path = os.path.join(os.path.expanduser("~"), ".aws")
 if ".aws" not in os.listdir(os.path.expanduser("~")):
     os.mkdir(aws_path)
@@ -72,11 +74,11 @@ while not aws_setup:
     # get credentials from user
     username = setup_aws(aws_path)
     # check whether credentials are valid. Command must return a json with user-information
-    state = os.popen("aws iam get-user").read()
+    state = os.popen("aws sts get-caller-identity").read()
     try:
         json_state = json.loads(state)
         # check whether credentials fit the given username
-        if json_state['User']['UserName'] == username:
+        if username in json_state['User']['Arn']:
             aws_setup = True
         else:
             print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
