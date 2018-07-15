@@ -1,6 +1,8 @@
 import os
 import json
 import datetime
+from pathlib import Path
+
 
 def remove_aws_files(in_aws_path):
     """
@@ -20,23 +22,22 @@ def setup_aws(in_aws_path):
     :param in_aws_path: Path to the .aws directory.
     :return: Username.
     """
-    remove_aws_files(in_aws_path)
+    # remove_aws_files(in_aws_path)
     aws_username = input("Please type your aws-username: ")
     aws_access_key_id = input("Please type the AWS access key id: ")
     aws_secret_access_key = input("Please type the AWS secret access key: ")
     credentials_content = "[default]" '\n' + "aws_access_key_id = %s" % aws_access_key_id + '\n' + \
                           "aws_secret_access_key = %s" % aws_secret_access_key
-    with open(os.path.join(in_aws_path, "credentials"), 'a') as aws_credentials:
+    with open(os.path.join(in_aws_path, "credentials"), 'w+') as aws_credentials:
         aws_credentials.write(credentials_content)
         aws_credentials.close()
 
     config_content = "[default]" + '\n' + "region = eu-central-1"
-    with open(os.path.join(in_aws_path, "config"), 'a') as aws_config:
+    with open(os.path.join(in_aws_path, "config"), 'w+') as aws_config:
         aws_config.write(config_content)
         aws_config.close()
     return aws_username
 
-"""
 # load required packages and install
 os.system("sudo pip3 install numpy")
 os.system("sudo pip3 install twisted")
@@ -63,7 +64,6 @@ os.system("git config --global user.name 'pi'")
 os.system("sudo pip install awscli --upgrade --user")
 # os.system("complete -C aws_completer aws")
 
-"""
 aws_path = os.path.join(os.path.expanduser("~"), ".aws")
 if ".aws" not in os.listdir(os.path.expanduser("~")):
     os.mkdir(aws_path)
@@ -88,6 +88,21 @@ while not aws_setup:
 
 with open("client_repo/Installation/installed", 'a') as installed:
     installed.write("Installation completed. Date: %s" % datetime.datetime.now())
+
+print("Installation completed so far. Next and last step would be updating the .bashrc-file. "
+      "ONLY EXECUTE THIS STEP ON A RASPBERRY!")
+
+answer = ""
+
+while answer not in ["y", "N"]:
+    answer = input("Do you want to update the .bashrc? [y/N]")
+
+if answer == "y":
+    os.system("sudo mv /home/pi/.bashrc /home/pi/.bashrc_original")
+    copy_command = "sudo mv %s /home/pi/.bashrc" % os.path.join(Path(os.path.dirname(os.path.realpath(__file__)),
+                                                                     "new_bashrc"))
+    print(copy_command)
+    os.system(copy_command)
 
 os.system("sudo reboot now")
 

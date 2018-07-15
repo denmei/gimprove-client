@@ -7,3 +7,4 @@ venv/
 Client_Prototype/Configuration/client_cache.json
 credentials.json
 .credentials.json
+installed
