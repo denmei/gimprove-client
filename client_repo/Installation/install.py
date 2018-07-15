@@ -1,6 +1,6 @@
 import os
 import json
-
+import datetime
 
 def remove_aws_files(in_aws_path):
     """
@@ -83,6 +83,9 @@ while not aws_setup:
     except Exception as e:
         # if json could not be parsed correctly, there occured an error with the credentials
         print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
+
+with open("installed", 'a') as installed:
+    installed.write("Installation completed. Date: %s" % datetime.datetime.now())
 
 os.system("sudo reboot now")
 
