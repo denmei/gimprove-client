@@ -78,8 +78,6 @@ while not aws_setup:
     try:
         json_state = json.loads(state)
         # check whether credentials fit the given username
-        print(json_state)
-        print(json_state['Arn'])
         if username in json_state['Arn']:
             aws_setup = True
         else:
@@ -88,7 +86,7 @@ while not aws_setup:
         # if json could not be parsed correctly, there occured an error with the credentials
         print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
 
-with open("installed", 'a') as installed:
+with open("client_repo/Installation/installed", 'a') as installed:
     installed.write("Installation completed. Date: %s" % datetime.datetime.now())
 
 os.system("sudo reboot now")
