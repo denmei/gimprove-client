@@ -2,7 +2,25 @@ import os
 import json
 
 
+def remove_aws_files(in_aws_path):
+    """
+    Removes the credentials and the config file from the .aws folder it they exist.
+    :param in_aws_path: Path to the .aws directory.
+    """
+    if os.path.join(in_aws_path, "config") in os.listdir(in_aws_path):
+        os.system("rm %s" % os.path.join(in_aws_path, "config"))
+    if os.path.join(in_aws_path, "credentials") in os.listdir(in_aws_path):
+        os.system("rm %s" % os.path.join(in_aws_path, "credentials"))
+
+
 def setup_aws(in_aws_path):
+    """
+    Creates credentials and config file from user-input. Replaces files that already exist. Returns username provided
+    by the user.
+    :param in_aws_path: Path to the .aws directory.
+    :return: Username.
+    """
+    remove_aws_files(in_aws_path)
     aws_username = input("Please type your aws-username: ")
     aws_access_key_id = input("Please type the AWS access key id: ")
     aws_secret_access_key = input("Please type the AWS secret access key: ")
@@ -62,13 +80,9 @@ while not aws_setup:
             aws_setup = True
         else:
             print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
-            os.system("rm %s" % os.path.join(aws_path, "config"))
-            os.system("rm %s" % os.path.join(aws_path, "credentials"))
     except Exception as e:
         # if json could not be parsed correctly, there occured an error with the credentials
         print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
-        os.system("rm %s" % os.path.join(aws_path, "config"))
-        os.system("rm %s" % os.path.join(aws_path, "credentials"))
 
 os.system("sudo reboot now")
 
