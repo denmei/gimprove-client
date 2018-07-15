@@ -1,0 +1,897 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ChangeListManager">
+    <list default="true" id="a26fba2d-6f47-4561-8e14-69986d1294f0" name="Default" comment="">
+      <change afterPath="$PROJECT_DIR$/.idea/gimprove_client.iml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/inspectionProfiles/Project_Default.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/modules.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/vcs.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/RPi/GPIO.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_repo/execute.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_repo/test/Configuration/logs/logging2018-07-15.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_repo/test/Helpers/test_data/logs/logging2018-05-24.log" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_repo/test/Sensors/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_repo/test/Sensors/_trial_temp/_trial_marker" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_repo/test/__init__.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/client_repo/test/_trial_temp/_trial_marker" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/.gitignore" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Client_State.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Client_State.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Communication/CacheManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/CacheManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Communication/MessageQueue.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/MessageQueue.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Communication/RequestManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/RequestManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Communication/WebSocketManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/WebSocketManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Communication/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/RPi/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Communication/s3Manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/s3Manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/HardwareControl/Sensors/DistanceSensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/DistanceSensor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/HardwareControl/Sensors/SensorManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/SensorManager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/HardwareControl/Sensors/WeightSensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/WeightSensor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/HardwareControl/Sensors/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/HardwareControl/StatusLed.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/StatusLed.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/HardwareControl/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Helpers/Configurator.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Helpers/Configurator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Helpers/Observable.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Helpers/Observable.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Helpers/Timer.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Helpers/Timer.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/Helpers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Client_Prototype/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Helpers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/api-links.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Configuration/api-links.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/client_cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Configuration/client_cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Configuration/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/credentials-template.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Configuration/credentials-template.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Configuration/weight_translation.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Configuration/weight_translation.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Installation/install.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Installation/install.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Installation/setup_weightsensors.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Installation/setup_weightsensors.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api_calibration.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api_calibration.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api_core.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api_core.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api_ranging.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api_ranging.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api_strings.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_api_strings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_def.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_def.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_device.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_device.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_interrupt_threshold_settings.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_interrupt_threshold_settings.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/inc/vl53l0x_tuning.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/inc/vl53l0x_tuning.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/src/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/src/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/src/vl53l0x_api.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/src/vl53l0x_api.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/src/vl53l0x_api.c.bak" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/src/vl53l0x_api.c.bak" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/src/vl53l0x_api_calibration.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/src/vl53l0x_api_calibration.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/src/vl53l0x_api_core.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/src/vl53l0x_api_core.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/src/vl53l0x_api_ranging.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/src/vl53l0x_api_ranging.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/core/src/vl53l0x_api_strings.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/core/src/vl53l0x_api_strings.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/inc/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/inc/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/inc/vl53l0x_i2c_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/inc/vl53l0x_i2c_platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/inc/vl53l0x_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/inc/vl53l0x_platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/inc/vl53l0x_platform_log.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/inc/vl53l0x_platform_log.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/inc/vl53l0x_types.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/inc/vl53l0x_types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/src/.vl53l0x_i2c_win_serial_comms.c.swp" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/src/.vl53l0x_i2c_win_serial_comms.c.swp" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/src/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/src/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/src/vl53l0x_i2c_win_serial_comms.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/src/vl53l0x_i2c_win_serial_comms.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/src/vl53l0x_platform.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/src/vl53l0x_platform.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Api/platform/src/vl53l0x_platform_log.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Api/platform/src/vl53l0x_platform_log.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/Makefile" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/Makefile" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/VL53L0X_Mutli_Rpi3_bb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/VL53L0X_Mutli_Rpi3_bb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/VL53L0X_TCA9548A_Rpi3_bb.jpg" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/VL53L0X_TCA9548A_Rpi3_bb.jpg" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/bin/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/bin/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/bin/vl53l0x_python.so" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/bin/vl53l0x_python.so" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/obj/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/obj/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/obj/vl53l0x_api.o" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/obj/vl53l0x_api.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/obj/vl53l0x_api_calibration.o" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/obj/vl53l0x_api_calibration.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/obj/vl53l0x_api_core.o" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/obj/vl53l0x_api_core.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/obj/vl53l0x_api_ranging.o" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/obj/vl53l0x_api_ranging.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/obj/vl53l0x_api_strings.o" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/obj/vl53l0x_api_strings.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/obj/vl53l0x_platform.o" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/obj/vl53l0x_platform.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/obj/vl53l0x_python.o" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/obj/vl53l0x_python.o" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/platform/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/platform/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/platform/inc/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/platform/inc/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/platform/inc/vl53l0x_platform.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/platform/inc/vl53l0x_platform.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/platform/inc/vl53l0x_platform_log.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/platform/inc/vl53l0x_platform_log.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/platform/inc/vl53l0x_types.h" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/platform/inc/vl53l0x_types.h" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/platform/src/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/platform/src/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/platform/src/vl53l0x_platform.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/platform/src/vl53l0x_platform.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/python/VL53L0X.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python/VL53L0X.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/python/VL53L0X_TCA9548A_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python/VL53L0X_TCA9548A_example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/python/VL53L0X_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python/VL53L0X_example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/python/VL53L0X_example_livegraph.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python/VL53L0X_example_livegraph.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/python/VL53L0X_multi_example.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python/VL53L0X_multi_example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/python/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/python_lib/desktop.ini" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python_lib/desktop.ini" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/VL53L0X_rasp_python/python_lib/vl53l0x_python.c" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python_lib/vl53l0x_python.c" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/distances.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/distances.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/execute.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/hx711py/LICENSE" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/hx711py/LICENSE" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hx711py/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/hx711py/README.md" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hx711py/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hx711py/example.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/hx711py/example.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/hx711py/hx711.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/hx711py/hx711.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme/Repetition_Detection.PNG" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/readme/Repetition_Detection.PNG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/readme/client_terminal.JPG" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/readme/client_terminal.JPG" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/requirements.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Installation/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/_trial_temp/_trial_marker" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/hx711py/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/_trial_temp/test.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/_trial_temp/test.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_cache_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_cache_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/api-links.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/api-links.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/big_client_cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/big_client_cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/delete_cache_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/delete_cache_test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/fake_cache_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/fake_cache_test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/invalid_rfid_cache_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/invalid_rfid_cache_test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/logs/logging2018-05-24.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/logs/logging2018-05-24.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/logs/logging2018-05-25.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/regular_cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/regular_cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/s3_upload_test.txt" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/s3_upload_test.txt" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_data/update_cache_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/update_cache_test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_request_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_request_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_s3_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_s3_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Communication/test_websocket_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_websocket_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Configuration/api-links.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Configuration/api-links.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Configuration/client_cache.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Configuration/client_cache.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Configuration/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Configuration/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Configuration/logs/logging2018-06-24.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Configuration/logs/logging2018-06-24.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Configuration/logs/logging2018-07-04.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/test_data/logs/logging2018-05-25.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Configuration/logs/logging2018-07-05.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Configuration/logs/logging2018-07-05.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Helpers/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Helpers/_trial_temp/_trial_marker" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Communication/_trial_temp/_trial_marker" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Helpers/_trial_temp/test.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Helpers/_trial_temp/test.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Helpers/del_config.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Helpers/del_config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Helpers/test_configurator.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Helpers/test_configurator.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Helpers/test_data/api-links_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Helpers/test_data/api-links_test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Helpers/test_data/config_test.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Helpers/test_data/config_test.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Helpers/test_data/logs/logging2018-05-24.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Configuration/logs/logging2018-07-04.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/VL53L0X_rasp_python/python/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/_trial_temp/_trial_marker" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Helpers/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/_trial_temp/test.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/_trial_temp/test.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_data/distances_long.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_data/distances_long.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_data/distances_no_middle.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_data/distances_no_middle.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_data/distances_out_of_range.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_data/distances_out_of_range.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_data/distances_over_border.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_data/distances_over_border.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_data/distances_short.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_data/distances_short.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_data/weight_translation.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_data/weight_translation.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_data/weights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_data/weights.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_distancesensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_distancesensor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_sensor_manager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_sensor_manager.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/Sensors/test_weightsensor.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Sensors/test_weightsensor.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/__init__.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/__init__.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/_trial_temp/_trial_marker" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/Helpers/_trial_temp/_trial_marker" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/_trial_temp/test.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/_trial_temp/test.log" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/test/test_client.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/test/test_client.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/weights.csv" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/weights.csv" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/x" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/x" afterDir="false" />
+    </list>
+    <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
+    <option name="TRACKING_ENABLED" value="true" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileEditorManager">
+    <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
+      <file leaf-file-name="hx711.py" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/client_repo/hx711py/hx711.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="375">
+              <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+              <folding>
+                <element signature="e#0#35#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="test_cache_manager.py" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_cache_manager.py">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="105">
+              <caret line="175" column="22" lean-forward="true" selection-start-line="175" selection-start-column="22" selection-end-line="175" selection-end-column="22" />
+              <folding>
+                <element signature="e#0#15#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+    </leaf>
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+      </list>
+    </option>
+  </component>
+  <component name="FindInProjectRecents">
+    <findStrings>
+      <find>out_</find>
+      <find>TOD</find>
+      <find>stop</find>
+      <find>is_timed_out</find>
+      <find>_stop</find>
+      <find>min</find>
+      <find>_runn</find>
+      <find>_init_set_record_</find>
+      <find>set_</find>
+      <find>set_i</find>
+      <find>copy</find>
+      <find>cache</find>
+      <find>dum</find>
+      <find>remo</find>
+      <find>rm_mock</find>
+      <find>txt</find>
+      <find>reque</find>
+      <find>_handle_delete_sets_</find>
+      <find>matplo</find>
+      <find>plt</find>
+      <find>freq</find>
+      <find>client_cache.t</find>
+      <find>SET ID</find>
+      <find>daemo</find>
+      <find>yy</find>
+      <find>min_</find>
+      <find>['sta</find>
+      <find>handle</find>
+      <find>print</find>
+      <find>print(</find>
+    </findStrings>
+    <dirStrings>
+      <dir>$PROJECT_DIR$/test</dir>
+    </dirStrings>
+  </component>
+  <component name="Git.Settings">
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="IdeDocumentHistory">
+    <option name="CHANGED_PATHS">
+      <list>
+        <option value="$PROJECT_DIR$/Client_Prototype/Communication/WebSocketManager.py" />
+        <option value="$PROJECT_DIR$/test/Communication/test_s3_manager.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/Communication/s3Manager.py" />
+        <option value="$PROJECT_DIR$/test/Communication/test_data/fake_cache_test.json" />
+        <option value="$PROJECT_DIR$/.gitignore" />
+        <option value="$PROJECT_DIR$/Installation/config" />
+        <option value="$PROJECT_DIR$/Installation/credentials" />
+        <option value="$PROJECT_DIR$/test/Sensors/test_data/distances_no_middle.csv" />
+        <option value="$PROJECT_DIR$/test/Sensors/test_data/distances_over_border.csv" />
+        <option value="$PROJECT_DIR$/test/Sensors/test_sensor_manager.py" />
+        <option value="$PROJECT_DIR$/test/Communication/test_data/delete_cache_test.json" />
+        <option value="$PROJECT_DIR$/RPi/GPIO.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/Helpers/Observable.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/HardwareControl/StatusLed.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/Client_State.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/HardwareControl/Sensors/SensorManager.py" />
+        <option value="$PROJECT_DIR$/hx711py/hx711.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/Helpers/Configurator.py" />
+        <option value="$PROJECT_DIR$/test/Helpers/test_configurator.py" />
+        <option value="$PROJECT_DIR$/Installation/setup_weightsensors.py" />
+        <option value="$PROJECT_DIR$/Client_Prototype/HardwareControl/Sensors/WeightSensor.py" />
+        <option value="$PROJECT_DIR$/Configuration/config.json" />
+        <option value="$PROJECT_DIR$/test/Sensors/test_weightsensor.py" />
+        <option value="$PROJECT_DIR$/test/test_client.py" />
+        <option value="$PROJECT_DIR$/test/Configuration/config.json" />
+        <option value="$PROJECT_DIR$/Client_Prototype/Client.py" />
+        <option value="$PROJECT_DIR$/test/Communication/test_data/logs/regular_cache.json" />
+        <option value="$PROJECT_DIR$/test/Communication/test_cache_manager.py" />
+        <option value="$PROJECT_DIR$/test/Communication/test_data/big_client_cache.json" />
+        <option value="$PROJECT_DIR$/Client_Prototype/Communication/CacheManager.py" />
+        <option value="$PROJECT_DIR$/Configuration/client_cache.json" />
+        <option value="$PROJECT_DIR$/Client_Prototype/Communication/RequestManager.py" />
+        <option value="$PROJECT_DIR$/execute.py" />
+        <option value="$PROJECT_DIR$/Installation/install.py" />
+        <option value="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/RequestManager.py" />
+        <option value="$PROJECT_DIR$/client_repo/Client_Prototype/Client.py" />
+        <option value="$PROJECT_DIR$/client_repo/execute.py" />
+        <option value="$PROJECT_DIR$/client_repo/Client_Prototype/Client_State.py" />
+        <option value="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/DistanceSensor.py" />
+        <option value="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/SensorManager.py" />
+        <option value="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/WeightSensor.py" />
+        <option value="$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/StatusLed.py" />
+        <option value="$PROJECT_DIR$/client_repo/hx711py/hx711.py" />
+        <option value="$PROJECT_DIR$/client_repo/test/test_client.py" />
+        <option value="$PROJECT_DIR$/client_repo/test/Communication/test_request_manager.py" />
+        <option value="$PROJECT_DIR$/client_repo/test/Communication/test_s3_manager.py" />
+        <option value="$PROJECT_DIR$/client_repo/test/Sensors/test_weightsensor.py" />
+        <option value="$PROJECT_DIR$/client_repo/test/Sensors/test_sensor_manager.py" />
+        <option value="$PROJECT_DIR$/client_repo/test/Sensors/test_distancesensor.py" />
+        <option value="$PROJECT_DIR$/client_repo/test/Helpers/test_configurator.py" />
+        <option value="$PROJECT_DIR$/client_repo/test/Communication/test_cache_manager.py" />
+      </list>
+    </option>
+  </component>
+  <component name="ProjectFrameBounds" extendedState="6">
+    <option name="y" value="27" />
+    <option name="width" value="1680" />
+    <option name="height" value="1023" />
+  </component>
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectView">
+    <navigator proportions="" version="1">
+      <foldersAlwaysOnTop value="true" />
+    </navigator>
+    <panes>
+      <pane id="ProjectPane">
+        <subPane>
+          <expand>
+            <path>
+              <item name="gimprove_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gimprove_client" type="462c0819:PsiDirectoryNode" />
+            </path>
+            <path>
+              <item name="gimprove_client" type="b2602c69:ProjectViewProjectNode" />
+              <item name="gimprove_client" type="462c0819:PsiDirectoryNode" />
+              <item name="client_repo" type="462c0819:PsiDirectoryNode" />
+            </path>
+          </expand>
+          <select />
+        </subPane>
+      </pane>
+      <pane id="Scope" />
+    </panes>
+  </component>
+  <component name="PropertiesComponent">
+    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="settings.editor.selected.configurable" value="com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable" />
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/test/Communication/test_data" />
+      <recent name="$PROJECT_DIR$/test/Sensors/test_data" />
+      <recent name="$PROJECT_DIR$/readme" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$" />
+      <recent name="$PROJECT_DIR$/client_repo" />
+      <recent name="$PROJECT_DIR$/Configuration" />
+      <recent name="$PROJECT_DIR$/Configuration/.credentials" />
+      <recent name="$PROJECT_DIR$/Configuration/aws-config" />
+    </key>
+  </component>
+  <component name="RunDashboard">
+    <option name="ruleStates">
+      <list>
+        <RuleState>
+          <option name="name" value="ConfigurationTypeDashboardGroupingRule" />
+        </RuleState>
+        <RuleState>
+          <option name="name" value="StatusDashboardGroupingRule" />
+        </RuleState>
+      </list>
+    </option>
+  </component>
+  <component name="RunManager" selected="Python.execute">
+    <configuration name="execute" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="gimprove_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/client_repo" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/client_repo/execute.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="install" type="PythonConfigurationType" factoryName="Python" temporary="true">
+      <module name="gimprove_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/Installation" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/Installation/install.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+    </configuration>
+    <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" type="tests" factoryName="Twisted Trial" temporary="true" nameIsGenerated="true">
+      <module name="gimprove_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/Communication" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_cache_manager.TestCacheManager.test_empty_cache&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache_no_connection" type="tests" factoryName="Twisted Trial" temporary="true" nameIsGenerated="true">
+      <module name="gimprove_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test/Communication" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_cache_manager.TestCacheManager.test_empty_cache_no_connection&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <configuration name="Twisted Trial for test_client.TestClient.test_init_set_record" type="tests" factoryName="Twisted Trial" temporary="true" nameIsGenerated="true">
+      <module name="gimprove_client" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/test" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="_new_additionalArguments" value="&quot;&quot;" />
+      <option name="_new_target" value="&quot;test_client.TestClient.test_init_set_record&quot;" />
+      <option name="_new_targetType" value="&quot;PYTHON&quot;" />
+    </configuration>
+    <list>
+      <item itemvalue="Python tests.Twisted Trial for test_client.TestClient.test_init_set_record" />
+      <item itemvalue="Python tests.Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache_no_connection" />
+      <item itemvalue="Python tests.Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" />
+      <item itemvalue="Python.install" />
+      <item itemvalue="Python.execute" />
+    </list>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.execute" />
+        <item itemvalue="Python.install" />
+        <item itemvalue="Python tests.Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" />
+        <item itemvalue="Python tests.Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache_no_connection" />
+        <item itemvalue="Python tests.Twisted Trial for test_client.TestClient.test_init_set_record" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SvnConfiguration">
+    <configuration />
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="a26fba2d-6f47-4561-8e14-69986d1294f0" name="Default" comment="" />
+      <created>1527938597365</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1527938597365</updated>
+    </task>
+    <servers />
+  </component>
+  <component name="TestHistory">
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache_no_connection - 2018.07.05 at 13h 13m 22s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache_no_connection" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache_no_connection - 2018.07.05 at 13h 15m 07s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache_no_connection" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache - 2018.07.05 at 13h 37m 38s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache - 2018.07.05 at 13h 39m 59s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache - 2018.07.05 at 13h 40m 53s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache - 2018.07.05 at 13h 41m 40s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache - 2018.07.05 at 13h 42m 34s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache - 2018.07.05 at 13h 42m 51s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache - 2018.07.05 at 13h 43m 10s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" configurationId="tests" />
+    </history-entry>
+    <history-entry file="Twisted_Trial_for_test_cache_manager_TestCacheManager_test_empty_cache - 2018.07.05 at 13h 43m 23s.xml">
+      <configuration name="Twisted Trial for test_cache_manager.TestCacheManager.test_empty_cache" configurationId="tests" />
+    </history-entry>
+  </component>
+  <component name="ToolWindowManager">
+    <frame x="0" y="25" width="1680" height="1025" extended-state="6" />
+    <layout>
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16428572" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Event Log" order="7" sideWeight="0.5005952" side_tool="true" weight="0.32786885" />
+      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.32568306" />
+      <window_info anchor="bottom" id="Version Control" order="7" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="bottom" id="Terminal" order="7" sideWeight="0.49940476" weight="0.28961748" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32896176" />
+    </layout>
+    <layout-to-restore>
+      <window_info anchor="right" content_ui="combo" id="Hierarchy" order="2" weight="0.25" />
+      <window_info anchor="bottom" id="Inspection" order="5" weight="0.4" />
+      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.16428572" />
+      <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
+      <window_info anchor="right" id="Commander" internal_type="SLIDING" order="0" type="SLIDING" weight="0.4" />
+      <window_info anchor="right" id="Ant Build" order="1" weight="0.25" />
+      <window_info anchor="bottom" id="TODO" order="6" />
+      <window_info anchor="bottom" id="Version Control" order="10" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.32568306" />
+      <window_info anchor="bottom" id="Message" order="0" />
+      <window_info anchor="bottom" id="Debug" order="3" weight="0.4" />
+      <window_info active="true" anchor="bottom" id="Terminal" order="8" sideWeight="0.49940476" visible="true" weight="0.28961748" />
+      <window_info anchor="bottom" id="Event Log" order="9" sideWeight="0.5005952" side_tool="true" weight="0.32786885" />
+      <window_info anchor="bottom" id="Cvs" order="4" weight="0.25" />
+      <window_info id="Favorites" order="2" side_tool="true" />
+      <window_info anchor="bottom" id="Find" order="1" weight="0.32896176" />
+      <window_info anchor="bottom" id="Python Console" order="7" />
+    </layout-to-restore>
+  </component>
+  <component name="VcsContentAnnotationSettings">
+    <option name="myLimit" value="2678400000" />
+  </component>
+  <component name="editorHistoryManager">
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_data/update_cache_test.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="180">
+          <caret line="12" column="29" lean-forward="true" selection-start-line="12" selection-start-column="29" selection-end-line="12" selection-end-column="29" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/Communication/test_data/client_cache.json" />
+    <entry file="file://$PROJECT_DIR$/test/Communication/test_data/delete.json" />
+    <entry file="file://$PROJECT_DIR$/client_repo/README.md">
+      <provider selected="true" editor-type-id="split-provider[text-editor;markdown-preview-editor]">
+        <state split_layout="SPLIT">
+          <first_editor relative-caret-position="465">
+            <caret line="31" selection-start-line="31" selection-end-line="31" />
+          </first_editor>
+          <second_editor />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file:///usr/lib/python3.6/threading.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="210">
+          <caret line="1071" selection-start-line="1071" selection-end-line="1071" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/Configuration/client_cache.txt" />
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Sensors/test_data/distances_no_middle.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Sensors/test_data/distances_over_border.csv">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="7" column="7" lean-forward="true" selection-start-line="7" selection-start-column="7" selection-end-line="7" selection-end-column="7" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Configuration/client_cache.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/RPi/GPIO.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="255">
+          <caret line="17" lean-forward="true" selection-start-line="17" selection-end-line="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/.gitignore">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" selection-start-line="9" selection-end-line="9" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Helpers/Observable.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="300">
+          <caret line="20" column="11" selection-start-line="20" selection-start-column="11" selection-end-line="20" selection-end-column="11" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/weights.csv">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Installation/setup_weightsensors.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="165">
+          <caret line="11" column="30" selection-start-line="11" selection-start-column="30" selection-end-line="11" selection-end-column="30" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Helpers/Configurator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="430">
+          <caret line="113" column="13" lean-forward="true" selection-start-line="113" selection-start-column="13" selection-end-line="113" selection-end-column="13" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/test/Communication/test_data/client_cache.json" />
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_data/invalid_rfid_cache_test.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="480">
+          <caret line="32" column="19" selection-start-line="32" selection-start-column="19" selection-end-line="32" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Configuration/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="283">
+          <caret line="33" column="16" selection-end-line="48" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Configuration/config.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="100">
+          <caret line="19" column="26" lean-forward="true" selection-start-line="19" selection-start-column="26" selection-end-line="19" selection-end-column="26" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_data/delete_cache_test.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="203">
+          <caret line="44" column="27" lean-forward="true" selection-start-line="44" selection-start-column="27" selection-end-line="44" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_data/fake_cache_test.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="44" selection-start-line="27" selection-start-column="44" selection-end-line="27" selection-end-column="44" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_data/regular_cache.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="448">
+          <caret line="111" column="14" lean-forward="true" selection-start-line="111" selection-start-column="14" selection-end-line="111" selection-end-column="14" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_data/big_client_cache.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="135">
+          <caret line="9" column="31" selection-start-line="9" selection-start-column="31" selection-end-line="9" selection-end-column="31" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Configuration/client_cache.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="2" lean-forward="true" selection-start-column="2" selection-end-column="2" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Configuration/credentials-template.json">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configuration/.credentials/aws-config/credentials">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="2" selection-end-column="27" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/Configuration/.credentials/aws-config/config">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret selection-end-line="1" selection-end-column="21" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/execute.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="60">
+          <caret line="4" lean-forward="true" selection-start-line="4" selection-end-line="4" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Installation/install.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="405">
+          <caret line="27" column="5" selection-start-line="27" selection-start-column="5" selection-end-line="27" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="35" lean-forward="true" selection-start-line="2" selection-start-column="35" selection-end-line="2" selection-end-column="35" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Client_State.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="17" selection-start-column="17" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Communication/CacheManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" column="18" selection-start-line="30" selection-start-column="12" selection-end-line="30" selection-end-column="18" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Communication/MessageQueue.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Communication/RequestManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="10" selection-start-line="3" selection-start-column="10" selection-end-line="3" selection-end-column="10" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Communication/s3Manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="150">
+          <caret line="10" column="13" selection-start-line="10" selection-start-column="13" selection-end-line="10" selection-end-column="36" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Communication/WebSocketManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="450">
+          <caret line="30" selection-start-line="30" selection-end-line="30" />
+          <folding>
+            <element signature="e#0#16#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Configuration/.credentials.json">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="120">
+          <caret line="8" column="1" selection-start-line="8" selection-start-column="1" selection-end-line="8" selection-end-column="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/DistanceSensor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" selection-start-line="1" selection-end-line="1" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/WeightSensor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="16" selection-start-line="1" selection-start-column="5" selection-end-line="1" selection-end-column="16" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/StatusLed.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state>
+          <caret column="19" selection-start-column="19" selection-end-column="19" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/HardwareControl/Sensors/SensorManager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="225">
+          <caret line="15" column="14" selection-start-line="15" selection-start-column="14" selection-end-line="15" selection-end-column="14" />
+          <folding>
+            <element signature="e#0#9#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_request_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="285">
+          <caret line="19" column="5" selection-start-line="19" selection-start-column="5" selection-end-line="19" selection-end-column="5" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_s3_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="45">
+          <caret line="3" column="17" selection-start-line="3" selection-start-column="17" selection-end-line="3" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_websocket_manager.py">
+      <provider selected="true" editor-type-id="text-editor" />
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/test_client.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Sensors/test_sensor_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="30">
+          <caret line="2" column="17" selection-start-line="2" selection-start-column="17" selection-end-line="2" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Sensors/test_distancesensor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Sensors/test_weightsensor.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="15">
+          <caret line="1" column="17" selection-start-line="1" selection-start-column="17" selection-end-line="1" selection-end-column="17" />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Helpers/test_configurator.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="16" column="10" selection-start-line="16" selection-start-column="10" selection-end-line="16" selection-end-column="10" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/hx711py/hx711.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="375">
+          <caret line="25" lean-forward="true" selection-start-line="25" selection-end-line="25" />
+          <folding>
+            <element signature="e#0#35#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/client_repo/test/Communication/test_cache_manager.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="105">
+          <caret line="175" column="22" lean-forward="true" selection-start-line="175" selection-start-column="22" selection-end-line="175" selection-end-column="22" />
+          <folding>
+            <element signature="e#0#15#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+  </component>
+</project>
