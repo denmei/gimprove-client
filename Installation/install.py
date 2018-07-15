@@ -1,5 +1,23 @@
 import os
-from shutil import copy2
+import json
+
+
+def setup_aws(in_aws_path):
+    aws_username = input("Please type your aws-username: ")
+    aws_access_key_id = input("Please type the AWS access key id: ")
+    aws_secret_access_key = input("Please type the AWS secret access key: ")
+    credentials_content = "[default]" '\n' + "aws_access_key_id = %s" % aws_access_key_id + '\n' + \
+                          "aws_secret_access_key = %s" % aws_secret_access_key
+    with open(os.path.join(in_aws_path, "credentials"), 'a') as aws_credentials:
+        aws_credentials.write(credentials_content)
+        aws_credentials.close()
+
+    config_content = "[default]" + '\n' + "region = eu-central-1"
+    with open(os.path.join(in_aws_path, "config"), 'a') as aws_config:
+        aws_config.write(config_content)
+        aws_config.close()
+    return aws_username
+
 
 # load required packages and install
 os.system("sudo pip3 install numpy")
@@ -22,15 +40,35 @@ os.system("git config --global user.email 'none'")
 os.system("git config --global user.name 'pi'")
 
 # maybe necessary for tkinter-problems: sudo apt-get install python3-tk
-
 # configure aws
-#TODO: .aws/credentials + .aws/config
+# TODO: .aws/credentials + .aws/config
 # os.system("pip install awscli --upgrade --user")
 # os.system("complete -C aws_completer aws")
 aws_path = os.path.join(os.path.expanduser("~"), ".aws")
-os.mkdir(aws_path)
-copy2("credentials", os.path.join(aws_path, "credentials"))
-copy2("config", os.path.join(aws_path, "config"))
+if ".aws" not in os.listdir(os.path.expanduser("~")):
+    os.mkdir(aws_path)
+
+aws_setup = False
+
+while not aws_setup:
+    # get credentials from user
+    username = setup_aws(aws_path)
+    # check whether credentials are valid. Command must return a json with user-information
+    state = os.popen("aws iam get-user").read()
+    try:
+        json_state = json.loads(state)
+        # check whether credentials fit the given username
+        if json_state['User']['UserName'] == username:
+            aws_setup = True
+        else:
+            print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
+            os.system("rm %s" % os.path.join(aws_path, "config"))
+            os.system("rm %s" % os.path.join(aws_path, "credentials"))
+    except Exception as e:
+        # if json could not be parsed correctly, there occured an error with the credentials
+        print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
+        os.system("rm %s" % os.path.join(aws_path, "config"))
+        os.system("rm %s" % os.path.join(aws_path, "credentials"))
 
 os.system("sudo reboot now")
 
