@@ -1,7 +1,7 @@
 # Gimprove-Client
 
-Gimprove is a lightweight system built to digitalize fitness equipment. Once installed on regular machines, Gimproves
-allows users to automatically track all relevant keyfigures of their activities such as the number of the repetitions
+Gimprove is a lightweight system built to digitalize fitness equipment. Once installed on regular machines, Gimprove
+allows users to automatically track all relevant keyfigures of their activities such as the number of repetitions
 or the weight used. Users get feedback in realtime and can analyze their progress in the Gimprove App.
 
 Related respositories are:
@@ -29,48 +29,24 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component that c
 7) ```sudo pip3 install RPi.GPIO```
 8) Clone this repository: ```git clone https://den_mei@bitbucket.org/den_mei/gimprove_client.git```
 
-To install all required packages, run `python3 install.py` from the ```Installation```-directory of the repository.
-
-### Setup User
-Communication with the Gimprove-server requires the client to authenticate with his credentials. When setting up the 
-client, you have to enter the credentials.
-
-At the moment, you'll also have to update your equipment-id in ```Configuration/config.json```.
-
-### Setup AWS
-To setup AWS for uploading the log-Files to S3:
-* Go to Home directory by executing `cd`
-* Create `/.aws` with the command `mkdir .aws` and cd into the new directory
-* Create the configuration file with `touch config`, open the file and paste: 
-```
-[default]
-region = eu-central-1
-```
-* Create the credentials file with `touch credentials` and enter the following (replace *** with your credentials!):
-```
-[default]
-aws_access_key_id = ***
-aws_secret_access_key = ***
-```
+Once the previous steps are completed, start the program with the command `python3 sync_and_start.py`. If 
+the script is used for the first time, it will guide through the remaining steps including:
+* Install required python-packages
+* Setup AWS
+* Setup Gimprove-Account
+* Modify .bashrc
 
 ### Not on Raspberry Pi
-If you're not using a Raspberry Pi, you might have to execute the following steps
-before executing the `execute.py`-script:
+If you're not using a Raspberry Pi, you might have to execute the following steps:
 
-1) In the sm_gym_client-directory, add a new directory named `RPi`
-
-2) In `RPi`, add a new file called `GPIO.py` with the following content:
-```python
-class GPIO:
-    pass
-```
-
-3) Add an empty file named `__init__.py` to the `RPi` directory.
+UPDATE!!
 
 
 ## Usage
-Before running the client, make sure that you're using the correct environment by checking the config.json-file.
-To **run** the client, run the `execute.py` file with `python3 execute.py` from the root-directory.
+**Running the client:** Be aware that the `sync_and_start.py`-script is always executed once the pi is rebooted! In this process, the current
+code base is updated from the related Gimprove-S3 bucket. The proceeding behavior of the client depends on the environment defined in the `config.json`-file:
+* *Production*: The client starts automatically.
+* *Test/Local*: The client is not started by the sync_and_start-script. Start the client manually by executing the `gimprove_client/execute.py`-script.
 
 To **test** the client, execute the following command from the root-directory: `python3 -m unittest`. The server must be
 running locally on 127.0.0.1:8000.
