@@ -16,19 +16,24 @@ if "installed" not in os.listdir("client_repo/Installation"):
 
 # Sync from S3.
 print("Syncing from S3...")
-os.system("aws s3 sync" +
+os.system("aws s3 sync s3://client-repository " +
           os.path.join(str(Path(os.path.dirname(os.path.realpath(__file__)))), "/client_repo/") +
-          " s3://client-repository "
-          "--exclude '*credentials*' "
+          "--exclude '*/.credentials.json' "
           "--exclude 'test/*' "
-          "--exclude 'config.json' "
+          "--exclude '*/config.json' "
           "--exclude '.idea/*' "
-          "--exclude 'weight_translation.csv' "
-          "--exclude '/logs/*'  "
-          "--exclude '__pycache__/*'")
+          "--exclude */weight_translation.csv "
+          "--exclude '*logs/*' "
+          "--exclude '*__pycache__/*' "
+          "--exclude */client_cache.json "
+          "--exclude 'weights.csv' "
+          "--exclude=distances.csv "
+          "--exclude 'README.md' "
+          "--exclude 'readme/*' ")
 
 # Run additional scripts if available.
 print("Looking for additional scripts...")
+# Todo: Sync additional scripts and execute them.
 
 # Start client.
 print("Starting client...")
