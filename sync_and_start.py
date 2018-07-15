@@ -18,7 +18,7 @@ if "installed" not in os.listdir("client_repo/Installation"):
 # Sync from S3.
 print("Syncing from S3...")
 os.system("aws s3 sync s3://client-repository " +
-          os.path.join(str(Path(os.path.dirname(os.path.realpath(__file__)))), "/client_repo/") +
+          os.path.join(str(Path(os.path.dirname(os.path.realpath(__file__)))), "client_repo/") +
           " --exclude '*/.credentials.json' "
           "--exclude 'test/*' "
           "--exclude '*/config.json' "

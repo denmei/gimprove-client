@@ -100,7 +100,7 @@ while answer not in ["y", "N"]:
 
 if answer == "y":
     os.system("sudo mv /home/pi/.bashrc /home/pi/.bashrc_original")
-    copy_command = "sudo mv %s /home/pi/.bashrc" % os.path.join(str(Path(os.path.dirname(os.path.realpath(__file__)))), "/new_bashrc")
+    copy_command = "sudo mv %s /home/pi/.bashrc" % os.path.join(str(Path(os.path.dirname(os.path.realpath(__file__)))), "new_bashrc")
     os.system(copy_command)
 
 
