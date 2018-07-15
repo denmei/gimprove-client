@@ -78,7 +78,9 @@ while not aws_setup:
     try:
         json_state = json.loads(state)
         # check whether credentials fit the given username
-        if username in json_state['User']['Arn']:
+        print(json_state)
+        print(json_state['Arn'])
+        if username in json_state['Arn']:
             aws_setup = True
         else:
             print("--- Provided credentials are not valid! Repeat initialization of AWS ---")
