@@ -64,7 +64,8 @@ def output(self, a):
 ```
 
 ## Usage
-**Running the client:** Be aware that the `sync_and_start.py`-script is always executed once the pi is rebooted! In this process, the current
+### Running the client
+Be aware that the `sync_and_start.py`-script is always executed once the pi is rebooted! In this process, the current
 code base is updated from the related Gimprove-S3 bucket. Then, the client is started automatically.
 
 There are various possibilities to **stop the client**:
@@ -74,7 +75,8 @@ when the client is asking for a rfid to shutdown the client.
 
 **Exceptions** in the normal program flow will cause the client to restart.
 
-To **test** the client, execute the following command from the root-directory: `python3 -m unittest`. The server must be
+### Testing the client
+To test the client, execute the following command from the root-directory: `python3 -m unittest`. The server must be
 running locally on 127.0.0.1:8000.
 
 ## Built with
