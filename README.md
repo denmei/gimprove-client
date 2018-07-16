@@ -16,7 +16,7 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component that c
 * Analyzing the sensor data to identify repetitions and weights
 * Sending results to the GImprove-server using the GImprove-API (HTTP) and via a Websocket-Connection
 
-![alt text](readme/client_terminal.JPG)
+![Raspberry Pi-powered Gimprove Terminal in a Gym.](readme/client_terminal.JPG)
 
 ## Install
 ### Raspberry set up (if necessary)
@@ -30,23 +30,49 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component that c
 8) Clone this repository: ```git clone https://den_mei@bitbucket.org/den_mei/gimprove_client.git```
 
 Once the previous steps are completed, start the program with the command `python3 sync_and_start.py`. If 
-the script is used for the first time, it will guide through the remaining steps including:
+the script is used for the first time, it will process through the remaining steps including:
 * Install required python-packages
 * Setup AWS
 * Setup Gimprove-Account
 * Modify .bashrc
 
 ### Not on Raspberry Pi
-If you're not using a Raspberry Pi, you might have to execute the following steps:
+If you're not using a Raspberry Pi, you might have to execute the following steps (since the Pi's RPi package might 
+be missing):
 
-UPDATE!!
+1) In the root directory, add a python-package named `RPi`
+2) In the package, add a module named `GPIO.py`
+3) Add the following code to the new module:
 
+```
+BCM = 1
+OUT = 1
+HIGH = 1
+LOW = 1
+
+
+def setup(self, a):
+    pass
+
+
+def setmode(self):
+    pass
+
+
+def output(self, a):
+    pass
+```
 
 ## Usage
 **Running the client:** Be aware that the `sync_and_start.py`-script is always executed once the pi is rebooted! In this process, the current
-code base is updated from the related Gimprove-S3 bucket. The proceeding behavior of the client depends on the environment defined in the `config.json`-file:
-* *Production*: The client starts automatically.
-* *Test/Local*: The client is not started by the sync_and_start-script. Start the client manually by executing the `gimprove_client/execute.py`-script.
+code base is updated from the related Gimprove-S3 bucket. Then, the client is started automatically.
+
+There are various possibilities to **stop the client**:
+1) Type `quit`, press a key combination such as `ctrl + c` or use the quit-rfid-tag defined in the client's config file 
+when the client is asking for a rfid to shutdown the client.
+2) Type `abort` to stop the client and to access the normal Raspberry Pi terminal (useful for maintenance).
+
+**Exceptions** in the normal program flow will cause the client to restart.
 
 To **test** the client, execute the following command from the root-directory: `python3 -m unittest`. The server must be
 running locally on 127.0.0.1:8000.
@@ -58,17 +84,6 @@ VL53L0X.
 
 ## Contributing
 **Dennis Meisner:** meisnerdennis@web.de.
-
-## Configuration: 
-The Configuration-folder contains files with necessary information to run the application:
-
-* api-links.json: Links to the GImprove-API (testing and production).
-* config.json: Configuration data for the device (name, id etc.).
-* logs/logging.log: Applikations-Logs.
-* weight_translation.csv: Helps converting measured weight to the weight stack on the machine if option is activated.
-* client_cache.txt: If there are connection problems, all HTTP-Requests from the client will be cached here and sent later.
-* credentials-template.json: Empty template for the client's credentials.
-* .credentials.json: Contains the credentials for the communication with the Gimprove-Server
 
 
 You can find more detailed information in the Wiki.
