@@ -161,6 +161,7 @@ class Equipment:
         If there occurs an error, the new set is deleted by sending a request to the server.
         """
         try:
+            shutdown = True
             while True:
                 # start waiting for rfid tag
                 rfid_tag = input('RFID (0006921147) or quit:')
@@ -170,6 +171,11 @@ class Equipment:
                 if rfid_tag == 'quit' or (rfid_tag == self.off_rfid and len(rfid_tag) > 1):
                     self.sensor_manager.quit()
                     self.request_manager.quit()
+                    break
+                if rfid_tag == 'abort':
+                    self.sensor_manager.quit()
+                    self.request_manager.quit()
+                    shutdown = False
                     break
                 elif self.request_manager.rfid_is_valid(rfid_tag):
                     try:
@@ -190,9 +196,18 @@ class Equipment:
                 else:
                     self.logger.info("RFID-tag not valid: " + rfid_tag)
                     print("Not a valid rfid tag")
+            if shutdown:
+                os.system("sudo shutdown now")
+        except KeyboardInterrupt as keyboard_exception:
+            self.sensor_manager.quit()
+            self.request_manager.quit()
+            self.logger.info("Keyboard-interrupt: %s. Shutting down." % keyboard_exception)
+            os.system("sudo shutdown now")
         except Exception as e:
             self.sensor_manager.quit()
             self.request_manager.quit()
+            self.logger.debug("Fatal Exception: %s. -> Rebooting." % e)
+            os.system("sudo reboot now")
 
 
 if __name__ == '__main__':
