@@ -101,7 +101,7 @@ class RequestManager(threading.Thread):
 
         # send via websocket if requested
         if websocket_send:
-            websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': end}.items()))
+            websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': end, 'set_id': set_id}.items()))
             self.check_ws_connection()
             try:
                 self.websocket_manager.send(json.dumps(websocket_data))
