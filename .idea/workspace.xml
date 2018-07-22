@@ -2,9 +2,7 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="a26fba2d-6f47-4561-8e14-69986d1294f0" name="Default" comment="">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/RequestManager.py" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Client_Prototype/Communication/RequestManager.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/client_repo/Configuration/config.json" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Configuration/config.json" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/client_repo/Configuration/logs/logging2018-07-22.log" beforeDir="false" afterPath="$PROJECT_DIR$/client_repo/Configuration/logs/logging2018-07-22.log" afterDir="false" />
     </list>
     <option name="EXCLUDED_CONVERTED_TO_IGNORED" value="true" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -39,8 +37,8 @@
       <file leaf-file-name="RequestManager.py" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Communication/RequestManager.py">
           <provider selected="true" editor-type-id="text-editor">
-            <state relative-caret-position="315">
-              <caret line="96" column="46" lean-forward="true" selection-start-line="96" selection-start-column="46" selection-end-line="96" selection-end-column="46" />
+            <state relative-caret-position="285">
+              <caret line="94" column="33" lean-forward="true" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
               <folding>
                 <element signature="e#0#15#0" expanded="true" />
               </folding>
@@ -173,30 +171,6 @@
             <path>
               <item name="gimprove_client" type="b2602c69:ProjectViewProjectNode" />
               <item name="gimprove_client" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gimprove_client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gimprove_client" type="462c0819:PsiDirectoryNode" />
-              <item name="client_repo" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gimprove_client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gimprove_client" type="462c0819:PsiDirectoryNode" />
-              <item name="client_repo" type="462c0819:PsiDirectoryNode" />
-              <item name="Client_Prototype" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gimprove_client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gimprove_client" type="462c0819:PsiDirectoryNode" />
-              <item name="client_repo" type="462c0819:PsiDirectoryNode" />
-              <item name="Client_Prototype" type="462c0819:PsiDirectoryNode" />
-              <item name="Communication" type="462c0819:PsiDirectoryNode" />
-            </path>
-            <path>
-              <item name="gimprove_client" type="b2602c69:ProjectViewProjectNode" />
-              <item name="gimprove_client" type="462c0819:PsiDirectoryNode" />
-              <item name="client_repo" type="462c0819:PsiDirectoryNode" />
-              <item name="Configuration" type="462c0819:PsiDirectoryNode" />
             </path>
           </expand>
           <select />
@@ -380,7 +354,6 @@
   </component>
   <component name="ToolWindowManager">
     <frame x="0" y="25" width="1680" height="1025" extended-state="6" />
-    <editor active="true" />
     <layout>
       <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.125" />
       <window_info anchor="bottom" id="TODO" order="6" />
@@ -677,13 +650,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/sync_to_s3.py">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="255">
-          <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Client.py">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2805">
@@ -729,10 +695,17 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/sync_to_s3.py">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="240">
+          <caret line="17" column="34" lean-forward="true" selection-start-line="17" selection-start-column="34" selection-end-line="17" selection-end-column="34" />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/client_repo/Client_Prototype/Communication/RequestManager.py">
       <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="315">
-          <caret line="96" column="46" lean-forward="true" selection-start-line="96" selection-start-column="46" selection-end-line="96" selection-end-column="46" />
+        <state relative-caret-position="285">
+          <caret line="94" column="33" lean-forward="true" selection-start-line="94" selection-start-column="33" selection-end-line="94" selection-end-column="33" />
           <folding>
             <element signature="e#0#15#0" expanded="true" />
           </folding>

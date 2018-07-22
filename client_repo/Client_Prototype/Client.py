@@ -2,6 +2,7 @@ import json
 from client_repo.Client_Prototype.Communication.RequestManager import RequestManager
 from client_repo.Client_Prototype.HardwareControl.Sensors.SensorManager import SensorManager
 from client_repo.Client_Prototype.Client_State import ClientState
+from client_repo.Client_Prototype.Helpers.battery_test import BatteryTest
 import traceback
 import logging
 import os
@@ -21,6 +22,8 @@ class Equipment:
     """
 
     def __init__(self, environment=None, config_path=None):
+        batteryTest = BatteryTest()
+        batteryTest.start()
         if config_path is None:
             self.config_path = str(Path(os.path.dirname(os.path.realpath(__file__))).parent) + "/Configuration/"
         else:
