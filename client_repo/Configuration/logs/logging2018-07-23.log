@@ -1,0 +1,16 @@
+gimproveclient_repo.Client_Prototype.Communication.WebSocketManager INFO       2018-07-23 17:06:18,451 __init__ Websocket: Created connection to ws://gimprove-test.herokuapp.com/ws/tracker/.
+gimproveclient_repo.Client_Prototype.Communication.CacheManager INFO       2018-07-23 17:06:18,456 empty_cache Cache: try empty cache.
+gimproveclient_repo.Client_Prototype.Client INFO       2018-07-23 17:06:18,892 __init__ Client instantiated.
+botocore.credentials INFO       2018-07-23 17:06:18,968 load Found credentials in shared credentials file: ~/.aws/credentials
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23 17:06:27,071 _new_conn Starting new HTTPS connection (1): test.s3.eu-central-1.amazonaws.com
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23 17:06:31,998 _new_conn Starting new HTTPS connection (1): test.s3.amazonaws.com
+gimproveclient_repo.Client_Prototype.Client INFO       2018-07-23 17:06:41,694 run Keyboard-interrupt: . Shutting down.
+gimproveclient_repo.Client_Prototype.Communication.CacheManager INFO       2018-07-23 17:06:41,694 empty_cache Cache: try empty cache.
+gimproveclient_repo.Client_Prototype.Communication.WebSocketManager INFO       2018-07-23 17:07:04,553 __init__ Websocket: Created connection to ws://gimprove-test.herokuapp.com/ws/tracker/.
+gimproveclient_repo.Client_Prototype.Communication.CacheManager INFO       2018-07-23 17:07:04,554 empty_cache Cache: try empty cache.
+gimproveclient_repo.Client_Prototype.Client INFO       2018-07-23 17:07:04,968 __init__ Client instantiated.
+botocore.credentials INFO       2018-07-23 17:07:05,037 load Found credentials in shared credentials file: ~/.aws/credentials
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23 17:07:19,037 _new_conn Starting new HTTPS connection (1): test.s3.eu-central-1.amazonaws.com
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23 17:08:03,768 _new_conn Starting new HTTPS connection (2): test.s3.eu-central-1.amazonaws.com
+websocket ERROR      2018-07-23 17:08:07,465 error error from callback <function on_error at 0x10a9dd2f0>: on_error() takes 1 positional argument but 2 were given
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23 17:08:10,310 _new_conn Starting new HTTPS connection (1): test.s3.amazonaws.com

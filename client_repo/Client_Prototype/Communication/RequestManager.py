@@ -101,7 +101,7 @@ class RequestManager(threading.Thread):
 
         # send via websocket if requested
         if websocket_send:
-            websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': end, 'set_id': set_id}.items()))
+            websocket_data = dict(list(data.items()) + list({'type': 'update', 'end': end, 'id': set_id}.items()))
             self.check_ws_connection()
             try:
                 self.websocket_manager.send(json.dumps(websocket_data))
@@ -109,6 +109,7 @@ class RequestManager(threading.Thread):
                 self.logger.debug("RequestManager: %s" % e)
 
         try:
+            print(data)
             response = requests.put(address, data=data, headers=self.header)
             if response.status_code != 200 and response.status_code != 201 and cache:
                 self.cache_manager.cache_request("update", address, data, str(response.status_code), set_id)
