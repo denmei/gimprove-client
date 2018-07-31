@@ -1,10 +1,10 @@
 __pycache__/
 .idea/
 RPi/
-Configuration/logs/
+client_repo/Configuration/logs/
 smbus/
 venv/
-Client_Prototype/Configuration/client_cache.json
+client_repo/Client_Prototype/Configuration/client_cache.json
 credentials.json
 .credentials.json
 installed
