@@ -21,13 +21,23 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component that c
 ## Install
 ### Raspberry set up (if necessary)
 1) Set up wifi: follow [this instruction](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
-2) ```sudo apt-get update```
-3) ```sudo apt-get upgrade```
-4) ```sudo apt-get install git```
-5) ```sudo apt-get install python3-pip```
-6) ```sudo apt-get install python-pip```
-7) ```sudo pip3 install RPi.GPIO```
-8) Clone this repository: ```git clone https://den_mei@bitbucket.org/den_mei/gimprove_client.git```
+
+2) Configure booting without login: type `sudo raspi-config` to open the menu. Go to `Boot Options` &rarr; `Desktop/CLI` and select `Console Autologin` (should be B2)
+
+After going back to the console:
+3) ```sudo apt-get update```
+
+4) ```sudo apt-get upgrade```
+
+5) ```sudo apt-get install git```
+
+6) ```sudo apt-get install python3-pip```
+
+7) ```sudo apt-get install python-pip```
+
+8) ```sudo pip3 install RPi.GPIO```
+
+9) Clone this repository: ```git clone https://den_mei@bitbucket.org/den_mei/gimprove_client.git```
 
 Once the previous steps are completed, start the program with the command `python3 sync_and_start.py`. If 
 the script is used for the first time, it will process through the remaining steps including:
