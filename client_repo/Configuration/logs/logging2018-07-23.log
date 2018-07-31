@@ -14,3 +14,11 @@ botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23
 botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23 22:10:48,715 _new_conn Starting new HTTPS connection (1): test.s3.amazonaws.com
 gimproveclient_repo.Client_Prototype.Client INFO       2018-07-23 22:10:50,950 run RFID-read: abort
 gimproveclient_repo.Client_Prototype.Communication.CacheManager INFO       2018-07-23 22:10:50,951 empty_cache Cache: try empty cache.
+gimproveclient_repo.Client_Prototype.Communication.WebSocketManager INFO       2018-07-23 22:13:06,330 __init__ Websocket: Created connection to ws://gimprove-test.herokuapp.com/ws/tracker/.
+gimproveclient_repo.Client_Prototype.Communication.CacheManager INFO       2018-07-23 22:13:06,334 empty_cache Cache: try empty cache.
+gimproveclient_repo.Client_Prototype.Client INFO       2018-07-23 22:13:06,345 __init__ Client instantiated.
+botocore.credentials INFO       2018-07-23 22:13:06,366 load Found credentials in shared credentials file: ~/.aws/credentials
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23 22:13:06,493 _new_conn Starting new HTTPS connection (1): test.s3.eu-central-1.amazonaws.com
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-07-23 22:13:06,659 _new_conn Starting new HTTPS connection (1): test.s3.amazonaws.com
+gimproveclient_repo.Client_Prototype.Client INFO       2018-07-23 22:14:55,812 run RFID-read: abort
+gimproveclient_repo.Client_Prototype.Communication.CacheManager INFO       2018-07-23 22:14:55,813 empty_cache Cache: try empty cache.

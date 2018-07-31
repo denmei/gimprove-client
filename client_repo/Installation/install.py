@@ -62,7 +62,7 @@ os.system("git config --global user.name 'pi'")
 
 
 # configure aws
-os.system("sudo pip install awscli --upgrade --user")
+os.system("sudo pip3 install awscli")
 aws_path = os.path.join(os.path.expanduser("~"), ".aws")
 if ".aws" not in os.listdir(os.path.expanduser("~")):
     os.mkdir(aws_path)
