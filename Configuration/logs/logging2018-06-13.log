@@ -1,0 +1,71 @@
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:05:56,395 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:05:56,407 error error from callback <function on_error at 0x10c631620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:06:40,932 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:06:40,945 error error from callback <function on_error at 0x1110a3620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:07:04,449 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:07:04,468 error error from callback <function on_error at 0x105e50620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Client INFO       2018-06-13 08:07:04,928 __init__ Client instantiated.
+botocore.credentials INFO       2018-06-13 08:07:05,010 load Found credentials in shared credentials file: ~/.aws/credentials
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-06-13 08:07:22,162 _new_conn Starting new HTTPS connection (1): rasppi-logs.s3.eu-central-1.amazonaws.com
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-06-13 08:08:37,720 _new_conn Starting new HTTPS connection (2): rasppi-logs.s3.eu-central-1.amazonaws.com
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:09:32,103 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:09:32,127 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Client INFO       2018-06-13 08:09:32,165 __init__ Client instantiated.
+botocore.credentials INFO       2018-06-13 08:09:32,204 load Found credentials in shared credentials file: ~/.aws/credentials
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-06-13 08:09:35,862 _new_conn Starting new HTTPS connection (1): rasppi-logs.s3.eu-central-1.amazonaws.com
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-06-13 08:09:36,619 _new_conn Starting new HTTPS connection (2): rasppi-logs.s3.eu-central-1.amazonaws.com
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-06-13 08:09:37,367 _new_conn Starting new HTTPS connection (3): rasppi-logs.s3.eu-central-1.amazonaws.com
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-06-13 08:09:38,760 _new_conn Starting new HTTPS connection (4): rasppi-logs.s3.eu-central-1.amazonaws.com
+botocore.vendored.requests.packages.urllib3.connectionpool INFO       2018-06-13 08:09:40,890 _new_conn Starting new HTTPS connection (5): rasppi-logs.s3.eu-central-1.amazonaws.com
+gimproveClient_Prototype.Client INFO       2018-06-13 08:10:11,167 run RFID-read: 0006921147
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:11,220 rfid_is_valid ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/userprofile_detail_rfid_rest/0006921147 (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x113426358>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,414 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,439 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,474 new_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_list_rest/ (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x113426dd8>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,531 cache_request Cached request.
+gimproveClient_Prototype.HardwareControl.Sensors.SensorManager INFO       2018-06-13 08:10:13,531 start_recording Start recording.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,572 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,576 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,578 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x113426a58>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,584 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,584 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,586 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,589 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11340d940>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,597 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,601 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,604 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,608 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11344dc18>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,618 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,619 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,620 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,626 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11345d748>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,633 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,633 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,635 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,641 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x112334320>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.HardwareControl.Sensors.SensorManager INFO       2018-06-13 08:10:13,643 start_recording Stop recording.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,643 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,650 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,652 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11344df60>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,652 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,653 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,656 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,660 cache_request Cached request.
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,661 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11344d6a0>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,665 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,665 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,666 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,668 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11345def0>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,673 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,673 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,676 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,677 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11346e3c8>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,683 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,683 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,684 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,686 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x10eb209b0>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,690 cache_request Cached request.
+gimproveClient_Prototype.Communication.WebSocketManager INFO       2018-06-13 08:10:13,691 __init__ Websocket: Created connection to ws://127.0.0.1:8000/ws/tracker/.
+websocket ERROR      2018-06-13 08:10:13,693 error error from callback <function on_error at 0x10fad9620>: on_error() takes 1 positional argument but 2 were given
+gimproveClient_Prototype.Communication.RequestManager INFO       2018-06-13 08:10:13,694 update_set ConnectionError: HTTPConnectionPool(host='127.0.0.1', port=8000): Max retries exceeded with url: /tracker/set_detail_rest/76862811-f3aa-4edd-9c99-14319d3111b6_fake (Caused by NewConnectionError('<urllib3.connection.HTTPConnection object at 0x11276bc88>: Failed to establish a new connection: [Errno 61] Connection refused',))
+gimproveClient_Prototype.Communication.CacheManager INFO       2018-06-13 08:10:13,699 cache_request Cached request.

@@ -27,6 +27,7 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component that c
 
 ## Install
 ### Raspberry set up (if necessary)
+
 1) Set up wifi: follow [this instruction](https://www.raspberrypi.org/documentation/configuration/wireless/wireless-cli.md)
 
 2) Configure booting without login: type `sudo raspi-config` to open the menu. Go to `Boot Options` &rarr; `Desktop/CLI` and select `Console Autologin` (should be B2)
@@ -52,6 +53,8 @@ the script is used for the first time, it will process through the remaining ste
 * Setup AWS
 * Setup Gimprove-Account
 * Modify .bashrc
+
+Optional: Follow [this instruction] (https://www.waveshare.com/wiki/5inch_HDMI_LCD) to install the AddOn for the Mini-Display.
 
 ### Not on Raspberry Pi
 If you're not using a Raspberry Pi, you might have to execute the following steps (since the Pi's RPi package might 
