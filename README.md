@@ -1,14 +1,21 @@
 # Gimprove-Client
 
+## Project Overview
 Gimprove is a lightweight system built to digitalize fitness equipment. Once installed on regular machines, Gimprove
 allows users to automatically track all relevant keyfigures of their activities such as the number of repetitions
-or the weight used. Users get feedback in realtime and can analyze their progress in the Gimprove App.
+or the weight used. Users get feedback in realtime and can analyze their progress in the Gimprove App. For more 
+information about Gimprove, visit the [Gimprove-Website](www.gimprove.com).
 
-Related respositories are:
+Here's an overview over the Gimprove system and it's components:
+![Overview over the single components of the Gimprove System](photos/ReadMe/GimproveSystem.png) 
+
+There are three respositories for this project:
 1) [Gimprove Backend](https://bitbucket.org/den_mei/gimprove_backend/src/master/): 
 Gimprove Plattform hosting the Gimprove Website and providing the Gimprove-API.
 2) [Gimprove-App](https://bitbucket.org/den_mei/gimprove_app/src/master/): User Interface.
+3) [Gimprove-Client](https://bitbucket.org/den_mei/gimprove_app/src/master/): Client that is attached on the machines.
 
+## Repository Overview
 This program is designed to turn a Raspberry Pi into a Gimprove-component that can be used to upgrade any fitness machine.
  The functionalities include:
 * User authentification

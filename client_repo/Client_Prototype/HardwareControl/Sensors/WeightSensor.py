@@ -64,7 +64,7 @@ class WeightSensor:
         measures = []
         i = 0
         error_counts = 0
-        error_limit = i * 25
+        error_limit = 100
         while i < times:
             new_weight = self.hx_weight.get_weight(1)
             measures = measures + [new_weight]
@@ -75,5 +75,5 @@ class WeightSensor:
                 print("Invalid weight value: %s" % new_weight)
                 error_counts = error_counts + 1
             if error_counts > error_limit:
-                raise Exception("Too many invalid measures. Check weight-sensor configuration. Measures: %s" % measures)
+                self.logger.info("Weight sensor: Too many invalid values: %s" % error_counts)
         return median(valid_measures)

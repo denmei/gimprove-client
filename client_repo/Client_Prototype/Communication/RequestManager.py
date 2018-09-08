@@ -154,7 +154,8 @@ class RequestManager(threading.Thread):
             elif response.status_code != 200 and response.status_code != 201 and cache:
                 self.cache_manager.cache_request("new", self.list_address, data, str(response.status_code), content['id'])
             return content
-        except requests.exceptions.RequestException as request_exception:
+        except Exception as request_exception:
+        # except requests.exceptions.RequestException as request_exception:
             new_uuid = str(uuid.uuid4()) + "_fake"
             self.logger.info("ConnectionError: %s" % request_exception)
             if cache:
