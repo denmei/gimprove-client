@@ -42,16 +42,16 @@
     },
     "local-links": {
       "set_list": {
-        "link": "http://127.0.0.1:8000/tracker/v0/set_list_rest/"
+        "link": "http://127.0.0.1:8000/tracker/api_v0_tracker/set_list_rest/"
       },
       "set_detail": {
-        "link": "http://127.0.0.1:8000/tracker/v0/set_detail_rest/"
+        "link": "http://127.0.0.1:8000/tracker/api_v0_tracker/set_detail_rest/"
       },
       "userprofile_detail": {
-        "link": "http://127.0.0.1:8000/tracker/v0/userprofile_detail_rfid_rest/"
+        "link": "http://127.0.0.1:8000/tracker/api_v0_main/userprofile_detail_rfid_rest/"
       },
       "userprofile_detail2": {
-        "link": "http://127.0.0.1:8000/tracker/v0/userprofile_detail_rest/"
+        "link": "http://127.0.0.1:8000/tracker/api_v0_main/userprofile_detail_rest/"
       },
       "websocket": {
         "link": "ws://127.0.0.1:8000/ws/tracker/"
