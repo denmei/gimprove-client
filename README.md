@@ -1,4 +1,7 @@
 # Gimprove-Client
+A project where my colleagues and I digitized fitness machines. Unfortunately we had to
+stop the project for personal and business reasons. Landing Page is still available here: 
+[Gimprove-Website](www.gimprove.com). 
 
 ## Project Overview
 Gimprove is a lightweight system built to digitalize fitness equipment. Once installed on regular machines, Gimprove
@@ -10,10 +13,12 @@ Here's an overview over the Gimprove system and it's components:
 ![Overview over the single components of the Gimprove System](photos/ReadMe/GimproveSystem.png) 
 
 There are three respositories for this project:
-1) [Gimprove Backend](https://bitbucket.org/den_mei/gimprove_backend/src/master/): 
+1) [Gimprove Backend](https://github.com/denmei/gimprove-backend): 
 Gimprove Plattform hosting the Gimprove Website and providing the Gimprove-API.
-2) [Gimprove-App](https://bitbucket.org/den_mei/gimprove_app/src/master/): User Interface.
-3) [Gimprove-Client](https://bitbucket.org/den_mei/gimprove_app/src/master/): Client that is attached on the machines.
+
+2) [Gimprove-App](https://github.com/denmei/gimprove-app): User Interface.
+
+3) [Gimprove-Client](https://github.com/denmei/gimprove-client): Client that is attached on the machines.
 
 ## Repository Overview
 This program is designed to turn a Raspberry Pi into a Gimprove-component that can be used to upgrade any fitness machine.
@@ -102,10 +107,14 @@ running locally on 127.0.0.1:8000.
 ## Built with
 * <a href="https://github.com/johnbryanmoore/VL53L0X_rasp_python">VL53L0X_rasp_python</a>: Python interface to the 
 VL53L0X.
-* 
+* <a href="https://github.com/tatobari/hx711py">hx711py</a>: Python interface for the HX711-sensor (weight-measurement).
 
 ## Contributing
 **Dennis Meisner:** meisnerdennis@web.de.
 
+## Team Members
+* **Lennard Rügauf:** l.ruegauf@gmx.de (Business, Hardware)
+* **Matthias Schuhbauer:** matthias_schuhbauer@web.de (Hardware)
+* **Dennis Meisner:** meisnerdennis@web.de (Business, Software)
 
 You can find more detailed information in the Wiki.
