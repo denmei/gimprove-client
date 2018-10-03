@@ -1,19 +1,19 @@
 # Gimprove-Client
 A project where my colleagues and I digitized fitness machines. Unfortunately we had to
-stop the project for personal and business reasons. Landing Page is still available here: 
-[Gimprove-Website](www.gimprove.com). 
+stop the project for personal and business reasons. Landing Page is still available here:
+[Gimprove-Website](http://www.gimprove.com).
 
 ## Project Overview
 Gimprove is a lightweight system built to digitalize fitness equipment. Once installed on regular machines, Gimprove
 allows users to automatically track all relevant keyfigures of their activities such as the number of repetitions
-or the weight used. Users get feedback in realtime and can analyze their progress in the Gimprove App. For more 
-information about Gimprove, visit the [Gimprove-Website](www.gimprove.com).
+or the weight used. Users get feedback in realtime and can analyze their progress in the Gimprove App. For more
+information about Gimprove, visit the [Gimprove-Website](http://www.gimprove.com).
 
 Here's an overview over the Gimprove system and it's components:
-![Overview over the single components of the Gimprove System](photos/ReadMe/GimproveSystem.png) 
+![Overview over the single components of the Gimprove System](photos/ReadMe/GimproveSystem.png)
 
 There are three respositories for this project:
-1) [Gimprove Backend](https://github.com/denmei/gimprove-backend): 
+1) [Gimprove Backend](https://github.com/denmei/gimprove-backend):
 Gimprove Plattform hosting the Gimprove Website and providing the Gimprove-API.
 
 2) [Gimprove-App](https://github.com/denmei/gimprove-app): User Interface.
@@ -52,7 +52,7 @@ After going back to the console:
 
 9) Clone this repository: ```git clone https://den_mei@bitbucket.org/den_mei/gimprove_client.git```
 
-Once the previous steps are completed, start the program with the command `python3 sync_and_start.py`. If 
+Once the previous steps are completed, start the program with the command `python3 sync_and_start.py`. If
 the script is used for the first time, it will process through the remaining steps including:
 * Install required python-packages
 * Setup AWS
@@ -62,7 +62,7 @@ the script is used for the first time, it will process through the remaining ste
 Optional: Follow [this instruction] (https://www.waveshare.com/wiki/5inch_HDMI_LCD) to install the AddOn for the Mini-Display.
 
 ### Not on Raspberry Pi
-If you're not using a Raspberry Pi, you might have to execute the following steps (since the Pi's RPi package might 
+If you're not using a Raspberry Pi, you might have to execute the following steps (since the Pi's RPi package might
 be missing):
 
 1) In the root directory, add a python-package named `RPi`
@@ -94,7 +94,7 @@ Be aware that the `sync_and_start.py`-script is always executed once the pi is r
 code base is updated from the related Gimprove-S3 bucket. Then, the client is started automatically.
 
 There are various possibilities to **stop the client**:
-1) Type `quit`, press a key combination such as `ctrl + c` or use the quit-rfid-tag defined in the client's config file 
+1) Type `quit`, press a key combination such as `ctrl + c` or use the quit-rfid-tag defined in the client's config file
 when the client is asking for a rfid to shutdown the client.
 2) Type `abort` to stop the client and to access the normal Raspberry Pi terminal (useful for maintenance).
 
@@ -105,7 +105,7 @@ To test the client, execute the following command from the root-directory: `pyth
 running locally on 127.0.0.1:8000.
 
 ## Built with
-* <a href="https://github.com/johnbryanmoore/VL53L0X_rasp_python">VL53L0X_rasp_python</a>: Python interface to the 
+* <a href="https://github.com/johnbryanmoore/VL53L0X_rasp_python">VL53L0X_rasp_python</a>: Python interface to the
 VL53L0X.
 * <a href="https://github.com/tatobari/hx711py">hx711py</a>: Python interface for the HX711-sensor (weight-measurement).
 
