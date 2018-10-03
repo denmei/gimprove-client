@@ -1,5 +1,5 @@
 {
-    "equipment_id": "653c9ed38b004f52bbc83fba95dc81cf",
+    "equipment_id": "0aad6c44ee754cfab3a4b07f4c1f2640",
     "exercise_name": "Lat Pulldown",
     "off-rfid": "",
     "led-gpio": 17,
@@ -41,7 +41,7 @@
         "print_undermax": "False"
     },
     "communication": {
-        "environment": "test"
+        "environment": "local"
     },
     "aws": {
         "bucket": "test"

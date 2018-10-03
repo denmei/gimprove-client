@@ -94,8 +94,9 @@ class RequestManager(threading.Thread):
         :param durations:
         :return: Server response.
         """
+        print("UPDATE: %s" % set_id)
         address = self.detail_address + set_id
-        data = {'repetitions': repetitions, 'weight': weight, "exercise_name": self.exercise_name,
+        data = {'repetitions': repetitions, 'weight': weight, "exercise": self.exercise_name,
                 'equipment_id': self.equipment_id, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'rfid': rfid, 'active': str(active), 'durations': json.dumps(durations)}
 
@@ -129,7 +130,7 @@ class RequestManager(threading.Thread):
         :param exercise_unit: ID of exercise_unit the set belongs to (if not available: "")
         :return: New set id. Fake id in case of connection error.
         """
-        data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise_name': self.exercise_name,
+        data = {'exercise_unit': exercise_unit, 'repetitions': 0, 'weight': 0, 'exercise': self.exercise_name,
                 'rfid': rfid, 'date_time': str(self.local_tz.localize(datetime.now())),
                 'equipment_id': self.equipment_id, 'active': 'True', 'durations': json.dumps([])}
 
