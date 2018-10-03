@@ -10,7 +10,7 @@ or the weight used. Users get feedback in realtime and can analyze their progres
 information about Gimprove, visit the [Gimprove-Website](http://www.gimprove.com).
 
 Here's an overview over the Gimprove system and it's components:
-![Overview over the single components of the Gimprove System](photos/ReadMe/GimproveSystem.png)
+![Overview over the single components of the Gimprove System](readMe/GimproveSystem.png)
 
 There are three respositories for this project:
 1) [Gimprove Backend](https://github.com/denmei/gimprove-backend):
