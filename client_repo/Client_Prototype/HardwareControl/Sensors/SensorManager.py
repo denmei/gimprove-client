@@ -255,7 +255,7 @@ class SensorManager:
 
         if self.final_plot and not self.plot:
             self._total_distances_ = self._total_distances_ + self._distance_buffer_
-            plt_line_max = [[0, len(self._total_distances_)], [self._max_ * self.rep_val, self._max_ * self.rep_val]]
+            plt_line_max = [[0, len(self._total_distances_)], [self._max_ * (1 - self.rep_val), self._max_ * (1 - self.rep_val)]]
             plt_line_min = [[0, len(self._total_distances_)], [self._min_ * (2 - self.rep_val), self._min_ * (2 - self.rep_val)]]
             plt.plot(plt_line_max[0], plt_line_max[1])
             plt.plot(plt_line_min[0], plt_line_min[1])

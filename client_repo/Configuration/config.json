@@ -1,12 +1,12 @@
 {
-    "equipment_id": "0aad6c44ee754cfab3a4b07f4c1f2640",
+    "equipment_id": "2fab85917cd047a9a8309367d2d025ac",
     "exercise_name": "Lat Pulldown",
     "off-rfid": "",
     "led-gpio": 17,
     "sensor_settings": {
         "use_sensors": "False",
         "distance_sensor": {
-            "min_dist": 470,
+            "min_dist": 490,
             "max_dist": 900,
             "frequency": 0.01,
             "running_mean":5,
@@ -33,7 +33,7 @@
     "plot_settings": {
         "plot": "False",
         "length": 10,
-        "final_plot": "False"
+        "final_plot": "True"
     },
     "terminal_settings": {
         "print_weight": "False",
@@ -41,7 +41,7 @@
         "print_undermax": "False"
     },
     "communication": {
-        "environment": "local"
+        "environment": "test"
     },
     "aws": {
         "bucket": "test"
