@@ -1,1 +1,21 @@
-[]
+[
+    {
+        "no": 1,
+        "content": {
+            "method": "update",
+            "address": "http://127.0.0.1:8000/api_v0_tracker/set_detail_rest/fa1822de-d2d4-49c1-8993-e59b134bf37e",
+            "data": {
+                "repetitions": 10,
+                "weight": 14.6,
+                "exercise": "Lat Pulldown",
+                "equipment_id": "8f8caeb1743141d8a7e74ba2c1da8709",
+                "date_time": "2018-10-03 11:09:31.520082+02:00",
+                "rfid": "0006921147",
+                "active": "False",
+                "durations": "[0.924587, 0.730666, 0.734813, 0.761285, 0.722676, 0.744696, 0.748013, 0.72827, 0.726077, 0.739883]"
+            },
+            "status_code": "404",
+            "set_id": "fa1822de-d2d4-49c1-8993-e59b134bf37e"
+        }
+    }
+]
