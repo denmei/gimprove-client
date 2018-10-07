@@ -30,6 +30,20 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component that c
 
 ![Raspberry Pi-powered Gimprove Terminal in a Gym.](readme/client_terminal.JPG)
 
+## How does it work?
+
+The distance between the weight stack is measured in small intervals. Once the stack overpasses a predefined threshold,
+this is detected as a new repetition. To detetect a new repetition, the stack has to undergo a defined minimum first again
+to make sure that the user executes the exercises properly. Below you can see a plot of the distance measures for a set
+with 10 repetitions, where the orange line has to be exceeded to register a new repetition, while the blue line is 
+the minimum line. The activity stops automatically after a predefined interval where no new repetition was detected.
+
+
+One a new repetition is detected, the current weight used by the user is measured using the weightsensors. Every new 
+repetition is reported to the Gimprove-backend in real-time and from there forwarded to the user's end device.
+
+![Rep-Overview](readme/repetitions.png)
+
 ## Install
 ### Raspberry set up (if necessary)
 
