@@ -23,7 +23,7 @@ Gimprove Plattform hosting the Gimprove Website and providing the Gimprove-API.
 ## Repository Overview
 This program is designed to turn a Raspberry Pi into a Gimprove-component that can be used to upgrade any fitness machine.
  The functionalities include:
-* User authentification
+* User authentification via RFID
 * Record the data coming from different sensors
 * Analyzing the sensor data to identify repetitions and weights
 * Sending results to the GImprove-server using the GImprove-API (HTTP) and via a Websocket-Connection
@@ -32,14 +32,20 @@ This program is designed to turn a Raspberry Pi into a Gimprove-component that c
 
 ## How does it work?
 
+We attached two types of sensor on the machine: A distance sensor, measuring the distance between a fixed point over the
+weight stack and the top of the stack. With the help of a weight sensor, we measure the total weight of the stack as well as the weight that is not used by the user (from which it's easy to calculate the used weight). The sensors are directly connected to the raspberry pi, which served as a central component of our prototype.
+Before the user can track his activity, he has to login at the system using his RFID-chip and the reader which is connected to the Raspberry Pi.
+
+![Client-Overview](readme/Client-Overview.png)
+
 The distance between the weight stack is measured in small intervals. Once the stack overpasses a predefined threshold,
 this is detected as a new repetition. To detetect a new repetition, the stack has to undergo a defined minimum first again
 to make sure that the user executes the exercises properly. Below you can see a plot of the distance measures for a set
-with 10 repetitions, where the orange line has to be exceeded to register a new repetition, while the blue line is 
+with 10 repetitions, where the orange line has to be exceeded to register a new repetition, while the blue line is
 the minimum line. The activity stops automatically after a predefined interval where no new repetition was detected.
 
 
-One a new repetition is detected, the current weight used by the user is measured using the weightsensors. Every new 
+One a new repetition is detected, the current weight used by the user is measured using the weightsensors. Every new
 repetition is reported to the Gimprove-backend in real-time and from there forwarded to the user's end device.
 
 ![Rep-Overview](readme/repetitions.png)
