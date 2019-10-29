@@ -3,6 +3,6 @@ Twisted==18.4.0
 matplotlib==2.1.1
 pandas==0.22.0
 pytz==2018.3
-requests==2.18.4
+requests==2.20.0
 autobahn_rce==0.6.0.5
 websocket_client==0.47.0
